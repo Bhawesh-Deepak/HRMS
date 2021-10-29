@@ -20,6 +20,7 @@ namespace HRMS.UI.Controllers
 
         public IActionResult Index()
         {
+            Serilog.Log.Information("Home Index method called..");
             return View();
         }
 
