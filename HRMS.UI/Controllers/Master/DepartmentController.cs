@@ -40,11 +40,6 @@ namespace HRMS.UI.Controllers.Master
 
             var response = ResponseMessageHelper.GetResponseMessage(dbResponse.ResponseStatus, nameof(Department), nameof(GetDepartmentList));
 
-            if (response.isSuccess)
-            {
-
-            }
-
             return Json("");
 
         }

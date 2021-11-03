@@ -121,7 +121,7 @@ namespace HRMS.Services.Implementation.GenericImplementation
             {
                 using (context)
                 {
-                    context.UpdateRange();
+                    context.UpdateRange(items);
                     await context.SaveChangesAsync();
                 }
 

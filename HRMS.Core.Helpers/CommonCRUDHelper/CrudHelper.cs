@@ -32,11 +32,11 @@ namespace HRMS.Core.Helpers.CommonCRUDHelper
             {
                 if (prop.Name == "IsDeleted")
                 {
-                    prop.SetValue(entity, 1, null);
+                    prop.SetValue(entity, true, null);
                 }
                 else if (prop.Name == "IsActive")
                 {
-                    prop.SetValue(entity, 0, null);
+                    prop.SetValue(entity, false, null);
                 }
                 else if (prop.Name == "UpdatedBy")
                 {

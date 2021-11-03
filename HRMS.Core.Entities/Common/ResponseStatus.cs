@@ -8,7 +8,7 @@ namespace HRMS.Core.Entities.Common
 {
     public enum ResponseStatus
     {
-        Created,
+        Created=201,
         Deleted,
         Updated,
         Success,
