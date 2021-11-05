@@ -27,20 +27,33 @@ namespace HRMS.Admin.UI.Controllers.Master
 
         public async Task<IActionResult> GetDepartmentList()
         {
-            var response = await _IDepartmentRepository.GetAllEntities(x => x.IsActive && !x.IsDeleted);
-            return PartialView(ViewHelper.GetViewPathDetails("Department", "DepartmentList"), response.Entities);
+            try
+            {
+                var response = new DBResponseHelper<Department, int>()
+                    .GetDBResponseHelper(await _IDepartmentRepository
+                    .GetAllEntities(x => x.IsActive && !x.IsDeleted));
+
+                return PartialView(ViewHelper.GetViewPathDetails("Department", "DepartmentList"), response.Item2.Entities);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error","Home");
+            }
+
         }
 
         public async Task<IActionResult> CreateDepartment(int id)
         {
+            var response = new DBResponseHelper<Department, int>().GetDBResponseHelper(await _IDepartmentRepository.GetAllEntities(x => x.Id == id));
+
             if (id == 0)
             {
                 return PartialView(ViewHelper.GetViewPathDetails("Department", "_CreateDepartment"));
             }
             else
             {
-                var response = await _IDepartmentRepository.GetAllEntities(x => x.Id == id);
-                return PartialView(ViewHelper.GetViewPathDetails("Department", "_CreateDepartment"), response.Entities.First());
+
+                return PartialView(ViewHelper.GetViewPathDetails("Department", "_CreateDepartment"), response.Item2.Entities.First());
             }
         }
 

@@ -1,5 +1,4 @@
-﻿using HRMS.Admin.UI.Helpers;
-using HRMS.Core.Entities.Master;
+﻿using HRMS.Core.Entities.Master;
 using HRMS.Core.Helpers.CommonCRUDHelper;
 using HRMS.Core.Helpers.CommonHelper;
 using HRMS.Services.Repository.GenericRepository;

@@ -42,9 +42,8 @@ namespace HRMS.Services.Implementation.GenericImplementation
             }
             catch (Exception ex)
             {
-                return await Task.Run(() => new GenericResponse<TEntity, T>()
-                   .GetGenericResponse(null, null, ex.Message, default,
-                   ResponseStatus.DataBaseException));
+                throw new ApplicationException("Db Exception", ex);
+               
             }
         }
 
@@ -66,16 +65,7 @@ namespace HRMS.Services.Implementation.GenericImplementation
             }
             catch (Exception ex)
             {
-                if (ex.InnerException.Message.Contains("The duplicate key "))
-                {
-                    return await Task.Run(() => new GenericResponse<TEntity, T>()
-                        .GetGenericResponse(null, null, ex.Message, default,
-                        ResponseStatus.AlreadyExists));
-                }
-
-                return await Task.Run(() => new GenericResponse<TEntity, T>()
-                 .GetGenericResponse(null, null, ex.Message, default,
-                 ResponseStatus.DataBaseException));
+                throw new ApplicationException("Db Exception", ex);
             }
         }
 
@@ -97,16 +87,7 @@ namespace HRMS.Services.Implementation.GenericImplementation
             }
             catch (Exception ex)
             {
-                if (ex.InnerException.Message.Contains("The duplicate key "))
-                {
-                    return await Task.Run(() => new GenericResponse<TEntity, T>()
-                        .GetGenericResponse(null, null, ex.Message, default,
-                        ResponseStatus.AlreadyExists));
-                }
-
-                return await Task.Run(() => new GenericResponse<TEntity, T>()
-                 .GetGenericResponse(null, null, ex.Message, default,
-                 ResponseStatus.DataBaseException));
+                throw new ApplicationException("Db Exception", ex);
             }
         }
 
@@ -133,9 +114,7 @@ namespace HRMS.Services.Implementation.GenericImplementation
             }
             catch (Exception ex)
             {
-                return await Task.Run(() => new GenericResponse<TEntity, T>()
-                 .GetGenericResponse(null, null, ex.Message, default,
-                 ResponseStatus.DataBaseException));
+                throw new ApplicationException("Db Exception", ex);
             }
         }
 
@@ -152,9 +131,7 @@ namespace HRMS.Services.Implementation.GenericImplementation
             }
             catch (Exception ex)
             {
-                return await Task.Run(() => new GenericResponse<TEntity, T>()
-                 .GetGenericResponse(null, null, ex.Message, default,
-                 ResponseStatus.DataBaseException));
+                throw new ApplicationException("Db Exception", ex);
             }
         }
 
@@ -170,16 +147,15 @@ namespace HRMS.Services.Implementation.GenericImplementation
                 IQueryable<TEntity> dbQuery = context.Set<TEntity>();
                 var tList = dbQuery.AsNoTracking().Where(where).ToList<TEntity>();
 
+                throw new Exception();
+
                 return await Task.Run(() => new GenericResponse<TEntity, T>()
                  .GetGenericResponse(tList, null, "success", default,
                  ResponseStatus.Success));
             }
             catch (Exception ex)
             {
-                return await Task.Run(() => new GenericResponse<TEntity, T>()
-                   .GetGenericResponse(null, null, ex.Message, default,
-                   ResponseStatus.DataBaseException));
-
+                throw new ApplicationException("Db Exception", ex);
             }
         }
 
@@ -204,9 +180,7 @@ namespace HRMS.Services.Implementation.GenericImplementation
             }
             catch (Exception ex)
             {
-                return await Task.Run(() => new GenericResponse<TEntity, T>()
-                   .GetGenericResponse(null, null, ex.Message, default,
-                   ResponseStatus.DataBaseException));
+                throw new ApplicationException("Db Exception", ex);
 
             }
         }
@@ -229,9 +203,7 @@ namespace HRMS.Services.Implementation.GenericImplementation
             }
             catch (Exception ex)
             {
-                return await Task.Run(() => new GenericResponse<TEntity, T>()
-                 .GetGenericResponse(null, null, ex.Message, default,
-                 ResponseStatus.DataBaseException));
+                throw new ApplicationException("Db Exception", ex);
             }
         }
     }

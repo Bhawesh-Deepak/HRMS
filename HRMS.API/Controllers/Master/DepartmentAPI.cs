@@ -74,7 +74,7 @@ namespace HRMS.API.Controllers.Master
         [Consumes("application/json")]
         public async Task<IActionResult> GetDepartmentList()
         {
-            var models = await _IDepartmentRepository.GetAllEntities(x => x.IsActive==1 && x.IsDeleted==0);
+            var models = await _IDepartmentRepository.GetAllEntities(x => x.IsActive && !x.IsDeleted);
 
             return new APIResponseHelper<Department, int>().GetResponse(models);
         }

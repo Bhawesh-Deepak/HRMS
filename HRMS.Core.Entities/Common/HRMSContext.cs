@@ -28,6 +28,8 @@ namespace HRMS.Core.Entities.Common
         #region Master
 
         public virtual DbSet<Department> Departments { get; set; }
+        public virtual DbSet<SalaryHeads> SalaryHeads { get; set; }
+        public virtual DbSet<Designation> Designations { get; set; }
 
         #endregion
     }
