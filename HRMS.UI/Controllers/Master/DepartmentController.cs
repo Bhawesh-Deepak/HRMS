@@ -36,7 +36,7 @@ namespace HRMS.UI.Controllers.Master
         [HttpGet]
         public async Task<IActionResult> GetDepartmentList()
         {
-            var dbResponse = await _IDepartmentRepository.GetAllEntities(x => x.IsActive && !x.IsDeleted);
+            var dbResponse = await _IDepartmentRepository.GetAllEntities(x => x.IsActive==1);
 
             var response = ResponseMessageHelper.GetResponseMessage(dbResponse.ResponseStatus, nameof(Department), nameof(GetDepartmentList));
 
