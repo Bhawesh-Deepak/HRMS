@@ -110,6 +110,11 @@ namespace HRMS.Services.Implementation.GenericImplementation
             }
         }
 
+        public Task<GenericResponse<TEntity, T>> DeleteEntities(TEntity[] items)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Remove entity from Data base object
         /// </summary>
@@ -119,11 +124,27 @@ namespace HRMS.Services.Implementation.GenericImplementation
         {
             try
             {
-                using (context)
-                {
-                    context.UpdateRange(items);
-                    await context.SaveChangesAsync();
-                }
+                context.UpdateRange(items);
+                await context.SaveChangesAsync();
+
+                return await Task.Run(() => new GenericResponse<TEntity, T>()
+                 .GetGenericResponse(null, null, "success", default,
+                 ResponseStatus.Deleted));
+            }
+            catch (Exception ex)
+            {
+                return await Task.Run(() => new GenericResponse<TEntity, T>()
+                 .GetGenericResponse(null, null, ex.Message, default,
+                 ResponseStatus.DataBaseException));
+            }
+        }
+
+        public async Task<GenericResponse<TEntity, T>> DeleteEntity(TEntity items)
+        {
+            try
+            {
+                context.Update(items);
+                await context.SaveChangesAsync();
 
                 return await Task.Run(() => new GenericResponse<TEntity, T>()
                  .GetGenericResponse(null, null, "success", default,
@@ -167,9 +188,27 @@ namespace HRMS.Services.Implementation.GenericImplementation
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        public Task<GenericResponse<TEntity, T>> GetAllEntityById(T Id)
+        public async Task<GenericResponse<TEntity, T>> GetAllEntityById(Func<TEntity, bool> where)
         {
-            throw new NotImplementedException();
+            try
+            {
+                TEntity item = null;
+                IQueryable<TEntity> dbQuery = context.Set<TEntity>();
+                item = dbQuery
+                    .AsNoTracking() //Don't track any changes for the selected item
+                    .FirstOrDefault(where); //Apply where clause
+
+                return await Task.Run(() => new GenericResponse<TEntity, T>()
+                   .GetGenericResponse(null, item, "Success", default,
+                   ResponseStatus.Success));
+            }
+            catch (Exception ex)
+            {
+                return await Task.Run(() => new GenericResponse<TEntity, T>()
+                   .GetGenericResponse(null, null, ex.Message, default,
+                   ResponseStatus.DataBaseException));
+
+            }
         }
 
         /// <summary>

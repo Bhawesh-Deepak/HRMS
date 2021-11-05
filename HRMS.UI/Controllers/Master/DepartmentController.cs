@@ -1,5 +1,7 @@
-﻿using HRMS.Core.Entities.Master;
+﻿using HRMS.Admin.UI.Helpers;
+using HRMS.Core.Entities.Master;
 using HRMS.Core.Helpers.CommonCRUDHelper;
+using HRMS.Core.Helpers.CommonHelper;
 using HRMS.Services.Repository.GenericRepository;
 using HRMS.UI.Helpers;
 using Microsoft.AspNetCore.Mvc;
@@ -18,9 +20,10 @@ namespace HRMS.UI.Controllers.Master
         {
             _IDepartmentRepository = departmentRepo;
         }
-        public async Task<IActionResult> DepartmentIndex()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            ViewBag.HeaderTitle = "Department";
+            return await Task.Run(()=> View(ViewHelper.GetViewPathDetails("Department", "DepartmentIndex"))) ;
         }
 
         [HttpPost]
@@ -36,7 +39,7 @@ namespace HRMS.UI.Controllers.Master
         [HttpGet]
         public async Task<IActionResult> GetDepartmentList()
         {
-            var dbResponse = await _IDepartmentRepository.GetAllEntities(x => x.IsActive==1);
+            var dbResponse = await _IDepartmentRepository.GetAllEntities(x => x.IsActive);
 
             var response = ResponseMessageHelper.GetResponseMessage(dbResponse.ResponseStatus, nameof(Department), nameof(GetDepartmentList));
 

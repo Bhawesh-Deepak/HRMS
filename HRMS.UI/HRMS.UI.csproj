@@ -17,8 +17,4 @@
     <ProjectReference Include="..\HRMS.Services.Repository\HRMS.Services.Repository.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Department\" />
-  </ItemGroup>
-
 </Project>

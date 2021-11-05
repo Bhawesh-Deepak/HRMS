@@ -14,8 +14,8 @@ namespace HRMS.Core.Entities.Common
     public abstract class BaseModel<T>
     {
         public T Id { get; set; }
-        public int IsActive { get; set; } = 1;
-        public int IsDeleted { get; set; } = 0;
+        public bool IsActive { get; set; } = true;
+        public bool IsDeleted { get; set; } = false;
         public int CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int UpdatedBy { get; set; }
