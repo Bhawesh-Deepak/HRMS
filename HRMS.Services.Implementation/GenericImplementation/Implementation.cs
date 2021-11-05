@@ -147,8 +147,6 @@ namespace HRMS.Services.Implementation.GenericImplementation
                 IQueryable<TEntity> dbQuery = context.Set<TEntity>();
                 var tList = dbQuery.AsNoTracking().Where(where).ToList<TEntity>();
 
-                throw new Exception();
-
                 return await Task.Run(() => new GenericResponse<TEntity, T>()
                  .GetGenericResponse(tList, null, "success", default,
                  ResponseStatus.Success));
