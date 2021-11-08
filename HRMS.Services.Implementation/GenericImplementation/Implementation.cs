@@ -91,9 +91,21 @@ namespace HRMS.Services.Implementation.GenericImplementation
             }
         }
 
-        public Task<GenericResponse<TEntity, T>> DeleteEntities(TEntity[] items)
+        public async Task<GenericResponse<TEntity, T>> DeleteEntities(TEntity[] items)
         {
-            throw new NotImplementedException();
+            try
+            {
+                context.UpdateRange(items);
+                await context.SaveChangesAsync();
+
+                return await Task.Run(() => new GenericResponse<TEntity, T>()
+                 .GetGenericResponse(null, null, "success", default,
+                 ResponseStatus.Deleted));
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Db Exception", ex);
+            }
         }
 
         /// <summary>

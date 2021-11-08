@@ -8,4 +8,14 @@
     <Folder Include="SqlHelpers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="ExcelDataReader.DataSet" Version="3.6.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.11" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HRMS.Core.Entities\HRMS.Core.Entities.csproj" />
+    <ProjectReference Include="..\HRMS.Core.ReqRespVm\HRMS.Core.ReqRespVm.csproj" />
+  </ItemGroup>
+
 </Project>

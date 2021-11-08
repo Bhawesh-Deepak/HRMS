@@ -1,4 +1,6 @@
 {
   "DepartmentIndex": "Department",
-  "SalaryHeadIndex": "SalaryHeads"
+  "SalaryHeadIndex": "SalaryHeads",
+  "DesignationIndex": "Designation",
+  "RoleMasterIndex": "Role"
 }
