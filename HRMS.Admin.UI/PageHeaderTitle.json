@@ -2,5 +2,7 @@
   "DepartmentIndex": "Department",
   "SalaryHeadIndex": "SalaryHeads",
   "DesignationIndex": "Designation",
-  "RoleMasterIndex": "Role"
+  "RoleMasterIndex": "Role",
+  "ModuleMaster": "Module/Menu",
+  "SubModuleMaster": "SubModule"
 }

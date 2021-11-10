@@ -1,4 +1,4 @@
-﻿
+﻿@model HRMS.Core.Entities.Master.RoleMaster
 <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 
@@ -6,21 +6,16 @@
     <h1>
         @ViewBag.HeaderTitle
     </h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Forms</a></li>
-        <li class="active">General Elements</li>
-    </ol>
-</section>
+  </section>
 <section class="content">
     <div class="row">
         <div class="col-md-8">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                   
+
                     <div class="col-md-12">
                         <h3 class="box-title pull-left">Create @ViewBag.HeaderTitle</h3>
-                        <a class="btn btn-primary pull-right" onclick="AddDepartment()">
+                        <a class="btn btn-primary pull-right" onclick="AddRecord()">
                             <i class="fa fa-plus-square"> &nbsp; Add</i>
                         </a>
                     </div>
@@ -29,33 +24,31 @@
                     <div id="divHRMS">
                     </div>
                 </div>
-               
+
             </div>
         </div>
-
-        
     </div>
 </section>
 
 <script>
-    function GetDepartmentList() {
-        GetCustomRecord("/Department/GetDepartmentList","divHRMS")
+    function GetRecord() {
+        GetCustomRecord("/SubModule/GetSubModuleDetails","divHRMS")
     }
 
     $(document).ready(function () {
-        GetDepartmentList();
+        GetRecord();
     })
 
-    function AddDepartment() {
-        NewCustomRecord("/Department/CreateDepartment","Create Department")
+    function AddRecord() {
+        NewCustomRecord("/SubModule/CreateSubModule","Create Role Detail")
     }
 
     function Delete(id,eData) {
-        CustomDeleteRecord(id, "/Department/GetDepartmentList", "/Department/DeleteDepartment", eData);
+        CustomDeleteRecord(id, "/SubModule/GetSubModuleDetails", "/SubModule/DeleteSubModule", eData);
     }
 
     function UpdateRecord(id) {
-        UpdateCustomRecord(id, "/Department/CreateDepartment", "Create Department","Update Department");
+        UpdateCustomRecord(id, "/SubModule/CreateSubModule", "Create SubModule Detail","Update SubModule Detail");
     }
 </script>
 
