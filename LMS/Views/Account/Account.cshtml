@@ -40,17 +40,17 @@
                     <div class="login-card">
                         <form class="theme-form login-form needs-validation" novalidate="" method="post"  asp-controller="Authenticate" asp-action="Login">
 
-                            <img src="~/wp-contents/img/logo.png" />
+                            <h4 style="text-align:center">LEAD MANAGEMENT SYSTEM</h4>
                             <hr />
-                            <h4>Login</h4>
+                            <h4 style="text-align:center">Login</h4>
 
-                            <h6>Welcome back! Log in to your account.</h6>
+                           
                             <div class="form-group">
                                 <label>User Name</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fa fa-user"></i></span>
                                     <input class="form-control" type="text" required="" name="UserName" placeholder="User Name">
-                                    <div class="invalid-tooltip">Please enter proper User Name.</div>
+                                    
                                 </div>
                             </div>
                             <div class="form-group">
@@ -58,7 +58,7 @@
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fa fa-unlock-alt"></i></span>
                                     <input class="form-control" type="password" name="password" required="" placeholder="*********">
-                                    <div class="invalid-tooltip">Please enter proper Password.</div>
+                                 
                                     <div class="show-hide"><span class="show">                         </span></div>
                                 </div>
                             </div>
@@ -66,11 +66,8 @@
                                 @ViewBag.ErrorMessage
                             </div>
                             <div class="form-group">
-                                <div class="checkbox">
-                                </div><a class="link" href="#">Forgot password?</a>
-                            </div>
-                            <div class="form-group">
-                                <button class="btn btn-primary btn-block" type="submit">Sign in</button>
+                                <a class="link pull-left" href="#">Forgot password?</a>
+                                <button class="btn btn-primary btn-block" type="submit">Login in</button>
                             </div>
 
                         </form>

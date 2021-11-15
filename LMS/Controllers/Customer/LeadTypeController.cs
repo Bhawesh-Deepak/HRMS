@@ -58,8 +58,11 @@ namespace LMS.Controllers.Customer
         public async Task<IActionResult> DeleteLeadType(int id)
         {
             var deleteModel = await _ILeadTypeRepository.GetAllEntityById(x => x.Id == id);
+
             var deleteDbModel = CrudHelper.DeleteHelper<LeadType>(deleteModel.Entity, 1);
+
             var deleteResponse = await _ILeadTypeRepository.DeleteEntity(deleteDbModel);
+
             if (deleteResponse.ResponseStatus == HRMS.Core.Entities.Common.ResponseStatus.Deleted)
             {
                 return Json(deleteResponse.Message);
