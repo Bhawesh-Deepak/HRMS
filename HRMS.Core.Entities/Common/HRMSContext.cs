@@ -52,6 +52,7 @@ namespace HRMS.Core.Entities.Common
         public virtual DbSet<RoleAccess> RoleAccesses { get; set; }
         public virtual DbSet<AuthenticateUser> AuthenticateUsers { get; set; }
         public virtual DbSet<CustomerDetail> CustomerDetails { get; set; }
+        public virtual DbSet<LeadType> LeadTypes { get; set; }
 
         #endregion
     }

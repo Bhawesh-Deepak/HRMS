@@ -11,8 +11,7 @@
     <link rel="apple-touch-icon-precomposed" href="~/wp-contents/img/ico/apple-touch-icon-57-precomposed.png">
     <link rel="shortcut icon" href="~/wp-contents/img/ico/favicon.png">
 
-    <!-- CSS -->
-
+    
     <link href="~/wp-contents/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="~/wp-contents/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="~/wp-contents/css/font-entypo.css" rel="stylesheet" type="text/css">
@@ -1858,6 +1857,7 @@
 
 
                 @RenderBody()
+                @await Html.PartialAsync("~/Views/Shared/_CommanModalPopUpPartial.cshtml")
             </div>
             <!-- .container -->
         </div>

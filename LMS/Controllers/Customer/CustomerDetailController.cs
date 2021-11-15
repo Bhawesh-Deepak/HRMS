@@ -1,6 +1,8 @@
 ﻿using HRMS.Core.Entities.LeadManagement;
 using HRMS.Core.Entities.Payroll;
+using HRMS.Core.Helpers.CommonHelper;
 using HRMS.Core.Helpers.ExcelHelper;
+using HRMS.Core.ReqRespVm.Response.Customer;
 using HRMS.Services.Repository.GenericRepository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -29,7 +31,26 @@ namespace LMS.Controllers.Customer
         {
             return View("~/Views/Customer/LeadManagement.cshtml");
         }
+        public async Task<IActionResult> CustomerList()
+        {
 
+            var CustomerDetailList = await _ICustomerDetailRepository.GetAllEntities(x => x.IsActive && !x.IsDeleted);
+            var CustomerLeadLIst = await _ICustomerLeadRepository.GetAllEntities(x => x.IsActive && !x.IsDeleted);
+            var responseDetails = (from CDList in CustomerDetailList.Entities
+                                   join CLList in CustomerLeadLIst.Entities
+                                   on CDList.Id equals CLList.CustomerId
+                                   where CLList.EmpId == Convert.ToInt32(HttpContext.Session.GetString("empId"))
+                                   select new CustomerDetail
+                                   {
+                                       CustomerName = CDList.CustomerName,
+                                       Address = CDList.Address,
+                                       Phone = CDList.Phone,
+                                       Email = CDList.Email,
+                                       Description = CDList.Description
+                                   }).ToList();
+
+            return await Task.Run(() => View(ViewHelper.GetViewPathDetails("Customer", "GetCustomerList"), responseDetails));
+        }
         [HttpPost]
         public async Task<IActionResult> UploadLeadData(IFormFile CustomerData)
         {
