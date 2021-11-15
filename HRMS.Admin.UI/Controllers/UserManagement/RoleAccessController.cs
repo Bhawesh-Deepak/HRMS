@@ -83,6 +83,9 @@ namespace HRMS.Admin.UI.Controllers.UserManagement
 
         }
 
+
+        #region PrivateMethods Display and populate the viewbag data
+
         private async Task PopulateViewBag()
         {
             var response = await _IRoleMasterRepository.GetAllEntities(x => x.IsActive && !x.IsDeleted);
@@ -121,5 +124,7 @@ namespace HRMS.Admin.UI.Controllers.UserManagement
 
             return response;
         }
+
+        #endregion
     }
 }

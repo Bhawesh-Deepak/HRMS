@@ -18,7 +18,7 @@ namespace HRMS.Admin.UI.Controllers.UserManagement
         private readonly IGenericRepository<EmployeeDetail, int> _IEmployeeDetailRepository;
 
         public UserLoginController(IGenericRepository<RoleMaster, int> roleMasterRepo,
-            IGenericRepository<AuthenticateModel, int> authRepo, IGenericRepository<EmployeeDetail, int> employeeRepo)
+            IGenericRepository<AuthenticateUser, int> authRepo, IGenericRepository<EmployeeDetail, int> employeeRepo)
         {
             _IRoleMasterRepoository = roleMasterRepo;
             _IAuthenticateRepository = authRepo;

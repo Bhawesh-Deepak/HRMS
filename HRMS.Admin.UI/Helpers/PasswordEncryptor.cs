@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 
 namespace HRMS.Admin.UI.Helpers
 {
+
+    /// <summary>
+    /// This is singleton class which is used to perform the password encryption and decryption.
+    /// </summary>
     public sealed class PasswordEncryptor
     {
         /// <summary>
@@ -15,10 +19,16 @@ namespace HRMS.Admin.UI.Helpers
         /// </summary>
         private static volatile PasswordEncryptor passwordEncrypter;
 
+        /// <summary>
+        /// Make the constructor private so that we can not able to create the instance out side the class.
+        /// </summary>
         private PasswordEncryptor()
         {
         }
 
+        /// <summary>
+        /// Create the instance of the class inside the class.
+        /// </summary>
         public static PasswordEncryptor Instance
         {
             get
@@ -40,6 +50,12 @@ namespace HRMS.Admin.UI.Helpers
             }
         }
 
+        /// <summary>
+        /// Method to perform the password encryption
+        /// </summary>
+        /// <param name="textToEncode"></param>
+        /// <param name="encryptionKey"></param>
+        /// <returns></returns>
         public string Encrypt(string textToEncode, string encryptionKey)
         {
             byte[] clearBytes = Encoding.Unicode.GetBytes(textToEncode);
@@ -63,6 +79,13 @@ namespace HRMS.Admin.UI.Helpers
             }
             return textToEncode;
         }
+
+        /// <summary>
+        /// Method to perform the password decryption
+        /// </summary>
+        /// <param name="textToDecode"></param>
+        /// <param name="encryptionKey"></param>
+        /// <returns></returns>
         public string Decrypt(string textToDecode, string encryptionKey)
         {
             if (!string.IsNullOrEmpty(textToDecode))
