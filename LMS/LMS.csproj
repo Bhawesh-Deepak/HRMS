@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\plugins\jquery-file-upload\server\php\files\thumbnail\htaccess-temporary\" />
+    <Folder Include="wwwroot\wp-contents\plugins\jquery-file-upload\server\php\files\thumbnail\htaccess-temporary\" />
   </ItemGroup>
 
 </Project>

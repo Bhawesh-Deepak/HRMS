@@ -44,7 +44,7 @@ namespace LMS.Controllers.UserManagement
 
                 return RedirectToAction("Index", "Home");
             }
-            return View();
+            return View("~/Views/Account/Account.cshtml");
         }
     }
 }
