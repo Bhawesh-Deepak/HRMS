@@ -1,24 +1,146 @@
 ﻿@model AuthenticateModel
-<div class="container">
-    <form asp-controller="Authenticate" asp-action="Login">    <div class="row">
-        <div class="form-group col-md-4">
-            <label>
-                User Name
-            </label>
-            <input  asp-for="UserName" class="form-control" />
-        </div>
 
-         <div class="form-group col-md-4">
-            <label>
-                Password
-            </label>
-            <input type="Password" asp-for="Password" class="form-control" />
-        </div>
 
-          <div class="form-group col-md-4">
-            <input type="submit" class="btn btn-primary" />
+@{
+    Layout = null;
+
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <link rel="icon" href="~/wp-contents/assests/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="~/wp-contents/assests/img/favicon.ico" type="image/x-icon">
+    <title>Lead  - Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="~/wp-contents/login/assets/css/bootstrap.css">
+    <!-- App css-->
+    <link rel="stylesheet" type="text/css" href="~/wp-contents/login/assets/css/style.css">
+    <link id="color" rel="stylesheet" href="~/wp-contents/login/assets/css/color-1.css" media="screen">
+    <!-- Responsive css-->
+    <link rel="stylesheet" type="text/css" href="~/wp-contents/login/assets/css/responsive.css">
+
+</head>
+<body>
+    <!-- Loader starts-->
+    <div class="loader-wrapper">
+        <div class="theme-loader">
+            <div class="loader-p"></div>
         </div>
     </div>
-    </form>
+    <!-- Loader ends-->
+    <!-- page-wrapper Start-->
+    <section>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-7 order-1"><img class="bg-img-cover bg-center" src="~/wp-contents/login/assets/images/login/1.jpg" alt="looginpage"></div>
+                <div class="col-xl-5 p-0">
+                    <div class="login-card">
+                        <form class="theme-form login-form needs-validation" novalidate="" method="post"  asp-controller="Authenticate" asp-action="Login">
 
-</div>
+                            <img src="~/wp-contents/img/logo.png" />
+                            <hr />
+                            <h4>Login</h4>
+
+                            <h6>Welcome back! Log in to your account.</h6>
+                            <div class="form-group">
+                                <label>User Name</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fa fa-user"></i></span>
+                                    <input class="form-control" type="text" required="" name="UserName" placeholder="User Name">
+                                    <div class="invalid-tooltip">Please enter proper User Name.</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fa fa-unlock-alt"></i></span>
+                                    <input class="form-control" type="password" name="password" required="" placeholder="*********">
+                                    <div class="invalid-tooltip">Please enter proper Password.</div>
+                                    <div class="show-hide"><span class="show">                         </span></div>
+                                </div>
+                            </div>
+                            <div class="checkbox m-b-10" style="color:red">
+                                @ViewBag.ErrorMessage
+                            </div>
+                            <div class="form-group">
+                                <div class="checkbox">
+                                </div><a class="link" href="#">Forgot password?</a>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-primary btn-block" type="submit">Sign in</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- page-wrapper end-->
+    <script>
+        (function () {
+            'use strict';
+            window.addEventListener('load', function () {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.getElementsByClassName('needs-validation');
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
+    <!-- latest jquery-->
+    <script src="~/wp-contents/login/assets/js/jquery-3.5.1.min.js"></script>
+    <!-- feather icon js-->
+    <script src="~/wp-contents/login/assets/js/icons/feather-icon/feather.min.js"></script>
+    <script src="~/wp-contents/login/assets/js/icons/feather-icon/feather-icon.js"></script>
+    <!-- Sidebar jquery-->
+    <script src="~/wp-contents/login/assets/js/sidebar-menu.js"></script>
+    <script src="~/wp-contents/login/assets/js/config.js"></script>
+    <!-- Bootstrap js-->
+    <script src="~/wp-contents/login/assets/js/bootstrap/popper.min.js"></script>
+    <script src="~/wp-contents/login/assets/js/bootstrap/bootstrap.min.js"></script>
+    <!-- Plugins JS start-->
+    <!-- Plugins JS Ends-->
+    <!-- Theme js-->
+
+    <script src="~/wp-contents/login/assets/js/script.js"></script>
+    <!-- login js-->
+    <!-- Plugin used-->
+</body>
+</html>
+
+@*<div class="container">
+        <form asp-controller="Authenticate" asp-action="Login">
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label>
+                        User Name
+                    </label>
+                    <input asp-for="UserName" class="form-control" />
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label>
+                        Password
+                    </label>
+                    <input type="Password" asp-for="Password" class="form-control" />
+                </div>
+
+                <div class="form-group col-md-4">
+                    <input type="submit" class="btn btn-primary" />
+                </div>
+            </div>
+        </form>
+
+    </div>*@
