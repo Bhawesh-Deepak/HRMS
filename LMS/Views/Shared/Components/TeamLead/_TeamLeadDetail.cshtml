@@ -1,0 +1,27 @@
+﻿@model IEnumerable<HRMS.Core.Entities.Payroll.EmployeeDetail>
+
+<div class="panel-body table-responsive">
+    <table class="table table-striped" id="data-tables">
+        <thead>
+            <tr>
+                <th>Employee Name</th>
+                <th>Level</th>
+                <th>Total</th>
+                <th>Present</th>
+                <th>Absent</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.EmployeeName</td>
+                    <td>@item.Level</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

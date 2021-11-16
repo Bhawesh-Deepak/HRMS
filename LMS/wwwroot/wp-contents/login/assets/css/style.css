@@ -1,4 +1,4 @@
-﻿@charset "UTF-8";
+@charset "UTF-8";
 /*-----------------------------------------------------------------------------------
     Template Name: viho Admin
     Template URI: themes.pixelstrap.com/viho
@@ -17209,7 +17209,7 @@ footer {
   background-image: url(../images/sidebar-image/5.html); }
 
 .bg-pattern6 {
-  background-image: url(../images/sidebar-pattern/6.png);
+  background-image: url(../images/sidebar-pattern/6.html);
   background-color: #2f3c4e; }
 
 .bg-img6 {
@@ -30948,4 +30948,3 @@ span.twitter-typeahead .tt-suggestion {
     60. RTL CSS Ends
 ==========================**/
 /*# sourceMappingURL=style.css.map */
- 
