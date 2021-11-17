@@ -1,5 +1,9 @@
-﻿using LMS.Helper;
+﻿using HRMS.Core.Entities.LeadManagement;
+using HRMS.Core.ReqRespVm.Response.Leads;
+using HRMS.Services.Repository.GenericRepository;
+using LMS.Helper;
 using LMS.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -13,27 +17,46 @@ namespace LMS.Controllers
     [CustomAuthenticate]
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IGenericRepository<CustomerDetail, int> _ICustomerDetailRepository;
+        private readonly IGenericRepository<CustomerLeadDetail, int> _ICustomerLeadRepository;
+        public HomeController(IGenericRepository<CustomerDetail, int> iCustomerDetailRepository,
+              IGenericRepository<CustomerLeadDetail, int> customerLeadRepo)
         {
-            _logger = logger;
+            _ICustomerDetailRepository = iCustomerDetailRepository;
+            _ICustomerLeadRepository = customerLeadRepo;
         }
-
         public IActionResult Index()
         {
             return View();
         }
-
-        public IActionResult Privacy()
+        public async Task<IActionResult> GetLeadsByDate()
         {
-            return View();
-        }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var CustomerDetailList = await _ICustomerDetailRepository.GetAllEntities(x => x.IsActive && !x.IsDeleted);
+            var CustomerLeadLIst = await _ICustomerLeadRepository.GetAllEntities(x => x.IsActive && !x.IsDeleted);
+            var responseDetails = (from CDList in CustomerDetailList.Entities
+                                   join CLList in CustomerLeadLIst.Entities
+                                   on CDList.Id equals CLList.CustomerId
+                                   where CLList.EmpId == Convert.ToInt32(HttpContext.Session.GetString("empId"))
+                                   select new CustomerDetail
+                                   {
+                                       CustomerName = CDList.CustomerName,
+                                       Address = CDList.Address,
+                                       Phone = CDList.Phone,
+                                       Email = CDList.Email,
+                                       Description = CDList.Description,
+                                       AssignDate = CDList.AssignDate
+                                   }).ToList();
+            var Leads = new List<LeadsDetail>();
+            foreach (var item in responseDetails.GroupBy(x => x.AssignDate))
+            {
+                Leads.Add(new LeadsDetail()
+                {
+                    NoOfLeads = item.Count() + "  Leads",
+                    AssignDate = item.First().AssignDate,
+                });
+            }
+            return Json(Leads);
         }
     }
 }
