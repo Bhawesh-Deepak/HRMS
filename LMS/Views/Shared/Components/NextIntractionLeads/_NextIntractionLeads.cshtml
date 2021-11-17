@@ -1,0 +1,30 @@
+﻿@model IEnumerable<HRMS.Core.ReqRespVm.Response.Leads.NextIntractionLeadsVM>
+
+<div class="panel-body table-responsive">
+    <table class="table table-striped" id="data-tables">
+        <thead>
+            <tr>
+                <th>Customer Name</th>
+                <th>Next Activity Date</th>
+                <th>Next Activity</th>
+                <th>Time</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.CustomerName</td>
+                    <td>@string.Format("{0:dd/MM/yyyy}", item.NextIntractionDate)</td>
+                    <td>@item.NextIntractionActivity</td>
+                    <td>
+                        
+                        @item.NextIntractionTime 
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
