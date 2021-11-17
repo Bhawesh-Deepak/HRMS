@@ -15,7 +15,7 @@ namespace LMS.Controllers.UserManagement
         private readonly IGenericRepository<AuthenticateUser, int> _IAuthenticateRepository;
         private readonly IGenericRepository<EmployeeDetail, int> _IEmployeeDetailRepository;
 
-        public AuthenticateController(IGenericRepository<AuthenticateUser, int> iAuthenticateRepository, 
+        public AuthenticateController(IGenericRepository<AuthenticateUser, int> iAuthenticateRepository,
             IGenericRepository<EmployeeDetail, int> employeeRepository)
         {
             _IAuthenticateRepository = iAuthenticateRepository;
@@ -45,6 +45,17 @@ namespace LMS.Controllers.UserManagement
                 return RedirectToAction("Index", "Home");
             }
             return View("~/Views/Account/Account.cshtml");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> LogOut()
+        {
+            HttpContext.Session.Clear();
+            HttpContext.Session.Remove("empCode");
+            HttpContext.Session.Remove("empId");
+            HttpContext.Session.Remove("empDetails");
+
+            return await Task.Run(() => RedirectToAction("Account", "Authenticate"));
         }
     }
 }

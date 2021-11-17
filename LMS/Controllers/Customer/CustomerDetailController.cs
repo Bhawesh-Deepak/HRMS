@@ -35,7 +35,9 @@ namespace LMS.Controllers.Customer
         {
 
             var CustomerDetailList = await _ICustomerDetailRepository.GetAllEntities(x => x.IsActive && !x.IsDeleted);
+
             var CustomerLeadLIst = await _ICustomerLeadRepository.GetAllEntities(x => x.IsActive && !x.IsDeleted);
+
             var responseDetails = (from CDList in CustomerDetailList.Entities
                                    join CLList in CustomerLeadLIst.Entities
                                    on CDList.Id equals CLList.CustomerId
