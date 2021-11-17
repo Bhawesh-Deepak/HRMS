@@ -38,19 +38,21 @@
                                             <th>Phone</th>
                                             <th>Email</th>
                                             <th>Description</th>
+                                            <th>Assign Date</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach (var item in Model.Select((x, i) => new { Data = x, Index = i + 1 }))
                                         {
-                                            <tr>
-                                                <td>@item.Index</td>
-                                                <td>@item.Data.CustomerName</td>
-                                                <td>@item.Data.Address</td>
-                                                <td>@item.Data.Phone</td>
-                                                <td>@item.Data.Email</td>
-                                                <td>@item.Data.Description</td>
-                                            </tr>
+                                        <tr>
+                                            <td>@item.Index</td>
+                                            <td>@item.Data.CustomerName</td>
+                                            <td>@item.Data.Address</td>
+                                            <td>@item.Data.Phone</td>
+                                            <td>@item.Data.Email</td>
+                                            <td>@item.Data.Description</td>
+                                            <td>@item.Data.AssignDate</td>
+                                        </tr>
                                         }
                                     </tbody>
                                 </table>

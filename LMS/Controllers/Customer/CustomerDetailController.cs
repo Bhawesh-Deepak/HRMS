@@ -31,7 +31,7 @@ namespace LMS.Controllers.Customer
         {
             return View("~/Views/Customer/LeadManagement.cshtml");
         }
-        public async Task<IActionResult> CustomerList()
+        public async Task<IActionResult> CustomerList(DateTime AssignDate)
         {
 
             var CustomerDetailList = await _ICustomerDetailRepository.GetAllEntities(x => x.IsActive && !x.IsDeleted);
@@ -39,14 +39,17 @@ namespace LMS.Controllers.Customer
             var responseDetails = (from CDList in CustomerDetailList.Entities
                                    join CLList in CustomerLeadLIst.Entities
                                    on CDList.Id equals CLList.CustomerId
-                                   where CLList.EmpId == Convert.ToInt32(HttpContext.Session.GetString("empId"))
+                                   where CLList.EmpId == Convert.ToInt32(HttpContext.Session.GetString("empId")) && CDList.AssignDate==AssignDate
                                    select new CustomerDetail
                                    {
                                        CustomerName = CDList.CustomerName,
                                        Address = CDList.Address,
                                        Phone = CDList.Phone,
                                        Email = CDList.Email,
-                                       Description = CDList.Description
+                                       Description = CDList.Description,
+                                       AssignDate=CDList.AssignDate
+                                       
+                                       
                                    }).ToList();
 
             return await Task.Run(() => View(ViewHelper.GetViewPathDetails("Customer", "GetCustomerList"), responseDetails));
