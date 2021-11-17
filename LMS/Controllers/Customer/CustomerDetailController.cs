@@ -2,7 +2,6 @@
 using HRMS.Core.Entities.Payroll;
 using HRMS.Core.Helpers.CommonHelper;
 using HRMS.Core.Helpers.ExcelHelper;
-using HRMS.Core.ReqRespVm.Response.Customer;
 using HRMS.Services.Repository.GenericRepository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
