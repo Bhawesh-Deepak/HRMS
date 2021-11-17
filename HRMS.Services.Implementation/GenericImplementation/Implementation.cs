@@ -113,27 +113,11 @@ namespace HRMS.Services.Implementation.GenericImplementation
         /// </summary>
         /// <param name="items"></param>
         /// <returns></returns>
-        public async Task<GenericResponse<TEntity, T>> DeleteEntity(params TEntity[] items)
-        {
-            try
-            {
-                context.UpdateRange(items);
-                await context.SaveChangesAsync();
-
-                return await Task.Run(() => new GenericResponse<TEntity, T>()
-                 .GetGenericResponse(null, null, "success", default,
-                 ResponseStatus.Deleted));
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException("Db Exception", ex);
-            }
-        }
-
         public async Task<GenericResponse<TEntity, T>> DeleteEntity(TEntity items)
         {
             try
             {
+                
                 context.Update(items);
                 await context.SaveChangesAsync();
 
@@ -146,6 +130,8 @@ namespace HRMS.Services.Implementation.GenericImplementation
                 throw new ApplicationException("Db Exception", ex);
             }
         }
+
+      
 
         /// <summary>
         /// Get All active entity from Data base

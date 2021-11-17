@@ -53,6 +53,7 @@ namespace HRMS.Core.Entities.Common
         public virtual DbSet<AuthenticateUser> AuthenticateUsers { get; set; }
         public virtual DbSet<CustomerDetail> CustomerDetails { get; set; }
         public virtual DbSet<LeadType> LeadTypes { get; set; }
+        public virtual DbSet<CustomerSecondryDetail> CustomerSecondryDetails { get; set; }
 
         #endregion
     }

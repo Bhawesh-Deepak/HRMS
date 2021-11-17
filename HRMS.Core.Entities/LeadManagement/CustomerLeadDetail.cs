@@ -15,5 +15,12 @@ namespace HRMS.Core.Entities.LeadManagement
         public int CustomerId { get; set; }
         public int LeadType { get; set; }
         public string Description { get; set; }
+        public DateTime IntractionDate { get; set; } = DateTime.Now.Date;
+        public TimeSpan IntractionTime { get; set; } = DateTime.Now.TimeOfDay;
+        public string Activity { get; set; } = string.Empty;
+        public DateTime? NextIntractionDate { get; set; }
+        public TimeSpan? NextIntractionTime { get; set; }
+        public string NextIntractionActivity { get; set; }
+        public string Comment { get; set; } = string.Empty;
     }
 }
