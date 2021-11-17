@@ -52,15 +52,16 @@ namespace LMS.Controllers.Customer
             return await Task.Run(() => View(ViewHelper.GetViewPathDetails("Customer", "GetCustomerList"), responseDetails));
         }
         [HttpPost]
-        public async Task<IActionResult> UploadLeadData(IFormFile CustomerData)
+        public async Task<IActionResult> UploadLeadData(DateTime AssignDate, IFormFile CustomerData)
         {
             var data = new ReadLeadData().GetCustomerDetail(CustomerData);
 
             data.ToList().ForEach(x =>
             {
                 x.CreatedBy = Convert.ToInt32(HttpContext.Session.GetString("empId"));
-
+                x.AssignDate = AssignDate;
             });
+          
 
             var response = await _ICustomerDetailRepository.CreateEntities(data.ToArray());
 

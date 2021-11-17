@@ -1,4 +1,5 @@
 ﻿using HRMS.Core.Entities.Common;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HRMS.Core.Entities.LeadManagement
@@ -11,5 +12,6 @@ namespace HRMS.Core.Entities.LeadManagement
         public string Phone { get; set; }
         public string Email { get; set; }
         public string Description { get; set; }
+        public DateTime AssignDate { get; set; }
     }
 }
