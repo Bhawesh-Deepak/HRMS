@@ -1,6 +1,7 @@
 ﻿using HRMS.Core.Entities.LeadManagement;
 using HRMS.Core.Helpers.CommonHelper;
 using HRMS.Services.Repository.GenericRepository;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,30 @@ namespace LMS.Controllers.Customer
         public async Task<IActionResult> CreateLead()
         {
             return await Task.Run(() => PartialView(ViewHelper.GetViewPathDetails("EmployeeLead", "EmployeeLeadCreate")));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PostCreateLead(CustomerDetail model)
+        {
+            model.AssignDate = DateTime.Now;
+            var customerCreateResponse = await _ICustomerDetailRepository.CreateEntity(model);
+
+            var customerId = (await _ICustomerDetailRepository.GetAllEntities(x => x.IsActive && !x.IsDeleted))
+                .Entities.Max(x => x.Id);
+
+            var employeeId = Convert.ToInt32(HttpContext.Session.GetString("empId"));
+
+            var customerLeadDetail = new CustomerLeadDetail() { 
+                CustomerId=customerId,
+                 LeadType=1,
+                 EmpId= employeeId,
+                 CreatedBy= employeeId,
+                 CreatedDate= DateTime.Now
+            };
+
+            var customerLeadResponse = await _ICustomerLeadRepository.CreateEntity(customerLeadDetail);
+
+            return Json(customerLeadResponse.Message);
         }
     }
 }
