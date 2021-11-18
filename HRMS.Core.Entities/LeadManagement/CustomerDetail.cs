@@ -36,5 +36,6 @@ namespace HRMS.Core.Entities.LeadManagement
         public string Website { get; set; }
         [Display(Prompt = "Industry")]
         public string Industry { get; set; }
+        public string AssignedBy { get; set; } = "Supervisor";
     }
 }
