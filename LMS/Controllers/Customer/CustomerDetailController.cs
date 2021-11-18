@@ -4,6 +4,7 @@ using HRMS.Core.Helpers.CommonHelper;
 using HRMS.Core.Helpers.ExcelHelper;
 using HRMS.Core.ReqRespVm.Response.Customer;
 using HRMS.Services.Repository.GenericRepository;
+using LMS.Controllers.CustomAction;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -31,31 +32,23 @@ namespace LMS.Controllers.Customer
         {
             return View("~/Views/Customer/LeadManagement.cshtml");
         }
+
         public async Task<IActionResult> CustomerList(DateTime AssignDate)
         {
-
-            var CustomerDetailList = await _ICustomerDetailRepository.GetAllEntities(x => x.IsActive && !x.IsDeleted);
-
-            var CustomerLeadLIst = await _ICustomerLeadRepository.GetAllEntities(x => x.IsActive && !x.IsDeleted);
-
-            var responseDetails = (from CDList in CustomerDetailList.Entities
-                                   join CLList in CustomerLeadLIst.Entities
-                                   on CDList.Id equals CLList.CustomerId
-                                   where CLList.EmpId == Convert.ToInt32(HttpContext.Session.GetString("empId")) && CDList.AssignDate==AssignDate
-                                   select new CustomerDetail
-                                   {
-                                       CustomerName = CDList.CustomerName,
-                                       Address = CDList.Address,
-                                       Phone = CDList.Phone,
-                                       Email = CDList.Email,
-                                       Description = CDList.Description,
-                                       AssignDate=CDList.AssignDate
-                                       
-                                       
-                                   }).ToList();
+            List<CustomerDetail> responseDetails = await GetCustomerDetaiAsignDateWise(AssignDate);
 
             return await Task.Run(() => View(ViewHelper.GetViewPathDetails("Customer", "GetCustomerList"), responseDetails));
         }
+
+        public async Task<IActionResult> ExportCustomerDetail(DateTime AssignDate) 
+        {
+            List<CustomerDetail> responseDetails = await GetCustomerDetaiAsignDateWise(AssignDate);
+
+            return await new ExcelExportController<CustomerDetail>().Index(responseDetails,$"Lead Details {AssignDate.ToString()}","Lead Detail")
+        }
+
+       
+
         [HttpPost]
         public async Task<IActionResult> UploadLeadData(DateTime AssignDate, IFormFile CustomerData)
         {
@@ -110,6 +103,30 @@ namespace LMS.Controllers.Customer
             });
 
             var response = await _ICustomerLeadRepository.CreateEntities(dbModels.ToArray());
+        }
+
+        private async Task<List<CustomerDetail>> GetCustomerDetaiAsignDateWise(DateTime AssignDate)
+        {
+            var CustomerDetailList = await _ICustomerDetailRepository.GetAllEntities(x => x.IsActive && !x.IsDeleted);
+
+            var CustomerLeadLIst = await _ICustomerLeadRepository.GetAllEntities(x => x.IsActive && !x.IsDeleted);
+
+            var responseDetails = (from CDList in CustomerDetailList.Entities
+                                   join CLList in CustomerLeadLIst.Entities
+                                   on CDList.Id equals CLList.CustomerId
+                                   where CLList.EmpId == Convert.ToInt32(HttpContext.Session.GetString("empId")) && CDList.AssignDate == AssignDate
+                                   select new CustomerDetail
+                                   {
+                                       CustomerName = CDList.CustomerName,
+                                       Address = CDList.Address,
+                                       Phone = CDList.Phone,
+                                       Email = CDList.Email,
+                                       Description = CDList.Description,
+                                       AssignDate = CDList.AssignDate
+
+
+                                   }).ToList();
+            return responseDetails;
         }
     }
 }
