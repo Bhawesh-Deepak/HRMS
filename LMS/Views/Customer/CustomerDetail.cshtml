@@ -241,14 +241,14 @@
         
         if (id == 0) {
             $.get("/CustomerDetail/AddSecondryDetail", { customerId: customerId, phone: phone, emailId: emailId }, function (data) {
-                alert(data);
+                notification("topright", "success", "fa fa-check-circle vd_green", "Success Notification", data);
             }).done(function () {
                 GetSecondryDetails(customerId);
             })
 
         } else {
             $.get("/CustomerDetail/UpdateSecondryDetail", { id: id, phone: phone, emailId: emailId }, function (data) {
-                alert(data);
+                notification("topright", "success", "fa fa-check-circle vd_green", "Success Notification", data);
                 location.reload();
             })
         }
@@ -275,7 +275,8 @@
 
     function Delete(id) {
         $.get("/CustomerDetail/DeleteSecondryDetails", { id: id }, function (data) {
-            alert(data);
+            notification("topright", "success", "fa fa-check-circle vd_green", "Success Notification", data);
+            
         }).done(function () {
             location.reload();
         })

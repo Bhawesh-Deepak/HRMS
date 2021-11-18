@@ -172,7 +172,7 @@ namespace LMS.Controllers.Customer
             updateResponse.Entity.UpdatedBy = Convert.ToInt32(HttpContext.Session.GetString("empId"));
             updateResponse.Entity.UpdatedDate = DateTime.Now;
             updateResponse.Entity.Comment = model.Comment;
-
+            updateResponse.Entity.LeadType = model.LeadType;
             var response = await _ICustomerLeadRepository.UpdateEntity(updateResponse.Entity);
 
             return Json("Customer lead updated successfully !!!");

@@ -5,50 +5,50 @@
     }
 </style>
 <div class="vd_title-section clearfix">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-6">Puran Kumar (5252414)</div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12 text-center">
-            <div class="btn-group mgbt-xs-5">
-                <button type="button" class="btn vd_btn vd_bg-green"><i class="fa fa-calendar"></i></button>
-                <button type="button" class="btn vd_btn vd_bg-red"><i class="fa fa-refresh"></i></button>
-                <button type="button" class="btn vd_btn vd_bg-twitter"><i class="fa fa-info"></i></button>
-                <button type="button" class="btn vd_btn vd_bg-googleplus"><i class="fa fa-map-marker"></i></button>
-                <button type="button" class="btn vd_btn vd_bg-yellow"><i class="fa fa-phone"></i></button>
-            </div>
-        </div>
-    </div>
-    <div class="row vd_bg-blue" style="color:white">
-        <div class="row">
+    @*<div class="row">
             <div class="col-md-12">
-                <div class="col-md-3">Phone Number</div>
-                <div class="col-md-3">Email Id</div>
-                <div class="col-md-3">Assign To</div>
-                <div class="col-md-3">Status</div>
+                <div class="col-md-6">Puran Kumar (5252414)</div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-3">Phone Number</div>
-                <div class="col-md-3">Email Id</div>
-                <div class="col-md-3">Assign To</div>
-                <div class="col-md-3">Status</div>
+            <div class="col-md-12 text-center">Status
+                <div class="btn-group mgbt-xs-5">
+                    <button type="button" class="btn vd_btn vd_bg-green"><i class="fa fa-calendar"></i></button>
+                    <button type="button" class="btn vd_btn vd_bg-red"><i class="fa fa-refresh"></i></button>
+                    <button type="button" class="btn vd_btn vd_bg-twitter"><i class="fa fa-info"></i></button>
+                    <button type="button" class="btn vd_btn vd_bg-googleplus"><i class="fa fa-map-marker"></i></button>
+                    <button type="button" class="btn vd_btn vd_bg-yellow"><i class="fa fa-phone"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="row vd_bg-blue" style="color:white">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-3">Phone Number</div>
+                    <div class="col-md-3">Email Id</div>
+                    <div class="col-md-3">Assign To</div>
+                    <div class="col-md-3">Status</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-3">Phone Number</div>
+                    <div class="col-md-3">Email Id</div>
+                    <div class="col-md-3">Assign To</div>
+                    <div class="col-md-3">Status</div>
 
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-3">Segment</div>
-                <div class="col-md-3">Industry for Project</div>
-                <div class="col-md-3">Project Location</div>
-                <div class="col-md-3">Current Location</div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-3">Segment</div>
+                    <div class="col-md-3">Industry for Project</div>
+                    <div class="col-md-3">Project Location</div>
+                    <div class="col-md-3">Current Location</div>
 
+                </div>
             </div>
-        </div>
-    </div>
+        </div>*@
     <form id="form" method="post" data-ajax="true" data-ajax-method="post" data-ajax-begin="AjaxOnBegin"
           data-ajax-complete="AjaxComplete"
           asp-action="PostCustomerLeadDetail" asp-controller="CustomerDetail" data-ajax-success="Success">
@@ -160,7 +160,7 @@
         $.get("/CustomerDetail/GetLeadTypeJson", function (data) {
             debugger;
             for (let i = 0; i < data.length; i++) {
-                $("#ddlStatus").append('<option value=' + data[i].name + '>' + data[i].name + '</option>');
+                $("#ddlStatus").append('<option value=' + data[i].id + '>' + data[i].name + '</option>');
             }
 
         })
