@@ -2,7 +2,6 @@
 using HRMS.Core.Entities.Payroll;
 using HRMS.Core.Helpers.CommonHelper;
 using HRMS.Core.Helpers.ExcelHelper;
-using HRMS.Core.ReqRespVm.Response.Customer;
 using HRMS.Services.Repository.GenericRepository;
 using LMS.Controllers.CustomAction;
 using Microsoft.AspNetCore.Http;
@@ -19,13 +18,20 @@ namespace LMS.Controllers.Customer
         private readonly IGenericRepository<CustomerDetail, int> _ICustomerDetailRepository;
         private readonly IGenericRepository<EmployeeDetail, int> _IEmployeeDetailRepository;
         private readonly IGenericRepository<CustomerLeadDetail, int> _ICustomerLeadRepository;
+        private readonly IGenericRepository<CustomerSecondryDetail, int> _ICustomerSecondryDetailRepository;
+        private readonly IGenericRepository<LeadType, int> _ILeadTypeRepository;
 
         public CustomerDetailController(IGenericRepository<CustomerDetail, int> iCustomerDetailRepository,
-            IGenericRepository<EmployeeDetail, int> employeeDetailRepo, IGenericRepository<CustomerLeadDetail, int> customerLeadRepo)
+            IGenericRepository<EmployeeDetail, int> employeeDetailRepo,
+            IGenericRepository<CustomerLeadDetail, int> customerLeadRepo,
+            IGenericRepository<CustomerSecondryDetail, int> customerSecondryDetailRepo,
+            IGenericRepository<LeadType, int> leadTypeRepository)
         {
             _ICustomerDetailRepository = iCustomerDetailRepository;
             _IEmployeeDetailRepository = employeeDetailRepo;
             _ICustomerLeadRepository = customerLeadRepo;
+            _ICustomerSecondryDetailRepository = customerSecondryDetailRepo;
+            _ILeadTypeRepository = leadTypeRepository;
         }
 
         public IActionResult Index()
@@ -59,7 +65,7 @@ namespace LMS.Controllers.Customer
                 x.CreatedBy = Convert.ToInt32(HttpContext.Session.GetString("empId"));
                 x.AssignDate = AssignDate;
             });
-          
+
 
             var response = await _ICustomerDetailRepository.CreateEntities(data.ToArray());
 
@@ -67,6 +73,101 @@ namespace LMS.Controllers.Customer
 
             return Json("Customer uploaded !!!");
 
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetCustomerDetail(int custId)
+        {
+            ViewBag.CustomerId = custId;
+            var response = await _ICustomerDetailRepository.GetAllEntityById(x => x.Id == custId);
+            return View(ViewHelper.GetViewPathDetails("Customer", "CustomerDetail"), response.Entity);
+        }
+        [HttpGet]
+        public async Task<IActionResult> AddSecondryDetail(int customerId, string phone, string emailId)
+        {
+            var phoneDetail = new CustomerSecondryDetail()
+            {
+                CustomerId = customerId,
+                Phone = phone,
+                IsActive = true,
+                IsDeleted = false,
+                CreatedBy = 1,
+                Email = emailId,
+                CreatedDate = DateTime.Now
+            };
+            var response = await _ICustomerSecondryDetailRepository.CreateEntity(phoneDetail);
+            return Json("Phone added successfully");
+        }
+        public async Task<IActionResult> GetSecondryDetails(int custId)
+        {
+            var response = await _ICustomerSecondryDetailRepository.GetAllEntities(x => x.CustomerId == custId && x.IsActive && !x.IsDeleted);
+            return PartialView(ViewHelper.GetViewPathDetails("Customer", "CustomerSecondryDetails"), response.Entities);
+        }
+
+        public async Task<IActionResult> UpdateSecondryDetail(int id, string phone, string emailId)
+        {
+            var updateModel = await _ICustomerSecondryDetailRepository.GetAllEntityById(x => x.Id == id);
+            updateModel.Entity.Phone = phone;
+            updateModel.Entity.Email = emailId;
+
+            var response = await _ICustomerSecondryDetailRepository.UpdateEntity(updateModel.Entity);
+            return Json("Phone added successfully");
+        }
+
+        public async Task<IActionResult> GetSecondryDetail(int id)
+        {
+            var response = await _ICustomerSecondryDetailRepository.GetAllEntityById(x => x.Id == id);
+            return Json(response.Entity);
+        }
+        public async Task<IActionResult> DeleteSecondryDetails(int id)
+        {
+            var deleteModel = await _ICustomerSecondryDetailRepository.GetAllEntityById(x => x.Id == id);
+            deleteModel.Entity.IsActive = false;
+            deleteModel.Entity.IsDeleted = true;
+
+            var response = await _ICustomerSecondryDetailRepository.DeleteEntity(deleteModel.Entity);
+
+            return Json("Detail deleted successfully !!!");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateBasicInfo(CustomerDetail model)
+        {
+            model.UpdatedDate = DateTime.Now;
+            model.UpdatedBy = Convert.ToInt32(HttpContext.Session.GetString("empId"));
+            model.CreatedDate = DateTime.Now;
+            var response = await _ICustomerDetailRepository.UpdateEntity(model);
+            return Json(response.Message);
+        }
+
+        public async Task<IActionResult> GetLeadTypeJson()
+        {
+            var response = await _ILeadTypeRepository.GetAllEntities(x => x.IsActive && !x.IsDeleted);
+            return Json(response.Entities);
+        }
+
+        public async Task<IActionResult> GetCustomerLeadDetail(int custId)
+        {
+            var response = await _ICustomerLeadRepository.GetAllEntityById(x => x.CustomerId == custId);
+            return PartialView(ViewHelper.GetViewPathDetails("Customer", "CustomerIntractionPartial"), response.Entity);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PostCustomerLeadDetail(CustomerLeadDetail model)
+        {
+            var updateResponse = await _ICustomerLeadRepository.GetAllEntityById(x => x.Id == model.Id);
+            updateResponse.Entity.IntractionDate = model.IntractionDate;
+            updateResponse.Entity.IntractionTime = model.IntractionTime;
+            updateResponse.Entity.NextIntractionActivity = model.NextIntractionActivity;
+            updateResponse.Entity.Activity = model.Activity;
+            updateResponse.Entity.NextIntractionDate = model.NextIntractionDate;
+            updateResponse.Entity.NextIntractionTime = model.NextIntractionTime;
+            updateResponse.Entity.UpdatedBy = Convert.ToInt32(HttpContext.Session.GetString("empId"));
+            updateResponse.Entity.UpdatedDate = DateTime.Now;
+            updateResponse.Entity.Comment = model.Comment;
+            updateResponse.Entity.LeadType = model.LeadType;
+            var response = await _ICustomerLeadRepository.UpdateEntity(updateResponse.Entity);
+
+            return Json("Customer lead updated successfully !!!");
         }
 
         private async Task LeadDistribution(List<CustomerDetail> model)
@@ -77,12 +178,20 @@ namespace LMS.Controllers.Customer
 
             int perEmpCout = Convert.ToInt32(model?.Count / superVisorEmployees?.Entities.Count());
 
+            int remainingDeals = Convert.ToInt32(model?.Count % superVisorEmployees?.Entities.Count());
+
             IDictionary<int, List<CustomerDetail>> empCustomerMapping = new Dictionary<int, List<CustomerDetail>>();
 
             for (int i = 0; i < superVisorEmployees.Entities.Count(); i++)
             {
                 var takenCount = perEmpCout * i;
                 empCustomerMapping.Add(superVisorEmployees.Entities.ElementAt(i).Id, model.Skip(takenCount).Take(perEmpCout).ToList());
+            }
+
+            if (remainingDeals > 0)
+            {
+                empCustomerMapping.Add(superVisorEmployees.Entities.ElementAt(superVisorEmployees.Entities.Count() - 1).Id,
+                    model.Skip((superVisorEmployees.Entities.Count() - 1)*perEmpCout).Take(remainingDeals).ToList());
             }
 
             var dbModels = new List<CustomerLeadDetail>();

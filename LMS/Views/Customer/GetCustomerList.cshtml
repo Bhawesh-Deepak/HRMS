@@ -46,7 +46,11 @@
                                         {
                                         <tr>
                                             <td>@item.Index</td>
-                                            <td>@item.Data.CustomerName</td>
+                                            <td>
+                                                <a asp-action="GetCustomerDetail" 
+                                                   asp-route-custId="@item.Data.Id"
+                                                   asp-controller="CustomerDetail">@item.Data.CustomerName</a>
+                                            </td>
                                             <td>@item.Data.Address</td>
                                             <td>@item.Data.Phone</td>
                                             <td>@item.Data.Email</td>

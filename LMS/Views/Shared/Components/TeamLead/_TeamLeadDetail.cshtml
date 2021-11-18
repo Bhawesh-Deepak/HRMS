@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HRMS.Core.Entities.Payroll.EmployeeDetail>
+﻿@model IEnumerable<HRMS.Core.ReqRespVm.Response.Leads.LeadsBySupervisorVM>
 
 <div class="panel-body table-responsive">
     <table class="table table-striped" id="data-tables">
@@ -15,11 +15,11 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>@item.EmployeeName</td>
+                    <td>@item.CustomerName</td>
                     <td>@item.Level</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td><a>@item.Leads</a></td>
+                    <td><a>@item.Called</a></td>
+                    <td><a>@item.Pending</a></td>
                 </tr>
             }
         </tbody>

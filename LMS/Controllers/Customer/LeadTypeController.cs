@@ -69,5 +69,6 @@ namespace LMS.Controllers.Customer
             }
             return Json(deleteResponse.Message);
         }
+
     }
 }

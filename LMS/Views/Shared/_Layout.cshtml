@@ -50,7 +50,13 @@
     <script type="text/javascript" src="~/wp-contents/js/mobile-detect.min.js"></script>
     <script type="text/javascript" src="~/wp-contents/js/modernizr.js"></script>
     <script type="text/javascript" src="~/wp-contents/js/mobile-detect-modernizr.js"></script>
+    <script src="~/custom/CountryStateCity.js"></script>
 
+    <script>
+        $(document).ready(function () {
+            GetCountryDetails();
+        });
+    </script>
 
 
 </head>
@@ -64,7 +70,7 @@
                     <div class="vd_top-nav vd_nav-width  ">
                         <div class="vd_panel-header">
                             <div class="logo">
-                                <a href="index.html"><img alt="logo" src="~/images/mainkudo.png" style="max-width:85%"></a>
+                                <a href="/"><img alt="logo" src="~/images/mainkudo.png" style="max-width:85%"></a>
                             </div>
                             <!-- logo -->
                             <div class="vd_panel-menu  hidden-sm hidden-xs" data-intro="<strong>Minimize Left Navigation</strong><br/>Toggle navigation size to medium or small size. You can set both button or one button only. See full option at documentation." data-step=1>
@@ -111,7 +117,7 @@
                                 <div class="vd_mega-menu-wrapper">
                                     <div class="vd_mega-menu pull-right">
                                         <ul class="mega-ul">
-                                            
+
                                             <li id="top-menu-profile" class="profile mega-li">
                                                 <a href="#" class="mega-link" data-action="click-trigger">
                                                     <span class="mega-image">
@@ -127,8 +133,12 @@
                                                             <ul class="list-wrapper pd-lr-10">
                                                                 <li> <a href="#"> <div class="menu-icon"><i class=" fa fa-user"></i></div> <div class="menu-text">Edit Profile</div> </a> </li>
                                                                 <li> <a href="#"> <div class="menu-icon"><i class=" fa fa-trophy"></i></div> <div class="menu-text">My Achievements</div> </a> </li>
-                                                                <li> <a href="#"> <div class="menu-icon"><i class=" fa fa-envelope"></i></div> <div class="menu-text">Current Leads</div>
-                                                                    <div class="menu-badge"><div class="badge vd_bg-red">10</div></div> </a>  </li>
+                                                                <li>
+                                                                    <a href="#">
+                                                                        <div class="menu-icon"><i class=" fa fa-envelope"></i></div> <div class="menu-text">Current Leads</div>
+                                                                        <div class="menu-badge"><div class="badge vd_bg-red">10</div></div>
+                                                                    </a>
+                                                                </li>
                                                                 <li>
                                                                     <a href="#">
                                                                         <div class="menu-icon">
@@ -212,25 +222,25 @@
                                             <li>
                                                 <a href="skin-nav-medium-profile-dark.html">
                                                     <span class="menu-text">My Leads</span>
-                                                    
+
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="skin-nav-medium-profile-dark.html">
+                                                <a  asp-action="Index" asp-controller="LeadCloser">
                                                     <span class="menu-text">Add LCF</span>
-                                                    
+
                                                 </a>
                                             </li>
                                         </ul>
                                     </div>
                                 </li>
-                               
+
 
                             </ul>
                             <!-- Head menu search form ends -->
                         </div>
                     </div>
-                    
+
                 </div>
                 <div class="vd_navbar vd_nav-width vd_navbar-chat vd_bg-black-80 vd_navbar-right   ">
                     <div class="navbar-tabs-menu clearfix">
@@ -440,6 +450,7 @@
     <script type="text/javascript" src='~/wp-contents/plugins/skycons/skycons.js'></script>
     <script type="text/javascript" src="~/wp-contents/plugins/dataTables/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/wp-contents/plugins/dataTables/dataTables.bootstrap.js"></script>
+
     <script type="text/javascript">
         $(document).ready(function () {
             "use strict";
@@ -449,7 +460,7 @@
     </script>
 
 
-    
+
 
 
 </body>
