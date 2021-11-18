@@ -12,86 +12,54 @@
                       data-ajax-complete="AjaxComplete"
                       asp-action="PostCreateLead" asp-controller="EmployeeLead" data-ajax-success="Success">
                     <div class="row">
-                        <div class="col-md-3">
-                            <label class="control-label">Customer Name</label>
+                        <div class="col-md-4">
+                            <label class="control-label">Lead Name</label>
                             <div class="controls">
                                 <input asp-for="Id" type="hidden" />
                                 <input asp-for="CreatedBy" type="hidden" />
                                 <input asp-for="CreatedDate" type="hidden" />
                                 <input type="hidden" asp-for="AssignDate" />
-                                <input type="text" asp-for="CustomerName">
+                                <input type="text" asp-for="LeadName">
+                                <span asp-validation-for="LeadName" class="text-danger"></span>
                             </div>
                         </div>
 
-                        <div class="col-md-3">
-                            <label class="control-label">Address</label>
+                        <div class="col-md-4">
+                            <label class="control-label">Location</label>
                             <div class="controls">
-                                <input type="text" asp-for="Address">
+                                <input type="text" asp-for="Location">
                             </div>
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <label class="control-label">Phone</label>
                             <div class="controls">
                                 <input type="text" asp-for="Phone">
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
 
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <label class="control-label">Email</label>
                             <div class="controls">
                                 <input type="text" asp-for="Email">
                             </div>
                         </div>
 
-                        <div class="col-md-3">
-                            <label class="control-label">Country</label>
+                        <div class="col-md-4">
+                            <label class="control-label">Description/Project</label>
                             <div class="controls">
-                                <input type="text" asp-for="Country">
+                                <input type="text" asp-for="Description_Project">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="control-label">Special Remarks</label>
+                            <div class="controls">
+                                <input type="text" asp-for="SpecialRemarks">
                             </div>
                         </div>
 
-                        <div class="col-md-3">
-                            <label class="control-label">State</label>
-                            <div class="controls">
-                                <input type="text" asp-for="State">
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <label class="control-label">City</label>
-                            <div class="controls">
-                                <input type="text" asp-for="City">
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <label class="control-label">Zip Code</label>
-                            <div class="controls">
-                                <input type="text" asp-for="ZipCode">
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <label class="control-label">Company Name</label>
-                            <div class="controls">
-                                <input type="text" asp-for="CompanyName">
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <label class="control-label">Website</label>
-                            <div class="controls">
-                                <input type="text" asp-for="Website">
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <label class="control-label">Industry</label>
-                            <div class="controls">
-                                <input type="text" asp-for="Industry">
-                            </div>
-                        </div>
 
                     </div>
 

@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<HRMS.Core.ReqRespVm.Response.Leads.NextIntractionLeadsVM>
 
 <div class="panel-body table-responsive">
-    <table class="table table-striped" id="data-tables">
+    <table class="table table-striped" id="data-tables1">
         <thead>
             <tr>
-                <th>Customer Name</th>
+                <th>Lead Name</th>
                 <th>Next Activity Date</th>
                 <th>Next Activity</th>
                 <th>Time</th>
@@ -15,12 +15,14 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>@item.CustomerName</td>
+                    <td>
+                        <a href="#" onclick="GetLeadType(@item.Id)">@item.LeadName</a>
+                    </td>
                     <td>@string.Format("{0:dd/MM/yyyy}", item.NextIntractionDate)</td>
                     <td>@item.NextIntractionActivity</td>
                     <td>
-                        
-                        @item.NextIntractionTime 
+
+                        @item.NextIntractionTime
                     </td>
 
                 </tr>
@@ -28,3 +30,20 @@
         </tbody>
     </table>
 </div>
+<script src="~/js/jquery.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        "use strict";
+        $('#data-tables1').dataTable();
+    });
+</script>
+
+<script>
+    function GetLeadType(custId) {
+        $.get("/CustomerDetail/GetCustomerLeadDetail", { custId: custId }, function (response) {
+            $("#modalTitle").text("Update Activity");
+            $("#divLeadCreate").html(response);
+            $('#myLeadModal').modal({ backdrop: 'static' });
+        });
+    }
+</script>

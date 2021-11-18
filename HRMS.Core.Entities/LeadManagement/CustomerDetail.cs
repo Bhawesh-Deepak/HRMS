@@ -10,6 +10,7 @@ namespace HRMS.Core.Entities.LeadManagement
     public class CustomerDetail:BaseModel<int>
     {
         [Required(ErrorMessage ="Customer name is required.")]
+        [Display(Prompt = "Lead Name")]
         public string LeadName { get; set; }
 
         [Display(Prompt ="Customer Address")]
