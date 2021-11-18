@@ -4,7 +4,7 @@
     <table class="table table-striped" id="data-tables">
         <thead>
             <tr>
-                <th>Customer Name</th>
+                <th>Lead Name</th>
                 <th>Next Activity Date</th>
                 <th>Next Activity</th>
                 <th>Time</th>
@@ -15,7 +15,7 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>@item.CustomerName</td>
+                    <td>@item.LeadName</td>
                     <td>@string.Format("{0:dd/MM/yyyy}", item.NextIntractionDate)</td>
                     <td>@item.NextIntractionActivity</td>
                     <td>

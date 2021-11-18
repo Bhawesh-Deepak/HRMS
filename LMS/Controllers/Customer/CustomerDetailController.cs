@@ -247,13 +247,14 @@ namespace LMS.Controllers.Customer
                                    where CLList.EmpId == Convert.ToInt32(HttpContext.Session.GetString("empId")) && CDList.AssignDate == AssignDate
                                    select new CustomerDetail
                                    {
-                                       CustomerName = CDList.CustomerName,
-                                       Address = CDList.Address,
+                                       LeadName = CDList.LeadName,
+                                       Location = CDList.Location,
                                        Phone = CDList.Phone,
                                        Email = CDList.Email,
-                                       Description = CDList.Description,
-                                       AssignDate = CDList.AssignDate
-
+                                       Description_Project = CDList.Description_Project,
+                                       AssignDate = CDList.AssignDate,
+                                       SpecialRemarks=CDList.SpecialRemarks
+                                       
 
                                    }).ToList();
             return responseDetails;

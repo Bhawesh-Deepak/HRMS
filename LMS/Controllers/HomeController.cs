@@ -44,12 +44,14 @@ namespace LMS.Controllers
                                    where CLList.EmpId == Convert.ToInt32(HttpContext.Session.GetString("empId"))
                                    select new CustomerDetail
                                    {
-                                       CustomerName = CDList.CustomerName,
-                                       Address = CDList.Address,
+                                       LeadName = CDList.LeadName,
+                                       Location = CDList.Location,
                                        Phone = CDList.Phone,
                                        Email = CDList.Email,
-                                       Description = CDList.Description,
+                                       Description_Project = CDList.Description_Project,
                                        AssignDate = CDList.AssignDate
+                                       ,SpecialRemarks=CDList.SpecialRemarks
+
                                    }).ToList();
             var Leads = new List<LeadsDetail>();
             foreach (var item in responseDetails.GroupBy(x => x.AssignDate))

@@ -49,12 +49,12 @@
                                             <td>
                                                 <a asp-action="GetCustomerDetail" 
                                                    asp-route-custId="@item.Data.Id"
-                                                   asp-controller="CustomerDetail">@item.Data.CustomerName</a>
+                                                   asp-controller="CustomerDetail">@item.Data.LeadName</a>
                                             </td>
-                                            <td>@item.Data.Address</td>
+                                            <td>@item.Data.Location</td>
                                             <td>@item.Data.Phone</td>
                                             <td>@item.Data.Email</td>
-                                            <td>@item.Data.Description</td>
+                                            <td>@item.Data.Description_Project</td>
                                             <td>@item.Data.AssignDate</td>
                                         </tr>
                                         }
