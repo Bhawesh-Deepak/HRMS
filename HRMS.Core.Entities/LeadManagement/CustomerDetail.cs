@@ -8,16 +8,17 @@ namespace HRMS.Core.Entities.LeadManagement
     [Table("CustomerDetail", Schema = "LeadManagement")]
     public class CustomerDetail:BaseModel<int>
     {
-        [Required(ErrorMessage ="Customer name is required.")]
+        [Required(ErrorMessage ="Lead name is required.")]
+        [Display(Prompt = "Lead Name")]
         public string CustomerName { get; set; }
 
-        [Display(Prompt ="Customer Address")]
+        [Display(Prompt ="Lead Address")]
         public string Address { get; set; }
 
-        [Display(Prompt = "Customer Phone")]
+        [Display(Prompt = "Lead Phone")]
         public string Phone { get; set; }
 
-        [Display(Prompt = "Customer Email")]
+        [Display(Prompt = "Lead Email")]
         public string Email { get; set; }
 
         [Display(Prompt = "Description")]

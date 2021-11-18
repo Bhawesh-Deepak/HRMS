@@ -8,6 +8,7 @@ namespace HRMS.Core.ReqRespVm.Response.Leads
 {
    public class NextIntractionLeadsVM
     {
+        public int Id { get; set; }
         public string CustomerName { get; set; }
         public DateTime ? NextIntractionDate { get; set; }
         public string NextIntractionActivity { get; set; }
