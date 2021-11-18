@@ -5,14 +5,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HRMS.Core.Entities.LeadManagement
 {
+   
     [Table("CustomerDetail", Schema = "LeadManagement")]
     public class CustomerDetail:BaseModel<int>
     {
         [Required(ErrorMessage ="Customer name is required.")]
-        public string CustomerName { get; set; }
+        public string LeadName { get; set; }
 
         [Display(Prompt ="Customer Address")]
-        public string Address { get; set; }
+        public string Location { get; set; }
 
         [Display(Prompt = "Customer Phone")]
         public string Phone { get; set; }
@@ -21,7 +22,7 @@ namespace HRMS.Core.Entities.LeadManagement
         public string Email { get; set; }
 
         [Display(Prompt = "Description")]
-        public string Description { get; set; }
+        public string Description_Project { get; set; }
         public DateTime AssignDate { get; set; }
         [Display(Prompt = "Country")]
         public string Country { get; set; }
@@ -37,5 +38,7 @@ namespace HRMS.Core.Entities.LeadManagement
         [Display(Prompt = "Industry")]
         public string Industry { get; set; }
         public string AssignedBy { get; set; } = "Supervisor";
+        public string SpecialRemarks { get; set; } = string.Empty;
+        public string EmpCode { get; set; } = string.Empty;
     }
 }

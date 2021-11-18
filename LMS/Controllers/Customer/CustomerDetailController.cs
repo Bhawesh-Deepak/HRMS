@@ -46,14 +46,14 @@ namespace LMS.Controllers.Customer
             return await Task.Run(() => View(ViewHelper.GetViewPathDetails("Customer", "GetCustomerList"), responseDetails));
         }
 
-        public async Task<IActionResult> ExportCustomerDetail(DateTime AssignDate) 
+        public async Task<IActionResult> ExportCustomerDetail(DateTime AssignDate)
         {
             List<CustomerDetail> responseDetails = await GetCustomerDetaiAsignDateWise(AssignDate);
 
-            return await new ExcelExportController<CustomerDetail>().Index(responseDetails,$"Lead Details {AssignDate.ToString()}","Lead Detail")
+            return await new ExcelExportController<CustomerDetail>().Index(responseDetails, $"Lead Details {AssignDate.ToString()}", "Lead Detail");
         }
 
-       
+
 
         [HttpPost]
         public async Task<IActionResult> UploadLeadData(DateTime AssignDate, IFormFile CustomerData)
@@ -70,6 +70,27 @@ namespace LMS.Controllers.Customer
             var response = await _ICustomerDetailRepository.CreateEntities(data.ToArray());
 
             await LeadDistribution(data.ToList());
+
+            return Json("Customer uploaded !!!");
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UploadLeadWithEmpCode(DateTime AssignDate, IFormFile CustomerData)
+        {
+            var data = new ReadLeadData().GetCustomerDetailWithEmpCode(CustomerData);
+
+            data.ToList().ForEach(x =>
+            {
+                x.CreatedBy = Convert.ToInt32(HttpContext.Session.GetString("empId"));
+                x.AssignDate = AssignDate;
+            });
+
+            var response = await _ICustomerDetailRepository.CreateEntities(data.ToArray());
+
+            var empCode = HttpContext.Session.GetString("empCode");
+
+            var dbModels = new List<CustomerLeadDetail>();
 
             return Json("Customer uploaded !!!");
 
@@ -191,7 +212,7 @@ namespace LMS.Controllers.Customer
             if (remainingDeals > 0)
             {
                 empCustomerMapping.Add(superVisorEmployees.Entities.ElementAt(superVisorEmployees.Entities.Count() - 1).Id,
-                    model.Skip((superVisorEmployees.Entities.Count() - 1)*perEmpCout).Take(remainingDeals).ToList());
+                    model.Skip((superVisorEmployees.Entities.Count() - 1) * perEmpCout).Take(remainingDeals).ToList());
             }
 
             var dbModels = new List<CustomerLeadDetail>();
