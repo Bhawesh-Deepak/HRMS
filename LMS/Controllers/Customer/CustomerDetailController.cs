@@ -50,7 +50,7 @@ namespace LMS.Controllers.Customer
         {
             List<CustomerDetail> responseDetails = await GetCustomerDetaiAsignDateWise(AssignDate);
 
-            return await new ExcelExportController<CustomerDetail>().Index(responseDetails, $"Lead Details {AssignDate.ToString()}", "Lead Detail");
+            return await new ExcelExportController<CustomerDetail>().Index(responseDetails, "Lead Details "+DateTime.Now.Date.ToString("dd/MM/yyyy"), "Lead Detail");
         }
 
 

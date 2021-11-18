@@ -1,4 +1,6 @@
-﻿
+﻿@{
+    ViewData["Title"] = "Leads";
+}
 
 <div class="vd_content-wrapper">
     <div class="vd_container">
@@ -7,8 +9,8 @@
                 <div class="vd_panel-header">
                     <ul class="breadcrumb">
                         <li><a href="/">Home</a> </li>
-                        <li class="">Master</li>
-                        <li class="active">Customer Details</li>
+                        <li class="active">Leas Allocation</li>
+
                     </ul>
                 </div>
             </div>
@@ -17,7 +19,7 @@
                     <div class="col-md-12">
                         <div class="panel vd_map-widget widget">
                             <div class="panel-heading vd_bg-green">
-                                <h3 class="panel-title"> <span class="menu-icon"> <i class="glyphicon glyphicon-user"></i> </span> <span class="menu-text" >Customer Master</span> </h3>
+                                <h3 class="panel-title"> <span class="menu-icon"> <i class="glyphicon glyphicon-user"></i> </span> <span class="menu-text">Leads Import</span> </h3>
                                 <div class="vd_panel-menu">
                                     <div data-action="minimize" data-original-title="Minimize" data-toggle="tooltip" data-placement="bottom" class=" menu entypo-icon"> <i class="icon-minus3"></i> </div>
 
@@ -36,24 +38,25 @@
                                                 <div class="panel-heading-btn">
 
                                                 </div>
-                                                <h4 class="panel-title"  style="color:black"> <span class="fa fa-cloud-upload" style="color:orange;padding-right: 4px;font-size: 20px;"></span>  Customer Master Import</h4>
+                                                <h4 class="panel-title" style="color:black"> <span class="fa fa-cloud-upload" style="color:orange;padding-right: 4px;font-size: 20px;"></span>  Lead Upload Auto </h4>
                                             </div>
                                             <div class="panel-body">
-                                                <form asp-action="UploadLeadData"  asp-controller="CustomerDetail" enctype="multipart/form-data">
+                                                <form asp-action="UploadLeadData" asp-controller="CustomerDetail" enctype="multipart/form-data">
                                                     <div class="row">
                                                         <div class="col-md-12 controls">
                                                             <label>Date :</label><em class="text-danger">*</em>
-                                                            <input type="date" id="AssignDate" required="" name="AssignDate"   class="input-sm">
+                                                            <input type="date" id="AssignDate" required="" name="AssignDate" class="input-sm">
                                                         </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-md-12 controls">
                                                             <label>Browse   File :</label><em class="text-danger">*</em>
-                                                            <input type="file" id="CustomerData" required="" name="CustomerData" class="input-sm" onchange="checkemployeefile(this);"  >
+                                                            <input type="file" id="CustomerData" required="" name="CustomerData" class="input-sm" onchange="checkemployeefile(this);">
                                                         </div>
                                                     </div>
                                                     <div class="row text-right">
                                                         <div class="col-md-12 ">
+                                                            <a href="~/Documents/Leadallocationauto.xlsx" download="" class="btn vd_btn vd_btn-bevel vd_bg-green font-semibold pull-left" style="margin-top:-5px"><i class="fa fa-file-excel-o"></i> Download Templete </a>
                                                             <button type="submit" class="btn vd_btn vd_btn-bevel vd_bg-green font-semibold"> <i class="fa fa-upload"></i>  Upload </button>
                                                         </div>
                                                     </div>
@@ -68,34 +71,64 @@
                                             <div class="panel-heading ui-sortable-handle">
 
                                                 <h4 class="panel-title" style="color:black">
-                                                    <span class="fa fa-info-circle" style="color:orange;padding-right: 4px;font-size: 20px;"></span>  Instructions
-                                                   
+                                                    <span class="fa fa-cloud-upload" style="color:orange;padding-right: 4px;font-size: 20px;"></span>  Lead Upload Manual
+
                                                 </h4>
-                                               
+
                                             </div>
                                             <div class="panel-body">
-                                                <div class="panel panel-white border-left-xlg  border-left-info">
-
-                                                    <div class="panel-body">
-                                                        <p><span style="font-size: 14px; color: #cc0000;padding-right: 4px;">*</span>Download the excel template from the above link.</p>
-                                                        <p><span style="font-size: 14px; color: #cc0000;padding-right: 4px;">*</span>Please make sure all the mandatory fields have values in the excel.</p>
-                                                        <p><span style="font-size: 14px; color: #cc0000;padding-right: 4px;">*</span>All the date format should be in yyyy-mm-dd(ex:2019-10-20).</p>
-                                                        <a href="~/Documents/CustomerDetails.xlsx" download="" class="btn vd_btn vd_btn-bevel vd_bg-green font-semibold pu" style="margin-top:-5px"><i class="fa fa-file-excel-o"></i> Download Excel </a>
-
+                                                <form asp-action="UploadLeadData" asp-controller="CustomerDetail" enctype="multipart/form-data">
+                                                    <div class="row">
+                                                        <div class="col-md-12 controls">
+                                                            <label>Date :</label><em class="text-danger">*</em>
+                                                            <input type="date" id="AssignDate" required="" name="AssignDate" class="input-sm">
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12 controls">
+                                                            <label>Browse   File :</label><em class="text-danger">*</em>
+                                                            <input type="file" id="CustomerData" required="" name="CustomerData" class="input-sm" onchange="checkemployeefile(this);">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row text-right">
+                                                        <div class="col-md-12 ">
+                                                            <a href="~/Documents/Leadallocationmanual.xlsx" download="" class="btn vd_btn vd_btn-bevel vd_bg-green font-semibold pull-left" style="margin-top:-5px"><i class="fa fa-file-excel-o"></i> Download Templete </a>
+                                                            <button type="submit" class="btn vd_btn vd_btn-bevel vd_bg-green font-semibold"> <i class="fa fa-upload"></i>  Upload </button>
+                                                        </div>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                 
+
                             </div>
                         </div>
                         <!-- Panel Widget -->
                     </div>
 
                 </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel vd_map-widget widget">
+                            <div class="panel-heading vd_bg-yellow">
+                                <h3 class="panel-title"> <span class="menu-icon"> <i class="glyphicon glyphicon-user"></i> </span> <span class="menu-text">Create Self Leads</span> </h3>
+                                <div class="vd_panel-menu">
+                                    <div data-action="minimize" data-original-title="Minimize" data-toggle="tooltip" data-placement="bottom" class=" menu entypo-icon"> <i class="icon-minus3"></i> </div>
 
+                                    <div data-action="close" data-original-title="Close" data-toggle="tooltip" data-placement="bottom" class=" menu entypo-icon"> <i class="icon-cross"></i> </div>
+                                </div>
+                                <!-- vd_panel-menu -->
+                            </div>
+                            <div class="panel-body" id="divLeads">
+
+
+                            </div>
+                        </div>
+                        <!-- Panel Widget -->
+                    </div>
+
+                </div>
 
             </div>
             <!-- .vd_content-section -->
@@ -105,3 +138,13 @@
     </div>
     <!-- .vd_container -->
 </div>
+
+<script>
+    $(document).ready(function () {
+
+        $.get("/EmployeeLead/CreateLead", {}, function (response) {
+            $("#divLeads").html(response);
+
+        });
+    });
+</script>

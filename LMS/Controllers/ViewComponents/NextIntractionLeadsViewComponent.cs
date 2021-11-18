@@ -29,7 +29,7 @@ namespace LMS.Controllers.ViewComponents
                                    on CDList.Id equals next.CustomerId
                                    select new NextIntractionLeadsVM
                                    {
-
+                                       Id=CDList.Id,
                                        LeadName = CDList.LeadName,
                                        NextIntractionDate =   next.NextIntractionDate,
                                        NextIntractionActivity = next.NextIntractionActivity,

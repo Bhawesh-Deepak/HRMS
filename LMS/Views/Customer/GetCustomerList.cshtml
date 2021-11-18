@@ -12,13 +12,13 @@
                     <ul class="breadcrumb">
                         <li><a href="/">Home</a> </li>
                         <li><a href="#">Master</a> </li>
-                        <li class="active">Customer List</li>
+                        <li class="active">Lead List</li>
                     </ul>
                 </div>
             </div>
             <div class="vd_title-section clearfix">
                 <div class="vd_panel-header">
-                    <h1>Customer List</h1>
+                    <h1>Lead List</h1>
                 </div>
             </div>
             <div class="vd_content-section clearfix">
@@ -26,18 +26,25 @@
                     <div class="col-md-12">
                         <div class="panel widget">
                             <div class="panel-heading vd_bg-green">
-                                <h3 class="panel-title"> <span class="menu-icon"> <i class="fa fa-table"></i> </span> Customer List</h3>
+                                <h3 class="panel-title"> <span class="menu-icon"> <i class="fa fa-table"></i> </span> Lead List</h3>
+                                <form asp-action="ExportCustomerDetail" asp-controller="CustomerDetail" method="get">
+                                    <div class="vd_panel-menu">
+                                        <input type="date" name="AssignDate" id="AssignDate" class="menu entypo-icon smaller-font" style="width:75%;margin-right:10px;color:black" value="@Model.First().AssignDate.ToString("yyyy-MM-dd")" />
+                                        <button type="submit" class="menu entypo-icon smaller-font vd_bg-yellow" title="Export Excel"><i class="fa fa-download"></i></button>
+                                    </div>
+                                </form>
                             </div>
                             <div class="panel-body table-responsive">
                                 <table class="table table-striped" id="data-tables">
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>CustomerName</th>
+                                            <th>Leads Name</th>
                                             <th>Address</th>
                                             <th>Phone</th>
                                             <th>Email</th>
-                                            <th>Description</th>
+                                            <th>Description/Project</th>
+                                            <th>Special Remarks</th>
                                             <th>Assign Date</th>
                                         </tr>
                                     </thead>
@@ -47,15 +54,14 @@
                                         <tr>
                                             <td>@item.Index</td>
                                             <td>
-                                                <a asp-action="GetCustomerDetail" 
-                                                   asp-route-custId="@item.Data.Id"
-                                                   asp-controller="CustomerDetail">@item.Data.LeadName</a>
+                                                <a href="#" onclick="GetLeadType(@item.Data.Id)">@item.Data.LeadName</a>
                                             </td>
                                             <td>@item.Data.Location</td>
                                             <td>@item.Data.Phone</td>
                                             <td>@item.Data.Email</td>
                                             <td>@item.Data.Description_Project</td>
-                                            <td>@item.Data.AssignDate</td>
+                                            <td>@item.Data.SpecialRemarks</td>
+                                            <td>@string.Format("{0:dd/MM/yyyy}", item.Data.AssignDate)</td>
                                         </tr>
                                         }
                                     </tbody>
@@ -76,3 +82,13 @@
     </div>
     <!-- .vd_container -->
 </div>
+ 
+<script>
+    function GetLeadType(custId) {
+        $.get("/CustomerDetail/GetCustomerLeadDetail", { custId: custId }, function (response) {
+            $("#modalTitle").text("Update Activity");
+            $("#divLeadCreate").html(response);
+            $('#myLeadModal').modal({ backdrop: 'static' });
+        });
+    }
+</script>
