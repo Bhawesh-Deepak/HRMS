@@ -58,7 +58,7 @@
                                     <li id="top-menu-profile" class="profile mega-li">
                                         <a href="#" class="mega-link" data-action="click-trigger">
                                             <span class="mega-image">
-                                                <img src="~/wp-contents/img/avatar/avatar.jpg" alt="example image" />
+                                                <img src="~/img/avatar/AvtarImage.jpg" alt="example image" />
                                             </span>
                                             <span class="mega-name">
                                                 @Model.EmployeeName <i class="fa fa-caret-down fa-fw"></i>
@@ -68,29 +68,7 @@
                                             <div class="child-menu">
                                                 <div class="content-list content-menu">
                                                     <ul class="list-wrapper pd-lr-10">
-                                                        <li> <a href="#"> <div class="menu-icon"><i class=" fa fa-user"></i></div> <div class="menu-text">Edit Profile</div> </a> </li>
-                                                        <li> <a href="#"> <div class="menu-icon"><i class=" fa fa-trophy"></i></div> <div class="menu-text">My Achievements</div> </a> </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <div class="menu-icon"><i class=" fa fa-envelope"></i></div> <div class="menu-text">Current Leads</div>
-                                                                <div class="menu-badge"><div class="badge vd_bg-red">10</div></div>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <div class="menu-icon">
-                                                                    <i class=" fa fa-tasks"></i>
-                                                                </div> <div class="menu-text"> Tasks</div><div class="menu-badge"><div class="badge vd_bg-red">5</div></div>
-                                                            </a>
-                                                        </li>
-                                                        <li class="line"></li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <div class="menu-icon">
-                                                                    <i class=" fa fa-lock"></i>
-                                                                </div> <div class="menu-text">Privacy</div>
-                                                            </a>
-                                                        </li>
+                                                        <li> <a asp-controller="EmployeeProfile" asp-action="Index"> <div class="menu-icon"><i class=" fa fa-user"></i></div> <div class="menu-text">Profile</div> </a> </li>
                                                         <li> <a href="#"> <div class="menu-icon"><i class="  fa fa-key"></i></div> <div class="menu-text">Lock</div> </a> </li>
                                                         <li> <a asp-action="LogOut" asp-controller="Authenticate"> <div class="menu-icon"><i class=" fa fa-sign-out"></i></div>  <div class="menu-text">Sign Out</div> </a> </li>
                                                     </ul>

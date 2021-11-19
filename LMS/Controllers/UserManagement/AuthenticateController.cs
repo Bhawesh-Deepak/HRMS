@@ -57,5 +57,10 @@ namespace LMS.Controllers.UserManagement
 
             return await Task.Run(() => RedirectToAction("Account", "Authenticate"));
         }
+
+        //public async Task<IActionResult> Lock()
+        //{
+            
+        //}
     }
 }

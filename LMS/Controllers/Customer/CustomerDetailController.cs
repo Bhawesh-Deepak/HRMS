@@ -1,4 +1,5 @@
 ﻿using ClosedXML.Excel;
+using HRMS.Core.Entities.Common;
 using HRMS.Core.Entities.LeadManagement;
 using HRMS.Core.Entities.Payroll;
 using HRMS.Core.Helpers.CommonHelper;
@@ -92,11 +93,14 @@ namespace LMS.Controllers.Customer
 
                 var response = await _ICustomerDetailRepository.CreateEntities(data.ToArray());
 
-                throw new Exception();
+                if (response.ResponseStatus == ResponseStatus.Success)
+                {
+                    await LeadDistribution(data.ToList());
 
-                await LeadDistribution(data.ToList());
+                    return Json("Customer uploaded !!!");
+                }
 
-                return Json("Customer uploaded !!!");
+                return RedirectToAction("Error", "Home");
             }
             catch (Exception ex)
             {
@@ -117,11 +121,45 @@ namespace LMS.Controllers.Customer
 
             var response = await _ICustomerDetailRepository.CreateEntities(data.ToArray());
 
-            var empCode = HttpContext.Session.GetString("empCode");
+            if (response.ResponseStatus == ResponseStatus.Success)
+            {
 
-            var dbModels = new List<CustomerLeadDetail>();
+                var empDetails = await _IEmployeeDetailRepository.GetAllEntities(x => x.IsActive && !x.IsDeleted);
 
-            return Json("Customer uploaded !!!");
+                var customerDetails = await _ICustomerDetailRepository.GetAllEntities(x => x.IsActive && !x.IsDeleted);
+
+                var dbModels = new List<CustomerLeadDetail>();
+
+                data.ToList().ForEach(item =>
+                {
+                    var customer = customerDetails.Entities.FirstOrDefault(x => x.LeadName == item.LeadName
+                     && x.Email == item.Email && x.Phone == item.Phone && x.Location == item.Location);
+
+                    var empData = empDetails.Entities.FirstOrDefault(x => x.EmpCode.ToLowerInvariant().Trim()
+                                         == item.EmpCode.ToLowerInvariant().Trim());
+
+                    var custLeadModel = new CustomerLeadDetail()
+                    {
+                        Activity = string.Empty,
+                        Comment = string.Empty,
+                        EmpId = empData.Id,
+                        CustomerId = customer.Id,
+                        LeadType = 0,
+                        Description = string.Empty,
+                        NextIntractionActivity= string.Empty
+                    };
+
+                    dbModels.Add(custLeadModel);
+
+                });
+
+                var dbResponse = await _ICustomerLeadRepository.CreateEntities(dbModels.ToArray());
+
+                return Json("Customer uploaded !!!");
+            }
+
+            return RedirectToAction("Error", "Home");
+
 
         }
         [HttpGet]
