@@ -1,4 +1,5 @@
-﻿using HRMS.Core.Entities.LeadManagement;
+﻿using ClosedXML.Excel;
+using HRMS.Core.Entities.LeadManagement;
 using HRMS.Core.Entities.Payroll;
 using HRMS.Core.Helpers.CommonHelper;
 using HRMS.Core.Helpers.ExcelHelper;
@@ -8,6 +9,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -50,7 +53,55 @@ namespace LMS.Controllers.Customer
         {
             List<CustomerDetail> responseDetails = await GetCustomerDetaiAsignDateWise(AssignDate);
 
-            return await new ExcelExportController<CustomerDetail>().Index(responseDetails, "Lead Details "+DateTime.Now.Date.ToString("dd/MM/yyyy"), "Lead Detail");
+            DataTable dt = new DataTable("LeadDetails");
+            dt.Columns.AddRange(new DataColumn[6] {
+                    new DataColumn("LeadName"),
+                    new DataColumn("Location"),
+                    new DataColumn("Phone"),
+                    new DataColumn("Email"),
+                    new DataColumn("Description_Project"),
+                    new DataColumn("AssignDate"),
+            });
+
+            foreach (var data in responseDetails)
+            {
+                dt.Rows.Add(data.LeadName, data.Location, data.Phone, data.Email, data.Description_Project, data.AssignDate.ToString());
+            }
+
+            using XLWorkbook wb = new XLWorkbook();
+            wb.Worksheets.Add(dt);
+            using MemoryStream stream = new MemoryStream();
+            wb.SaveAs(stream);
+            return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Customer Lead Details");
+
+
+            //var currentRow = 1;
+            //worksheet.Cell(currentRow, 1).Value = "LeadName";
+            //worksheet.Cell(currentRow, 2).Value = "Location";
+            //worksheet.Cell(currentRow, 3).Value = "Phone";
+            //worksheet.Cell(currentRow, 4).Value = "Email";
+            //worksheet.Cell(currentRow, 5).Value = "Description/Project";
+            //worksheet.Cell(currentRow, 6).Value = "AssignDate";
+
+            //for (int i = 0; i < dt.Rows.Count; i++)
+            //{
+            //    currentRow++;
+            //    worksheet.Cell(currentRow, 1).Value = dt.Rows[i]["LeadName"];
+            //    worksheet.Cell(currentRow, 2).Value = dt.Rows[i]["Location"];
+            //    worksheet.Cell(currentRow, 3).Value = dt.Rows[i]["Phone"];
+            //    worksheet.Cell(currentRow, 4).Value = dt.Rows[i]["Email"];
+            //    worksheet.Cell(currentRow, 4).Value = dt.Rows[i]["Description_Project"];
+            //    worksheet.Cell(currentRow, 4).Value = dt.Rows[i]["AssignDate"];
+            //}
+            //using var stream = new MemoryStream();
+            //workbook.SaveAs(stream);
+            //var content = stream.ToArray();
+            //Response.Clear();
+            //Response.Headers.Add("content-disposition", "attachment;filename=ProductDetails.xls");
+            //Response.ContentType = "application/xls";
+            //return await Task.Run(() => Response.Body.WriteAsync(content));
+            //Response.Body.Flush();
+
         }
 
 
@@ -191,6 +242,8 @@ namespace LMS.Controllers.Customer
             return Json("Customer lead updated successfully !!!");
         }
 
+        
+
         private async Task LeadDistribution(List<CustomerDetail> model)
         {
             var empCode = HttpContext.Session.GetString("empCode");
@@ -253,8 +306,8 @@ namespace LMS.Controllers.Customer
                                        Email = CDList.Email,
                                        Description_Project = CDList.Description_Project,
                                        AssignDate = CDList.AssignDate,
-                                       SpecialRemarks=CDList.SpecialRemarks
-                                       
+                                       SpecialRemarks = CDList.SpecialRemarks
+
 
                                    }).ToList();
             return responseDetails;

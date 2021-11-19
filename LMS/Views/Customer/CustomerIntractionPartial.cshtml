@@ -14,7 +14,7 @@
                         <input asp-for="Id" type="hidden" />
                         <input asp-for="CreatedBy" type="hidden" />
                         <input asp-for="CreatedDate" type="hidden" />
-                        <select class="input-sm" asp-for="LeadType" id="ddlStatus">
+                        <select class="input-sm" asp-for="LeadType" id="ddlStatus" onchange="CheckLeadType()">
                             <option>----Select----</option>
                         </select>
                     </div>
@@ -104,5 +104,12 @@
             }
 
         })
+    }
+
+    function CheckLeadType() {
+        var id = $("#ddlStatus").val();
+        var text = $("#ddlStatus:selected").text();
+        location.href = "/CustomerLead/Index?customerId=" + id;
+        debugger;
     }
 </script>
