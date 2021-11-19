@@ -9,20 +9,20 @@ namespace HRMS.Core.Entities.LeadManagement
     [Table("CustomerDetail", Schema = "LeadManagement")]
     public class CustomerDetail:BaseModel<int>
     {
-        [Required(ErrorMessage ="Customer name is required.")]
+        [Required(ErrorMessage ="Lead name is required.")]
         [Display(Prompt = "Lead Name")]
         public string LeadName { get; set; }
 
-        [Display(Prompt ="Customer Address")]
+        [Display(Prompt ="Lead Location")]
         public string Location { get; set; }
 
-        [Display(Prompt = "Customer Phone")]
+        [Display(Prompt = "Lead Phone")]
         public string Phone { get; set; }
 
-        [Display(Prompt = "Customer Email")]
+        [Display(Prompt = "Lead Email")]
         public string Email { get; set; }
 
-        [Display(Prompt = "Description")]
+        [Display(Prompt = "Description/Project")]
         public string Description_Project { get; set; }
         public DateTime AssignDate { get; set; }
         [Display(Prompt = "Country")]
@@ -39,6 +39,7 @@ namespace HRMS.Core.Entities.LeadManagement
         [Display(Prompt = "Industry")]
         public string Industry { get; set; }
         public string AssignedBy { get; set; } = "Supervisor";
+        [Display(Prompt = "Special Remarks")]
         public string SpecialRemarks { get; set; } = string.Empty;
         public string EmpCode { get; set; } = string.Empty;
     }

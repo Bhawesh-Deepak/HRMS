@@ -93,7 +93,7 @@ namespace LMS.Controllers.Customer
 
                 var response = await _ICustomerDetailRepository.CreateEntities(data.ToArray());
 
-                throw new Exception();
+                //throw new Exception();
 
                 await LeadDistribution(data.ToList());
 
