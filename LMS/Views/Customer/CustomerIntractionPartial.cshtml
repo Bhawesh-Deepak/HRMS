@@ -2,6 +2,7 @@
 <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
 <link href="~/css/site.css" rel="stylesheet" />
+
 <form id="form" method="post" data-ajax="true" data-ajax-method="post" data-ajax-begin="AjaxOnBegin"
       data-ajax-complete="AjaxComplete"
       asp-action="PostCustomerLeadDetail" asp-controller="CustomerDetail" data-ajax-success="Success">
@@ -89,24 +90,31 @@
         <button id=btnUpdate type="submit" class="btn vd_btn vd_btn-bevel vd_bg-green font-semibold"><i class="fa fa-calendar"></i> Update Activity</button>
     </div>
 </form>
-
+ 
 <script type="text/javascript">
     $(document).ready(function () {
         GetLeadType();
     })
     function GetLeadType() {
+        $("#ddlStatus option").remove();
+        $('#ddlStatus').val(0);
         $.get("/CustomerDetail/GetLeadTypeJson", function (data) {
+            $("#ddlStatus").append("<option value=''>----Select----</option>");
             for (let i = 0; i < data.length; i++) {
                 $("#ddlStatus").append('<option value=' + data[i].id + '>' + data[i].name + '</option>');
             }
-
-        })
+        });
     }
 
     function CheckLeadType() {
         var id = $("#ddlStatus").val();
-        var text = $("#ddlStatus:selected").text();
-        location.href = "/CustomerLead/Index?customerId=" + id;
-        debugger;
+        if (id == 1004) {
+            if (confirm("Are you sure you want to do this?")) {
+                location.href = "/CustomerLead/Index?customerId=" + @Model.Id;
+            }
+            else {
+                GetLeadType();
+            }
+        }
     }
 </script>

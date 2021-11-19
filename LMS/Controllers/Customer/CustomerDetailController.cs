@@ -55,18 +55,19 @@ namespace LMS.Controllers.Customer
             List<CustomerDetail> responseDetails = await GetCustomerDetaiAsignDateWise(AssignDate);
 
             DataTable dt = new DataTable("LeadDetails");
-            dt.Columns.AddRange(new DataColumn[6] {
+            dt.Columns.AddRange(new DataColumn[7] {
                     new DataColumn("LeadName"),
                     new DataColumn("Location"),
                     new DataColumn("Phone"),
                     new DataColumn("Email"),
-                    new DataColumn("Description_Project"),
+                    new DataColumn("Description/Project"),
+                    new DataColumn("Special Remarks"),
                     new DataColumn("AssignDate"),
             });
 
             foreach (var data in responseDetails)
             {
-                dt.Rows.Add(data.LeadName, data.Location, data.Phone, data.Email, data.Description_Project, data.AssignDate.ToString());
+                dt.Rows.Add(data.LeadName, data.Location, data.Phone, data.Email, data.Description_Project, data.SpecialRemarks, data.AssignDate.ToString("dd/MM/yyyy"));
             }
 
             using XLWorkbook wb = new XLWorkbook();
@@ -243,7 +244,7 @@ namespace LMS.Controllers.Customer
         public async Task<IActionResult> PostCustomerLeadDetail(CustomerLeadDetail model)
         {
             var updateResponse = await _ICustomerLeadRepository.GetAllEntityById(x => x.Id == model.Id);
-            updateResponse.Entity.IntractionDate = model.IntractionDate;
+            updateResponse.Entity.IntractionDate = Convert.ToDateTime(model.IntractionDate);
             updateResponse.Entity.IntractionTime = model.IntractionTime;
             updateResponse.Entity.NextIntractionActivity = model.NextIntractionActivity;
             updateResponse.Entity.Activity = model.Activity;
@@ -336,6 +337,7 @@ namespace LMS.Controllers.Customer
                                    where CLList.EmpId == Convert.ToInt32(HttpContext.Session.GetString("empId")) && CDList.AssignDate == AssignDate
                                    select new CustomerDetail
                                    {
+                                       Id = CDList.Id,
                                        LeadName = CDList.LeadName,
                                        Location = CDList.Location,
                                        Phone = CDList.Phone,

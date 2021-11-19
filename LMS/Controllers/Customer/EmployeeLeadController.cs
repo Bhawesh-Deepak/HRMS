@@ -36,12 +36,9 @@ namespace LMS.Controllers.Customer
         {
             model.AssignDate = DateTime.Now;
             var customerCreateResponse = await _ICustomerDetailRepository.CreateEntity(model);
-
             var customerId = (await _ICustomerDetailRepository.GetAllEntities(x => x.IsActive && !x.IsDeleted))
                 .Entities.Max(x => x.Id);
-
             var employeeId = Convert.ToInt32(HttpContext.Session.GetString("empId"));
-
             var customerLeadDetail = new CustomerLeadDetail() { 
                 CustomerId=customerId,
                  LeadType=1,
