@@ -72,7 +72,7 @@ namespace LMS.Controllers.Customer
             wb.Worksheets.Add(dt);
             using MemoryStream stream = new MemoryStream();
             wb.SaveAs(stream);
-            return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Customer Lead Details");
+            return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "CustomerLeadDetails.xlsx");
 
 
             //var currentRow = 1;
