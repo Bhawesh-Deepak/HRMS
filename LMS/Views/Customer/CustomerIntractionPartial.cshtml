@@ -15,7 +15,7 @@
                         <input asp-for="CreatedBy" type="hidden" />
                         <input asp-for="CreatedDate" type="hidden" />
                         <select class="input-sm" asp-for="LeadType" id="ddlStatus" onchange="CheckLeadType()">
-                            <option>----Select----</option>
+                            <option value="">----Select----</option>
                         </select>
                     </div>
                 </div>
@@ -90,8 +90,6 @@
         <button type="submit" class="btn vd_btn vd_btn-bevel vd_bg-green font-semibold"><i class="fa fa-calendar"></i> Update Activity</button>
     </div>
 </form>
-
-
 
 <script type="text/javascript">
     $(document).ready(function () {

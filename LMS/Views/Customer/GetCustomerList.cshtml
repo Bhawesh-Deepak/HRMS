@@ -52,18 +52,18 @@
                                     <tbody>
                                         @foreach (var item in Model.Select((x, i) => new { Data = x, Index = i + 1 }))
                                         {
-                                        <tr>
-                                            <td>@item.Index</td>
-                                            <td>
-                                                <a href="#" onclick="GetLeadType(@item.Data.Id)">@item.Data.LeadName</a>
-                                            </td>
-                                            <td>@item.Data.Location</td>
-                                            <td>@item.Data.Phone</td>
-                                            <td>@item.Data.Email</td>
-                                            <td>@item.Data.Description_Project</td>
-                                            <td>@item.Data.SpecialRemarks</td>
-                                            <td>@string.Format("{0:dd/MM/yyyy}", item.Data.AssignDate)</td>
-                                        </tr>
+                                            <tr>
+                                                <td>@item.Index</td>
+                                                <td>
+                                                    <a href="#" onclick="GetLeadType(@item.Data.Id)">@item.Data.LeadName</a>
+                                                </td>
+                                                <td>@item.Data.Location</td>
+                                                <td>@item.Data.Phone</td>
+                                                <td>@item.Data.Email</td>
+                                                <td>@item.Data.Description_Project</td>
+                                                <td>@item.Data.SpecialRemarks</td>
+                                                <td>@string.Format("{0:dd/MM/yyyy}", item.Data.AssignDate)</td>
+                                            </tr>
                                         }
                                     </tbody>
                                 </table>
@@ -83,7 +83,9 @@
     </div>
     <!-- .vd_container -->
 </div>
- 
+
+<script src="~/js/jquery.js"></script>
+<script src="~/CustomJavaScript/CustomJs.js"></script>
 <script>
     function GetLeadType(custId) {
         $.get("/CustomerDetail/GetCustomerLeadDetail", { custId: custId }, function (response) {

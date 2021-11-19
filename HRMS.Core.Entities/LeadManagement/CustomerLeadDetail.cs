@@ -1,6 +1,7 @@
 ﻿using HRMS.Core.Entities.Common;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,10 @@ namespace HRMS.Core.Entities.LeadManagement
     {
         public int EmpId { get; set; }
         public int CustomerId { get; set; }
+        [Required(ErrorMessage ="Status is required.")]
         public int LeadType { get; set; }
+
+        
         public string Description { get; set; }
         public DateTime IntractionDate { get; set; } = DateTime.Now.Date;
         public TimeSpan IntractionTime { get; set; } = DateTime.Now.TimeOfDay;
@@ -21,6 +25,8 @@ namespace HRMS.Core.Entities.LeadManagement
         public DateTime? NextIntractionDate { get; set; }
         public TimeSpan? NextIntractionTime { get; set; }
         public string NextIntractionActivity { get; set; }
+
+        [Required(ErrorMessage = "Comment is required.")]
         public string Comment { get; set; } = string.Empty;
     }
 }
