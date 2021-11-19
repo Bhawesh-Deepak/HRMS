@@ -1,4 +1,5 @@
 ﻿using HRMS.Core.Entities.LeadManagement;
+using HRMS.Core.Helpers.CommonHelper;
 using HRMS.Core.ReqRespVm.Response.Leads;
 using HRMS.Services.Repository.GenericRepository;
 using LMS.Helper;
@@ -33,6 +34,13 @@ namespace LMS.Controllers
         {
             return View();
         }
+
+        public async Task<IActionResult> Error()
+        {
+            return await Task.Run(()=> View(ViewHelper.GetViewPathDetails("Shared", "Error"))) ;
+        }
+
+
         public async Task<IActionResult> GetLeadsByDate()
         {
 
@@ -50,9 +58,11 @@ namespace LMS.Controllers
                                        Email = CDList.Email,
                                        Description_Project = CDList.Description_Project,
                                        AssignDate = CDList.AssignDate
-                                       ,SpecialRemarks=CDList.SpecialRemarks
+                                       ,
+                                       SpecialRemarks = CDList.SpecialRemarks
 
                                    }).ToList();
+
             var Leads = new List<LeadsDetail>();
             foreach (var item in responseDetails.GroupBy(x => x.AssignDate))
             {

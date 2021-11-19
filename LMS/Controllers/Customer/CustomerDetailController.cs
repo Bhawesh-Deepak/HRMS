@@ -81,21 +81,27 @@ namespace LMS.Controllers.Customer
         [HttpPost]
         public async Task<IActionResult> UploadLeadData(DateTime AssignDate, IFormFile CustomerData)
         {
-            var data = new ReadLeadData().GetCustomerDetail(CustomerData);
-
-            data.ToList().ForEach(x =>
+            try
             {
-                x.CreatedBy = Convert.ToInt32(HttpContext.Session.GetString("empId"));
-                x.AssignDate = AssignDate;
-            });
+                var data = new ReadLeadData().GetCustomerDetail(CustomerData);
+                data.ToList().ForEach(x =>
+                {
+                    x.CreatedBy = Convert.ToInt32(HttpContext.Session.GetString("empId"));
+                    x.AssignDate = AssignDate;
+                });
 
+                var response = await _ICustomerDetailRepository.CreateEntities(data.ToArray());
 
-            var response = await _ICustomerDetailRepository.CreateEntities(data.ToArray());
+                throw new Exception();
 
-            await LeadDistribution(data.ToList());
+                await LeadDistribution(data.ToList());
 
-            return Json("Customer uploaded !!!");
-
+                return Json("Customer uploaded !!!");
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         [HttpPost]
@@ -214,7 +220,7 @@ namespace LMS.Controllers.Customer
             return Json("Customer lead updated successfully !!!");
         }
 
-        
+
 
         private async Task LeadDistribution(List<CustomerDetail> model)
         {
@@ -227,6 +233,7 @@ namespace LMS.Controllers.Customer
             int remainingDeals = Convert.ToInt32(model?.Count % superVisorEmployees?.Entities.Count());
 
             IDictionary<int, List<CustomerDetail>> empCustomerMapping = new Dictionary<int, List<CustomerDetail>>();
+            IDictionary<int, List<CustomerDetail>> remainingempCustomerMapping = new Dictionary<int, List<CustomerDetail>>();
 
             for (int i = 0; i < superVisorEmployees.Entities.Count(); i++)
             {
@@ -236,8 +243,11 @@ namespace LMS.Controllers.Customer
 
             if (remainingDeals > 0)
             {
-                empCustomerMapping.Add(superVisorEmployees.Entities.ElementAt(superVisorEmployees.Entities.Count() - 1).Id,
-                    model.Skip((superVisorEmployees.Entities.Count() - 1) * perEmpCout).Take(remainingDeals).ToList());
+                var empId = (superVisorEmployees.Entities.ElementAt(superVisorEmployees.Entities.Count() - 1).Id);
+                int skipCount = model.Count - remainingDeals;
+
+                remainingempCustomerMapping.Add(empId,
+                    model.Skip(skipCount).Take(remainingDeals).ToList());
             }
 
             var dbModels = new List<CustomerLeadDetail>();
@@ -256,6 +266,22 @@ namespace LMS.Controllers.Customer
                     dbModels.Add(dbModel);
                 });
             });
+
+            remainingempCustomerMapping.ToList().ForEach(x =>
+            {
+                x.Value.ForEach(item =>
+                {
+                    var dbModel = new CustomerLeadDetail();
+
+                    dbModel.EmpId = x.Key;
+                    dbModel.CustomerId = item.Id;
+                    dbModel.LeadType = 0;
+                    dbModel.CreatedBy = Convert.ToInt32(HttpContext.Session.GetString("empId"));
+                    dbModel.CreatedDate = DateTime.Now;
+                    dbModels.Add(dbModel);
+                });
+            });
+
 
             var response = await _ICustomerLeadRepository.CreateEntities(dbModels.ToArray());
         }
