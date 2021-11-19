@@ -29,7 +29,7 @@ namespace LMS.Controllers.Customer
             };
 
             var response = await _ICustomerLeadRepository.CreateEntity(dbModel);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "LeadCloser");
         }
     }
 }
