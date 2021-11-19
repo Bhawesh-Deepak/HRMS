@@ -10,14 +10,15 @@ namespace LMS.Controllers.Customer
     public class CustomerLeadController : Controller
     {
         private readonly IGenericRepository<CustomerLead, int> _ICustomerLeadRepository;
-
+        
         public CustomerLeadController(IGenericRepository<CustomerLead, int> customerLeadRepository)
         {
+          
             _ICustomerLeadRepository = customerLeadRepository;
         }
         public async Task<IActionResult> Index(int customerId)
         {
-            var leadCode = "SQYLD00" + customerId.ToString();
+            var leadCode = "KUDO00" + customerId.ToString();
             var dbModel = new CustomerLead()
             {
                 CustomerId = customerId,
@@ -29,7 +30,7 @@ namespace LMS.Controllers.Customer
             };
 
             var response = await _ICustomerLeadRepository.CreateEntity(dbModel);
-            return RedirectToAction("Index", "LeadCloser");
+            return RedirectToAction("Index", "LeadCloser",new { customerId= customerId });
         }
     }
 }

@@ -19,6 +19,7 @@ namespace LMS.Controllers.ViewComponents
         }
         public async Task<IViewComponentResult> InvokeAsync()
         {
+             
             var CustomerLeadLIst = await _ICustomerLeadRepository.GetAllEntities(x => x.IsActive && !x.IsDeleted && x.EmpId == Convert.ToInt32(HttpContext.Session.GetString("empId")));
             var CountDashboard = new CountDashboardLeadsVM()
             {

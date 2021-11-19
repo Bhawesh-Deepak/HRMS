@@ -66,7 +66,7 @@ namespace LMS.Controllers.Customer
 
             foreach (var data in responseDetails)
             {
-                dt.Rows.Add(data.LeadName, data.Location, data.Phone, data.Email, data.Description_Project,data.SpecialRemarks, data.AssignDate.ToString("dd/MM/yyyy"));
+                dt.Rows.Add(data.LeadName, data.Location, data.Phone, data.Email, data.Description_Project, data.SpecialRemarks, data.AssignDate.ToString("dd/MM/yyyy"));
             }
 
             using XLWorkbook wb = new XLWorkbook();
@@ -200,7 +200,7 @@ namespace LMS.Controllers.Customer
         public async Task<IActionResult> PostCustomerLeadDetail(CustomerLeadDetail model)
         {
             var updateResponse = await _ICustomerLeadRepository.GetAllEntityById(x => x.Id == model.Id);
-            updateResponse.Entity.IntractionDate = model.IntractionDate;
+            updateResponse.Entity.IntractionDate = Convert.ToDateTime(model.IntractionDate);
             updateResponse.Entity.IntractionTime = model.IntractionTime;
             updateResponse.Entity.NextIntractionActivity = model.NextIntractionActivity;
             updateResponse.Entity.Activity = model.Activity;
@@ -215,7 +215,7 @@ namespace LMS.Controllers.Customer
             return Json("Customer lead updated successfully !!!");
         }
 
-        
+
 
         private async Task LeadDistribution(List<CustomerDetail> model)
         {
@@ -273,6 +273,7 @@ namespace LMS.Controllers.Customer
                                    where CLList.EmpId == Convert.ToInt32(HttpContext.Session.GetString("empId")) && CDList.AssignDate == AssignDate
                                    select new CustomerDetail
                                    {
+                                       Id = CDList.Id,
                                        LeadName = CDList.LeadName,
                                        Location = CDList.Location,
                                        Phone = CDList.Phone,

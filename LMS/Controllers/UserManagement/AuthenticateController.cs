@@ -37,7 +37,7 @@ namespace LMS.Controllers.UserManagement
 
             if (response.Entities.Any())
             {
-                var empDetail = await _IEmployeeDetailRepository.GetAllEntities(x => x.Id == response.Entities.First().Id);
+                var empDetail = await _IEmployeeDetailRepository.GetAllEntities(x => x.Id == response.Entities.First().EmployeeId);
                 HttpContext.Session.SetString("empCode", empDetail.Entities.First().EmpCode);
                 HttpContext.Session.SetString("empId", empDetail.Entities.First().Id.ToString());
                 HttpContext.Session.SetObjectAsJson("empDetails", empDetail.Entities.First());
