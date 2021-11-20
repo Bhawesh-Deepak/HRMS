@@ -23,14 +23,17 @@ namespace LMS.Controllers
     {
         private readonly IGenericRepository<CustomerDetail, int> _ICustomerDetailRepository;
         private readonly IGenericRepository<CustomerLeadDetail, int> _ICustomerLeadRepository;
+        private readonly ILogger<HomeController> _ILogger;
         public HomeController(IGenericRepository<CustomerDetail, int> iCustomerDetailRepository,
-              IGenericRepository<CustomerLeadDetail, int> customerLeadRepo)
+              IGenericRepository<CustomerLeadDetail, int> customerLeadRepo, ILogger<HomeController> logger)
         {
             _ICustomerDetailRepository = iCustomerDetailRepository;
             _ICustomerLeadRepository = customerLeadRepo;
+            _ILogger = logger;
         }
         public IActionResult Index()
         {
+            Serilog.Log.Information("Home Index action method called !!!");
             return View();
         }
         public IActionResult Privacy()
