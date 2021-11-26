@@ -8,7 +8,8 @@ namespace HRMS.Core.ReqRespVm.Response.Leads
 {
    public class LeadsBySupervisorVM
     {
-        public string CustomerName { get; set; }
+        public int employeeId { get; set; }
+        public string employeeName { get; set; }
         public string Level { get; set; }
         public int Leads { get; set; }
         public int Called { get; set; }
@@ -18,5 +19,6 @@ namespace HRMS.Core.ReqRespVm.Response.Leads
         public int Cold { get; set; }
         public int NotInterested { get; set; }
         public int LeadConvertedToClient { get; set; }
+        public DateTime  AssignDate { get; set; }
     }
 }

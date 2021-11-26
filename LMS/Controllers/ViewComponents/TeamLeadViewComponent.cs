@@ -31,7 +31,8 @@ namespace LMS.Controllers.ViewComponents
             {
                 CustomerComplete.Add(new LeadsBySupervisorVM
                 {
-                    CustomerName = x.EmployeeName,
+                    employeeId = x.Id,
+                    employeeName = x.EmployeeName,
                     Level = x.Level,
                     Leads = CustomerLeadLIst.Entities.Where(y => y.EmpId == x.Id).Count(),
                     Called = CustomerLeadLIst.Entities.Where(y => y.EmpId == x.Id && y.LeadType != 0).Count(),

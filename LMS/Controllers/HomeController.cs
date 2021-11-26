@@ -1,5 +1,6 @@
 ﻿using ClosedXML.Excel;
 using HRMS.Core.Entities.LeadManagement;
+using HRMS.Core.Entities.Payroll;
 using HRMS.Core.Helpers.CommonHelper;
 using HRMS.Core.ReqRespVm.Response.Leads;
 using HRMS.Services.Repository.GenericRepository;
@@ -24,13 +25,16 @@ namespace LMS.Controllers
         private readonly IGenericRepository<CustomerDetail, int> _ICustomerDetailRepository;
         private readonly IGenericRepository<LeadType, int> _ILeadTypeRepository;
         private readonly IGenericRepository<CustomerLeadDetail, int> _ICustomerLeadRepository;
+        private readonly IGenericRepository<EmployeeDetail, int> _IEmployeeDetailRepository;
         private readonly ILogger<HomeController> _ILogger;
         public HomeController(IGenericRepository<CustomerDetail, int> iCustomerDetailRepository, IGenericRepository<LeadType, int> iLeadTypeRepository,
+            IGenericRepository<EmployeeDetail, int> employeeDetailRepo,
               IGenericRepository<CustomerLeadDetail, int> customerLeadRepo, ILogger<HomeController> logger)
         {
             _ICustomerDetailRepository = iCustomerDetailRepository;
             _ILeadTypeRepository = iLeadTypeRepository;
             _ICustomerLeadRepository = customerLeadRepo;
+            _IEmployeeDetailRepository = employeeDetailRepo;
             _ILogger = logger;
         }
         public IActionResult Index()
@@ -71,16 +75,12 @@ namespace LMS.Controllers
             var Leads = new List<LeadsDetail>();
             foreach (var item in responseDetails.GroupBy(x => x.AssignDate.Date))
             {
-                var customerDetails = CustomerDetailList.Entities.Where(x => x.CreatedBy == Convert.ToInt32(HttpContext.Session.GetString("empId"))).ToList();
-                var UploadCount = customerDetails.Where(x => x.CreatedDate.Value.Date == item.First().AssignDate.Date).Count();
-
-
-
+                var todayleadsresponse = responseDetails.Where(x => x.AssignDate.Date == item.Key.Date).Count();
+                var TotalLeadsResponse = CustomerDetailList.Entities.Where(x => x.CreatedDate.Value.Date == item.Key.Date && x.CreatedBy == Convert.ToInt32(HttpContext.Session.GetString("empId"))).Count();
                 Leads.Add(new LeadsDetail()
                 {
-
-                    Description = "Upload " + UploadCount + " and Lead " + item.Count(),
-                    NoOfLeads = UploadCount + " Upload, " + item.Count() + "  Leads",
+                    Description = "Upload " + TotalLeadsResponse + " and Lead " + todayleadsresponse,
+                    NoOfLeads = TotalLeadsResponse + " Upload, " + todayleadsresponse + "  Leads",
                     AssignDate = item.First().AssignDate,
                 });
             }
@@ -164,6 +164,158 @@ namespace LMS.Controllers
                 return responseDetails;
             }
 
+        }
+
+        public async Task<IActionResult> ExportTeamLaed()
+        {
+            List<LeadsBySupervisorVM> responseDetails = await GetEmployeeLeads();
+            DataTable dt = new DataTable("LeadDetails");
+            dt.Columns.AddRange(new DataColumn[10] {
+                    new DataColumn("Employee Name"),
+                    new DataColumn("Level"),
+                    new DataColumn("Lead"),
+                    new DataColumn("Called"),
+                    new DataColumn("Pending"),
+                    new DataColumn("Hot"),
+                    new DataColumn("Warm"),
+                    new DataColumn("Cold"),
+                    new DataColumn("Not Interested"),
+                    new DataColumn("Lead Convert To Client"),
+            });
+
+            foreach (var data in responseDetails)
+            {
+                dt.Rows.Add(
+                    data.employeeName,
+                    data.Level,
+                    data.Leads,
+                    data.Called,
+                    data.Pending,
+                    data.Hot,
+                    data.Warm,
+                    data.Cold, data.NotInterested, data.LeadConvertedToClient);
+            }
+
+            using XLWorkbook wb = new XLWorkbook();
+            wb.Worksheets.Add(dt);
+            using MemoryStream stream = new MemoryStream();
+            wb.SaveAs(stream);
+            return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                "CustomerLeadDetails.xlsx");
+
+        }
+
+        private async Task<List<LeadsBySupervisorVM>> GetEmployeeLeads()
+        {
+            var empCode = HttpContext.Session.GetString("empCode");
+            var CustomerLeadLIst = await _ICustomerLeadRepository.GetAllEntities(x => x.IsActive && !x.IsDeleted);
+            var EmployeeDetailList = await _IEmployeeDetailRepository.GetAllEntities(x => x.IsActive && !x.IsDeleted && x.SuperVisorCode == empCode);
+            var CustomerComplete = new List<LeadsBySupervisorVM>();
+            EmployeeDetailList.Entities.ToList().ForEach(x =>
+            {
+                CustomerComplete.Add(new LeadsBySupervisorVM
+                {
+                    employeeName = x.EmployeeName,
+                    Level = x.Level,
+                    Leads = CustomerLeadLIst.Entities.Where(y => y.EmpId == x.Id).Count(),
+                    Called = CustomerLeadLIst.Entities.Where(y => y.EmpId == x.Id && y.LeadType != 0).Count(),
+                    Pending = CustomerLeadLIst.Entities.Where(y => y.EmpId == x.Id && y.LeadType == 0).Count(),
+                    Hot = CustomerLeadLIst.Entities.Where(y => y.EmpId == x.Id && y.LeadType == 1).Count(),
+                    Warm = CustomerLeadLIst.Entities.Where(y => y.EmpId == x.Id && y.LeadType == 2).Count(),
+                    Cold = CustomerLeadLIst.Entities.Where(y => y.EmpId == x.Id && y.LeadType == 3).Count(),
+                    NotInterested = CustomerLeadLIst.Entities.Where(y => y.EmpId == x.Id && y.LeadType == 4).Count(),
+                    LeadConvertedToClient = CustomerLeadLIst.Entities.Where(y => y.EmpId == x.Id && y.LeadType == 5).Count(),
+                });
+            });
+            return CustomerComplete;
+        }
+        public async Task<IActionResult> GetEmployeeLeadsDetails(int employeeId)
+        {
+            List<LeadsBySupervisorVM> responseDetails = await GetCustomerDetailEmployeeWise(employeeId);
+            return PartialView(ViewHelper.GetViewPathDetails("Home", "GetLeadsByEmployee"), responseDetails);
+        }
+        public async Task<IActionResult> ExportTeamLaedByEmployee(int employeeId)
+        {
+            List<LeadsBySupervisorVM> responseDetails = await GetCustomerDetailEmployeeWise(employeeId);
+            DataTable dt = new DataTable("LeadDetails");
+            dt.Columns.AddRange(new DataColumn[10] {
+                    new DataColumn("Employee Name"),
+                    new DataColumn("Assign Date"),
+                    new DataColumn("Lead"),
+                    new DataColumn("Called"),
+                    new DataColumn("Pending"),
+                    new DataColumn("Hot"),
+                    new DataColumn("Warm"),
+                    new DataColumn("Cold"),
+                    new DataColumn("Not Interested"),
+                    new DataColumn("Lead Convert To Client"),
+            });
+
+            foreach (var data in responseDetails)
+            {
+                dt.Rows.Add(
+                    data.employeeName,
+                    data.AssignDate.Date.ToString("dd/MM/yyyy"),
+                    data.Leads,
+                    data.Called,
+                    data.Pending,
+                    data.Hot,
+                    data.Warm,
+                    data.Cold, data.NotInterested, data.LeadConvertedToClient);
+            }
+
+            using XLWorkbook wb = new XLWorkbook();
+            wb.Worksheets.Add(dt);
+            using MemoryStream stream = new MemoryStream();
+            wb.SaveAs(stream);
+            return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                "CustomerLeadDetails.xlsx");
+
+        }
+        private async Task<List<LeadsBySupervisorVM>> GetCustomerDetailEmployeeWise(int employeeId)
+        {
+            var CustomerDetailList = await _ICustomerDetailRepository.GetAllEntities(x => x.IsActive && !x.IsDeleted);
+            var CustomerLeadLIst = await _ICustomerLeadRepository.GetAllEntities(x => x.IsActive && !x.IsDeleted);
+            var EmployeeDetailLIst = await _IEmployeeDetailRepository.GetAllEntities(x => x.IsActive && !x.IsDeleted);
+            var responseDetails = (from CDList in CustomerDetailList.Entities
+                                   join CLList in CustomerLeadLIst.Entities
+                                   on CDList.Id equals CLList.CustomerId
+                                   join emp in EmployeeDetailLIst.Entities on CLList.EmpId equals emp.Id
+                                   where CLList.EmpId == employeeId
+                                   select new CustomerDetail
+                                   {
+                                       LeadName = CDList.LeadName,
+                                       Location = CDList.Location,
+                                       Phone = CDList.Phone,
+                                       Email = CDList.Email,
+                                       Description_Project = CDList.Description_Project,
+                                       AssignDate = CDList.AssignDate.Date,
+                                       SpecialRemarks = CDList.SpecialRemarks,
+                                       CreatedBy = CDList.CreatedBy,
+                                       CreatedDate = CDList.CreatedDate,
+                                       EmpId = CLList.EmpId,
+                                       LeadType = CLList.LeadType,
+                                       EmpCode = emp.EmployeeName
+                                   }).ToList();
+            var CompleteLeadsByEmployee = new List<LeadsBySupervisorVM>();
+            foreach (var item in responseDetails.GroupBy(x => x.AssignDate.Date))
+            {
+                CompleteLeadsByEmployee.Add(new LeadsBySupervisorVM
+                {
+                    AssignDate = item.Key,
+                    employeeId = item.FirstOrDefault().EmpId,
+                    employeeName = item.FirstOrDefault().EmpCode,
+                    Leads = item.Count(),
+                    Called = item.Where(y => y.LeadType != 0).Count(),
+                    Pending = item.Where(y => y.LeadType == 0).Count(),
+                    Hot = item.Where(y => y.LeadType == 1).Count(),
+                    Warm = item.Where(y => y.LeadType == 2).Count(),
+                    Cold = item.Where(y => y.LeadType == 3).Count(),
+                    NotInterested = item.Where(y => y.LeadType == 4).Count(),
+                    LeadConvertedToClient = item.Where(y => y.LeadType == 5).Count(),
+                });
+            }
+            return CompleteLeadsByEmployee;
         }
     }
 }
