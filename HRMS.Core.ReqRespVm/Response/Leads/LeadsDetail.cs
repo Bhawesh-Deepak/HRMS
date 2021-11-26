@@ -10,5 +10,7 @@ namespace HRMS.Core.ReqRespVm.Response.Leads
     {
         public string NoOfLeads { get; set; }
         public DateTime AssignDate { get; set; }
+         
+        public string Description{ get; set; }
     }
 }

@@ -31,11 +31,17 @@ namespace LMS.Controllers.ViewComponents
             {
                 CustomerComplete.Add(new LeadsBySupervisorVM
                 {
-                    CustomerName = x.EmployeeName,
+                    employeeId = x.Id,
+                    employeeName = x.EmployeeName,
                     Level = x.Level,
                     Leads = CustomerLeadLIst.Entities.Where(y => y.EmpId == x.Id).Count(),
                     Called = CustomerLeadLIst.Entities.Where(y => y.EmpId == x.Id && y.LeadType != 0).Count(),
                     Pending = CustomerLeadLIst.Entities.Where(y => y.EmpId == x.Id && y.LeadType == 0).Count(),
+                    Hot = CustomerLeadLIst.Entities.Where(y => y.EmpId == x.Id && y.LeadType == 1).Count(),
+                    Warm = CustomerLeadLIst.Entities.Where(y => y.EmpId == x.Id && y.LeadType == 2).Count(),
+                    Cold = CustomerLeadLIst.Entities.Where(y => y.EmpId == x.Id && y.LeadType == 3).Count(),
+                    NotInterested = CustomerLeadLIst.Entities.Where(y => y.EmpId == x.Id && y.LeadType == 4).Count(),
+                    LeadConvertedToClient = CustomerLeadLIst.Entities.Where(y => y.EmpId == x.Id && y.LeadType == 5).Count(),
                 });
             });
             return await Task.FromResult((IViewComponentResult)View("_TeamLeadDetail", CustomerComplete));
