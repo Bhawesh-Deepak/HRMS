@@ -62,18 +62,25 @@ namespace LMS.Controllers
                                        Phone = CDList.Phone,
                                        Email = CDList.Email,
                                        Description_Project = CDList.Description_Project,
-                                       AssignDate = CDList.AssignDate
-                                       ,
-                                       SpecialRemarks = CDList.SpecialRemarks
-
+                                       AssignDate = CDList.AssignDate.Date,
+                                       SpecialRemarks = CDList.SpecialRemarks,
+                                       CreatedBy = CDList.CreatedBy,
+                                       CreatedDate = CDList.CreatedDate,
                                    }).ToList();
 
             var Leads = new List<LeadsDetail>();
-            foreach (var item in responseDetails.GroupBy(x => x.AssignDate))
+            foreach (var item in responseDetails.GroupBy(x => x.AssignDate.Date))
             {
+                var customerDetails = CustomerDetailList.Entities.Where(x => x.CreatedBy == Convert.ToInt32(HttpContext.Session.GetString("empId"))).ToList();
+                var UploadCount = customerDetails.Where(x => x.CreatedDate.Value.Date == item.First().AssignDate.Date).Count();
+
+
+
                 Leads.Add(new LeadsDetail()
                 {
-                    NoOfLeads = item.Count() + "  Leads",
+
+                    Description = "Upload " + UploadCount + " and Lead " + item.Count(),
+                    NoOfLeads = UploadCount + " Upload, " + item.Count() + "  Leads",
                     AssignDate = item.First().AssignDate,
                 });
             }

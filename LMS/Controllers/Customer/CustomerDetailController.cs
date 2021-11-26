@@ -92,6 +92,7 @@ namespace LMS.Controllers.Customer
                 {
                     x.CreatedBy = Convert.ToInt32(HttpContext.Session.GetString("empId"));
                     x.AssignDate = AssignDate;
+                    x.CreatedDate = DateTime.Now;
                 });
 
                 var response = await _ICustomerDetailRepository.CreateEntities(data.ToArray());
@@ -120,6 +121,7 @@ namespace LMS.Controllers.Customer
             {
                 x.CreatedBy = Convert.ToInt32(HttpContext.Session.GetString("empId"));
                 x.AssignDate = AssignDate;
+                x.CreatedDate = DateTime.Now;
             });
 
             var response = await _ICustomerDetailRepository.CreateEntities(data.ToArray());

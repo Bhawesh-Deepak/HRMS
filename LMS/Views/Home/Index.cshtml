@@ -48,7 +48,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
 
                         <div class="panel vd_map-widget widget">
                             <div class="panel-heading vd_bg-facebook">
@@ -66,6 +66,12 @@
                         </div>
                         <!-- Panel Widget -->
                     </div>
+                    
+                    <!--col-md-5-->
+
+
+                </div>
+                <div class="row">
                     <div class="col-md-6">
 
                         <div class="panel vd_map-widget widget">
@@ -84,9 +90,6 @@
                         </div>
                         <!-- Panel Widget -->
                     </div>
-                    <!--col-md-5-->
-
-
                 </div>
             </div>
             <!-- .vd_content-section -->
@@ -106,7 +109,8 @@
                 events.push({
                     title: response[i].noOfLeads,
                     start: response[i].assignDate,
-                    url: 'CustomerDetail/CustomerList?AssignDate='+response[i].assignDate,
+                    url: 'CustomerDetail/CustomerList?AssignDate=' + response[i].assignDate,
+                    description: response[i].description,
                 });
             }
 
@@ -118,7 +122,26 @@
                 },
                 editable: true,
                 defaultDate: new Date(),
+                eventMouseover: function (data, event, view) {
+                    tooltip = '<div class="tooltiptopicevent" style="width:auto;height:auto;background:#feb811;position:absolute;z-index:10001;padding:10px 10px 10px 10px ;  line-height: 200%;">' + 'Lead Details: ' + data.description + '</br></div>';
+                    $("body").append(tooltip);
+                    $(this).mouseover(function (e) {
+                        $(this).css('z-index', 10000);
+                        $('.tooltiptopicevent').fadeIn('500');
+                        $('.tooltiptopicevent').fadeTo('10', 1.9);
+                    }).mousemove(function (e) {
+                        $('.tooltiptopicevent').css('top', e.pageY + 10);
+                        $('.tooltiptopicevent').css('left', e.pageX + 20);
+                    });
+                },
 
+                eventMouseout: function (data, event, view) {
+                    $(this).css('z-index', 8);
+
+                    $('.tooltiptopicevent').remove();
+
+                },
+                eventLimit: true,
                 dayClick: function (date, jsEvent, view) {
 
                     //$(this).css('background-color', '');
@@ -134,8 +157,7 @@
                 },
                 events: events,
             });
-            // $("#divLeadCreate").html(response);
-            // $('#myLeadModal').modal({ backdrop: 'static' });
+            
         })
 
 
