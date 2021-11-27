@@ -1,4 +1,5 @@
 ﻿using HRMS.Core.Entities.LeadManagement;
+using HRMS.Core.Helpers.CommonHelper;
 using HRMS.Services.Repository.GenericRepository;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -31,14 +32,20 @@ namespace LMS.Controllers.LeadCloserFrom
                                        Location = CDList.Location,
                                        Email = CDList.Email,
                                        Phone = CDList.Phone,
-                                       EmpCode=CLead.LeadCode
-                                       ,SpecialRemarks=CDList.SpecialRemarks,
-                                       Description_Project=CDList.Description_Project
+                                       EmpCode = CLead.LeadCode
+                                       ,
+                                       SpecialRemarks = CDList.SpecialRemarks,
+                                       Description_Project = CDList.Description_Project
 
                                    }).ToList();
 
 
             return View(CustomerDetails);
+        }
+
+        public async Task<IActionResult> GetCustomerLCF(int customerId)
+        {
+            return await Task.Run(() => PartialView(ViewHelper.GetViewPathDetails("LeadCloser","_CustomerLCFPartial")));
         }
     }
 }
