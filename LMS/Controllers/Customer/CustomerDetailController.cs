@@ -4,6 +4,7 @@ using HRMS.Core.Entities.LeadManagement;
 using HRMS.Core.Entities.Payroll;
 using HRMS.Core.Helpers.CommonHelper;
 using HRMS.Core.Helpers.ExcelHelper;
+using HRMS.Core.ReqRespVm.Response.Leads;
 using HRMS.Services.Repository.GenericRepository;
 using LMS.Controllers.CustomAction;
 using Microsoft.AspNetCore.Http;
@@ -45,17 +46,17 @@ namespace LMS.Controllers.Customer
 
         public async Task<IActionResult> CustomerList(DateTime AssignDate)
         {
-            List<CustomerDetail> responseDetails = await GetCustomerDetaiAsignDateWise(AssignDate);
+            List<CompleteLeadsDetailVM> responseDetails = await GetCustomerDetaiAsignDateWise(AssignDate);
 
             return await Task.Run(() => View(ViewHelper.GetViewPathDetails("Customer", "GetCustomerList"), responseDetails));
         }
 
         public async Task<IActionResult> ExportCustomerDetail(DateTime AssignDate)
         {
-            List<CustomerDetail> responseDetails = await GetCustomerDetaiAsignDateWise(AssignDate);
+            List<CompleteLeadsDetailVM> responseDetails = await GetCustomerDetaiAsignDateWise(AssignDate);
 
             DataTable dt = new DataTable("LeadDetails");
-            dt.Columns.AddRange(new DataColumn[7] {
+            dt.Columns.AddRange(new DataColumn[8] {
                     new DataColumn("LeadName"),
                     new DataColumn("Location"),
                     new DataColumn("Phone"),
@@ -63,11 +64,12 @@ namespace LMS.Controllers.Customer
                     new DataColumn("Description/Project"),
                     new DataColumn("Special Remarks"),
                     new DataColumn("AssignDate"),
+                     new DataColumn("Status"),
             });
 
             foreach (var data in responseDetails)
             {
-                dt.Rows.Add(data.LeadName, data.Location, data.Phone, data.Email, data.Description_Project, data.SpecialRemarks, data.AssignDate.ToString("dd/MM/yyyy"));
+                dt.Rows.Add(data.LeadName, data.Location, data.Phone, data.Email, data.Description_Project, data.SpecialRemarks, data.AssignDate.ToString("dd/MM/yyyy"), data.LeadTypeName);
             }
 
             using XLWorkbook wb = new XLWorkbook();
@@ -90,6 +92,7 @@ namespace LMS.Controllers.Customer
                 {
                     x.CreatedBy = Convert.ToInt32(HttpContext.Session.GetString("empId"));
                     x.AssignDate = AssignDate;
+                    x.CreatedDate = DateTime.Now;
                 });
 
                 var response = await _ICustomerDetailRepository.CreateEntities(data.ToArray());
@@ -118,6 +121,7 @@ namespace LMS.Controllers.Customer
             {
                 x.CreatedBy = Convert.ToInt32(HttpContext.Session.GetString("empId"));
                 x.AssignDate = AssignDate;
+                x.CreatedDate = DateTime.Now;
             });
 
             var response = await _ICustomerDetailRepository.CreateEntities(data.ToArray());
@@ -147,7 +151,7 @@ namespace LMS.Controllers.Customer
                         CustomerId = customer.Id,
                         LeadType = 0,
                         Description = string.Empty,
-                        NextIntractionActivity= string.Empty
+                        NextIntractionActivity = string.Empty
                     };
 
                     dbModels.Add(custLeadModel);
@@ -325,27 +329,28 @@ namespace LMS.Controllers.Customer
             var response = await _ICustomerLeadRepository.CreateEntities(dbModels.ToArray());
         }
 
-        private async Task<List<CustomerDetail>> GetCustomerDetaiAsignDateWise(DateTime AssignDate)
+        private async Task<List<CompleteLeadsDetailVM>> GetCustomerDetaiAsignDateWise(DateTime AssignDate)
         {
             var CustomerDetailList = await _ICustomerDetailRepository.GetAllEntities(x => x.IsActive && !x.IsDeleted);
-
             var CustomerLeadLIst = await _ICustomerLeadRepository.GetAllEntities(x => x.IsActive && !x.IsDeleted);
-
+            var LeadTypeLIst = await _ILeadTypeRepository.GetAllEntities(x => x.IsActive && !x.IsDeleted);
             var responseDetails = (from CDList in CustomerDetailList.Entities
                                    join CLList in CustomerLeadLIst.Entities
                                    on CDList.Id equals CLList.CustomerId
+                                   join ltype in LeadTypeLIst.Entities on CLList.LeadType equals ltype.Id into leadtype
+                                   from subpet in leadtype.DefaultIfEmpty()
                                    where CLList.EmpId == Convert.ToInt32(HttpContext.Session.GetString("empId")) && CDList.AssignDate == AssignDate
-                                   select new CustomerDetail
+                                   select new CompleteLeadsDetailVM
                                    {
-                                       Id = CDList.Id,
+                                       CustomerId = CDList.Id,
                                        LeadName = CDList.LeadName,
                                        Location = CDList.Location,
                                        Phone = CDList.Phone,
                                        Email = CDList.Email,
                                        Description_Project = CDList.Description_Project,
                                        AssignDate = CDList.AssignDate,
-                                       SpecialRemarks = CDList.SpecialRemarks
-
+                                       SpecialRemarks = CDList.SpecialRemarks,
+                                       LeadTypeName = subpet?.Name ?? String.Empty
 
                                    }).ToList();
             return responseDetails;

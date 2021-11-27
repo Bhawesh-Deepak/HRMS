@@ -42,5 +42,9 @@ namespace HRMS.Core.Entities.LeadManagement
         [Display(Prompt = "Special Remarks")]
         public string SpecialRemarks { get; set; } = string.Empty;
         public string EmpCode { get; set; } = string.Empty;
+        [NotMapped]
+        public int EmpId { get; set; }
+        [NotMapped]
+        public int LeadType { get; set; }
     }
 }

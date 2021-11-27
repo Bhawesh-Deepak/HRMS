@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HRMS.Core.Entities.LeadManagement.CustomerDetail>
+﻿@model IEnumerable<HRMS.Core.ReqRespVm.Response.Leads.CompleteLeadsDetailVM>
 
 @{
     ViewData["Title"] = "Customer List";
@@ -47,6 +47,7 @@
                                             <th>Description/Project</th>
                                             <th>Special Remarks</th>
                                             <th>Assign Date</th>
+                                            <th>Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -55,7 +56,8 @@
                                             <tr>
                                                 <td>@item.Index</td>
                                                 <td>
-                                                    <a href="#" onclick="GetLeadType(@item.Data.Id)">@item.Data.LeadName</a>
+                                                    <a onclick="GetLeadType(@item.Data.CustomerId)" href="#">@item.Data.LeadName</a>
+
                                                 </td>
                                                 <td>@item.Data.Location</td>
                                                 <td>@item.Data.Phone</td>
@@ -63,6 +65,7 @@
                                                 <td>@item.Data.Description_Project</td>
                                                 <td>@item.Data.SpecialRemarks</td>
                                                 <td>@string.Format("{0:dd/MM/yyyy}", item.Data.AssignDate)</td>
+                                                <td>@item.Data.LeadTypeName</td>
                                             </tr>
                                         }
                                     </tbody>
@@ -83,10 +86,15 @@
     </div>
     <!-- .vd_container -->
 </div>
-
 <script src="~/js/jquery.js"></script>
+
 <script src="~/CustomJavaScript/CustomJs.js"></script>
-<script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('input[type="date"]').change(function () {
+            location.href = "/CustomerDetail/CustomerList?AssignDate=" + this.value;
+        });
+    });
     function GetLeadType(custId) {
         $.get("/CustomerDetail/GetCustomerLeadDetail", { custId: custId }, function (response) {
             $("#modalTitle").text("Update Activity");
