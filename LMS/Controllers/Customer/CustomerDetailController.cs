@@ -56,7 +56,7 @@ namespace LMS.Controllers.Customer
             List<CompleteLeadsDetailVM> responseDetails = await GetCustomerDetaiAsignDateWise(AssignDate);
 
             DataTable dt = new DataTable("LeadDetails");
-            dt.Columns.AddRange(new DataColumn[8] {
+            dt.Columns.AddRange(new DataColumn[15] {
                     new DataColumn("LeadName"),
                     new DataColumn("Location"),
                     new DataColumn("Phone"),
@@ -64,12 +64,21 @@ namespace LMS.Controllers.Customer
                     new DataColumn("Description/Project"),
                     new DataColumn("Special Remarks"),
                     new DataColumn("AssignDate"),
-                     new DataColumn("Status"),
+                    new DataColumn("Status"),
+                    new DataColumn("Intraction Date"),
+                    new DataColumn("Intraction Time"),
+                    new DataColumn("Activity"),
+                    new DataColumn("Next Inraction Date"),
+                    new DataColumn("Next Inraction Time"),
+                    new DataColumn("Next Activity"),
+                    new DataColumn("Comments"),
             });
 
             foreach (var data in responseDetails)
             {
-                dt.Rows.Add(data.LeadName, data.Location, data.Phone, data.Email, data.Description_Project, data.SpecialRemarks, data.AssignDate.ToString("dd/MM/yyyy"), data.LeadTypeName);
+                dt.Rows.Add(data.LeadName, data.Location, data.Phone, data.Email, data.Description_Project, data.SpecialRemarks, data.AssignDate.ToString("dd/MM/yyyy"), 
+                    data.LeadTypeName,
+                    "","","","","","","");
             }
 
             using XLWorkbook wb = new XLWorkbook();
@@ -105,6 +114,37 @@ namespace LMS.Controllers.Customer
                 }
 
                 return RedirectToAction("Error", "Home");
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> UploadActivityData(  IFormFile ActivityData)
+        {
+            try
+            {
+                var data = new ReadLeadData().GetLeadActivity(ActivityData);
+                data.ToList().ForEach(x =>
+                {
+                    x.CreatedBy = Convert.ToInt32(HttpContext.Session.GetString("empId"));
+                    x.CreatedDate = DateTime.Now;
+                    x.UpdatedBy= Convert.ToInt32(HttpContext.Session.GetString("empId"));
+                    x.UpdatedDate = DateTime.Now;
+                });
+
+                var response = await _ICustomerDetailRepository.GetAllEntities(x=>x.IsActive==true);
+
+                //if (response.ResponseStatus == ResponseStatus.Success)
+                //{
+                //    await LeadDistribution(data.ToList());
+
+                //    return Json("Customer uploaded !!!");
+                //}
+
+                //return RedirectToAction("Error", "Home");
+                return Json("Activity uploaded !!!");
             }
             catch (Exception ex)
             {

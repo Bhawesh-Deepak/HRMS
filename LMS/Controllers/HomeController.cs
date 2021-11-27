@@ -79,8 +79,8 @@ namespace LMS.Controllers
                 var TotalLeadsResponse = CustomerDetailList.Entities.Where(x => x.CreatedDate.Value.Date == item.Key.Date && x.CreatedBy == Convert.ToInt32(HttpContext.Session.GetString("empId"))).Count();
                 Leads.Add(new LeadsDetail()
                 {
-                    Description = "Upload " + TotalLeadsResponse + " and Lead " + todayleadsresponse,
-                    NoOfLeads = TotalLeadsResponse + " Upload, " + todayleadsresponse + "  Leads",
+                    Description = "Uploaded " + TotalLeadsResponse + " and Lead " + todayleadsresponse,
+                    NoOfLeads = TotalLeadsResponse + " Uploaded, " + todayleadsresponse + "  Leads",
                     AssignDate = item.First().AssignDate,
                 });
             }
