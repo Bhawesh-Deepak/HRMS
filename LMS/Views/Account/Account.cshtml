@@ -54,7 +54,7 @@
                                 <label>User Name</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fa fa-user"></i></span>
-                                    <input class="form-control" type="text" required="" name="UserName" placeholder="User Name">
+                                    <input class="form-control" type="text" required="" name="UserName" placeholder="User Name" id="un">
                                     @*<div class="invalid-tooltip">Please enter proper UserName.</div>*@
                                 </div>
                             </div>
@@ -62,7 +62,7 @@
                                 <label>Password</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fa fa-lock"></i></span>
-                                    <input class="form-control" type="password" name="password" required="" placeholder="*********">
+                                    <input class="form-control" type="password" name="password" required="" placeholder="*********" id="ps">
                                     @*<div class="invalid-tooltip">Please enter proper Password.</div>*@
                                     <div class="show-hide">
                                         <!----------------------------------------------------Edit By Azim------------------------->
@@ -74,7 +74,7 @@
                             <div class="form-group">
                                 <div class="checkbox">
                                     <a class="link" href="#">Forgot password?</a>
-                                </div> <button class="btn btn-primary btn-block" type="submit">Login</button>
+                                </div> <button class="btn btn-primary btn-block" type="submit" id="lgbtn">Login</button>
                             </div>
 
                         </form>
@@ -119,6 +119,8 @@
                 });
             }, false);
         })();
+
+       
     </script>
 </body>
 
