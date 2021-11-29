@@ -1,5 +1,6 @@
 ﻿using HRMS.Core.Entities.LeadManagement;
 using HRMS.Core.Entities.Payroll;
+using HRMS.Core.ReqRespVm.RequestVm;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -37,7 +38,6 @@ namespace HRMS.Core.Helpers.ExcelHelper
 
             return models;
         }
-
         public IEnumerable<CustomerDetail> GetCustomerDetailWithEmpCode(IFormFile inputFile)
         {
             var dataResult = ReadExcelDataHelper.GetDataTableFromExcelFile(inputFile);
@@ -66,5 +66,29 @@ namespace HRMS.Core.Helpers.ExcelHelper
 
             return models;
         }
+        public IEnumerable<UploadActivityExcelVM> GetLeadActivity(IFormFile inputFile)
+        {
+            var dataResult = ReadExcelDataHelper.GetDataTableFromExcelFile(inputFile);
+            var models = new List<UploadActivityExcelVM>();
+
+            for (int i = 1; i < dataResult.dtResult.Rows.Count; i++)
+            {
+                var model = new UploadActivityExcelVM();
+                model.LeadName = dataResult.dtResult.Rows[i][0].ToString();
+                model.LeadType = dataResult.dtResult.Rows[i][7].ToString();
+                model.IntractionDate =Convert.ToDateTime( dataResult.dtResult.Rows[i][8]);
+                //model.IntractionTime = TimeSpan.Parse(dataResult.dtResult.Rows[i][9].ToString());
+                model.Activity = dataResult.dtResult.Rows[i][10].ToString();
+                model.NextIntractionDate = Convert.ToDateTime(dataResult.dtResult.Rows[i][11]);
+                //model.NextIntractionTime = TimeSpan.Parse(dataResult.dtResult.Rows[i][12].ToString());
+                model.NextIntractionActivity = dataResult.dtResult.Rows[i][13].ToString();
+                model.Comment = dataResult.dtResult.Rows[i][14].ToString();
+
+                models.Add(model);
+            }
+
+            return models;
+        }
+
     }
 }
