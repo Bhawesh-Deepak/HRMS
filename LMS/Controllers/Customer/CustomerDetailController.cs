@@ -76,9 +76,9 @@ namespace LMS.Controllers.Customer
 
             foreach (var data in responseDetails)
             {
-                dt.Rows.Add(data.LeadName, data.Location, data.Phone, data.Email, data.Description_Project, data.SpecialRemarks, data.AssignDate.ToString("dd/MM/yyyy"), 
+                dt.Rows.Add(data.LeadName, data.Location, data.Phone, data.Email, data.Description_Project, data.SpecialRemarks, data.AssignDate.ToString("dd/MM/yyyy"),
                     data.LeadTypeName,
-                    "","","","","","","");
+                    "", "", "", "", "", "", "");
             }
 
             using XLWorkbook wb = new XLWorkbook();
@@ -121,30 +121,46 @@ namespace LMS.Controllers.Customer
             }
         }
         [HttpPost]
-        public async Task<IActionResult> UploadActivityData(  IFormFile ActivityData)
+        public async Task<IActionResult> UploadActivityData(IFormFile ActivityData)
         {
             try
             {
                 var data = new ReadLeadData().GetLeadActivity(ActivityData);
                 data.ToList().ForEach(x =>
                 {
-                    x.CreatedBy = Convert.ToInt32(HttpContext.Session.GetString("empId"));
-                    x.CreatedDate = DateTime.Now;
-                    x.UpdatedBy= Convert.ToInt32(HttpContext.Session.GetString("empId"));
+                    x.UpdatedBy = Convert.ToInt32(HttpContext.Session.GetString("empId"));
                     x.UpdatedDate = DateTime.Now;
                 });
-
-                var response = await _ICustomerDetailRepository.GetAllEntities(x=>x.IsActive==true);
-
-                //if (response.ResponseStatus == ResponseStatus.Success)
-                //{
-                //    await LeadDistribution(data.ToList());
-
-                //    return Json("Customer uploaded !!!");
-                //}
-
-                //return RedirectToAction("Error", "Home");
-                return Json("Activity uploaded !!!");
+                var LeadTypeLIst = await _ILeadTypeRepository.GetAllEntities(x => x.IsActive && !x.IsDeleted);
+                var CustomerLeadList = await _ICustomerLeadRepository.GetAllEntities(x => x.IsActive && !x.IsDeleted);
+                var CustomerDetailList = await _ICustomerDetailRepository.GetAllEntities(x => x.IsActive && !x.IsDeleted);
+                var CustomerLead = new List<CustomerLeadDetail>();
+                foreach (var item in data)
+                {
+                    int customerId = CustomerDetailList.Entities.Where(x => x.LeadName.Contains(item.LeadName)).FirstOrDefault().Id;
+                    CustomerLead.Add(new CustomerLeadDetail()
+                    {
+                        EmpId = Convert.ToInt32(HttpContext.Session.GetString("empId")),
+                        CustomerId = customerId,
+                        Id= CustomerLeadList.Entities.Where(x=>x.CustomerId==customerId).FirstOrDefault().Id,
+                        LeadType = LeadTypeLIst.Entities.Where(x => x.Name.Contains(item.LeadType)).FirstOrDefault().Id,
+                        Description = item.Description,
+                        IntractionDate = item.IntractionDate,
+                        IntractionTime = item.IntractionTime,
+                        Activity = item.Activity,
+                        NextIntractionDate = item.NextIntractionDate,
+                        NextIntractionTime = item.NextIntractionTime,
+                        NextIntractionActivity = item.NextIntractionActivity,
+                        Comment = item.Comment,
+                    }) ;
+                }
+                var response = await _ICustomerLeadRepository.UpdateMultipleEntity(CustomerLead.ToArray());
+                if (response.ResponseStatus == ResponseStatus.Success)
+                {
+                    return Json("Customer uploaded !!!");
+                }
+                return RedirectToAction("Error", "Home");
+                 
             }
             catch (Exception ex)
             {

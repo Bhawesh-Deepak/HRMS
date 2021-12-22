@@ -14,5 +14,6 @@ namespace HRMS.Services.Repository.GenericRepository
         Task<GenericResponse<TEntity, T>> DeleteEntity(TEntity items);
         Task<GenericResponse<TEntity, T>> DeleteEntities(TEntity[] items);
         Task<GenericResponse<TEntity, T>> CheckIsExists(Func<TEntity, bool> where);
+        Task<GenericResponse<TEntity,T>> UpdateMultipleEntity(params TEntity[] items);
     }
 }

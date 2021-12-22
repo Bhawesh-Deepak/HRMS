@@ -202,5 +202,23 @@ namespace HRMS.Services.Implementation.GenericImplementation
                 throw new ApplicationException("Db Exception", ex);
             }
         }
+       
+
+        public async Task<GenericResponse<TEntity, T>> UpdateMultipleEntity(params TEntity[] items)
+        {
+            try
+            {
+                context.UpdateRange(items);
+                await context.SaveChangesAsync();
+
+                return await Task.Run(() => new GenericResponse<TEntity, T>()
+                 .GetGenericResponse(null, null, "success", default,
+                 ResponseStatus.Updated));
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Db Exception", ex);
+            }
+        }
     }
 }
