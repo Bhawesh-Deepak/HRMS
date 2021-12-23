@@ -17,7 +17,7 @@ namespace HRMS.Core.Helpers.ExcelHelper
             for (int i = 1; i < dataResult.dtResult.Rows.Count; i++)
             {
                 var model = new CustomerDetail();
-                model.LeadName =dataResult.dtResult.Rows[i][0].ToString();
+                model.LeadName = dataResult.dtResult.Rows[i][0].ToString();
                 model.Location = dataResult.dtResult.Rows[i][1].ToString();
                 model.Phone = dataResult.dtResult.Rows[i][2].ToString();
                 model.Email = dataResult.dtResult.Rows[i][3].ToString();
@@ -31,7 +31,7 @@ namespace HRMS.Core.Helpers.ExcelHelper
                 model.Website = string.Empty;
                 model.Industry = string.Empty;
                 model.EmpCode = string.Empty;
-                
+
                 model.FinancialYear = 1;
                 models.Add(model);
             }
@@ -46,7 +46,7 @@ namespace HRMS.Core.Helpers.ExcelHelper
             for (int i = 1; i < dataResult.dtResult.Rows.Count; i++)
             {
                 var model = new CustomerDetail();
-                model.EmpCode = dataResult.dtResult.Rows [i][0].ToString();
+                model.EmpCode = dataResult.dtResult.Rows[i][0].ToString();
                 model.LeadName = dataResult.dtResult.Rows[i][1].ToString();
                 model.Location = dataResult.dtResult.Rows[i][2].ToString();
                 model.Phone = dataResult.dtResult.Rows[i][3].ToString();
@@ -70,25 +70,29 @@ namespace HRMS.Core.Helpers.ExcelHelper
         {
             var dataResult = ReadExcelDataHelper.GetDataTableFromExcelFile(inputFile);
             var models = new List<UploadActivityExcelVM>();
-
-            for (int i = 1; i < dataResult.dtResult.Rows.Count; i++)
+            try
             {
-                var model = new UploadActivityExcelVM();
-                model.LeadName = dataResult.dtResult.Rows[i][0].ToString();
-                model.LeadType = dataResult.dtResult.Rows[i][7].ToString();
-                model.IntractionDate =Convert.ToDateTime( dataResult.dtResult.Rows[i][8]);
-                //model.IntractionTime = TimeSpan.Parse(dataResult.dtResult.Rows[i][9].ToString());
-                model.Activity = dataResult.dtResult.Rows[i][10].ToString();
-                model.NextIntractionDate = Convert.ToDateTime(dataResult.dtResult.Rows[i][11]);
-                //model.NextIntractionTime = TimeSpan.Parse(dataResult.dtResult.Rows[i][12].ToString());
-                model.NextIntractionActivity = dataResult.dtResult.Rows[i][13].ToString();
-                model.Comment = dataResult.dtResult.Rows[i][14].ToString();
+                for (int i = 1; i < dataResult.dtResult.Rows.Count; i++)
+                {
+                    var model = new UploadActivityExcelVM();
+                    model.LeadName = dataResult.dtResult.Rows[i][0].ToString();
+                    model.LeadType = dataResult.dtResult.Rows[i][7].ToString();
+                    model.IntractionDate = Convert.ToDateTime(dataResult.dtResult.Rows[i][8]);
+                    model.IntractionTime = TimeSpan.Parse(Convert.ToDateTime(string.Format(Convert.ToDateTime(dataResult.dtResult.Rows[i][9]).ToString(), "HH:mm")).ToString("HH:mm"));
+                    model.Activity = dataResult.dtResult.Rows[i][10].ToString();
+                    model.NextIntractionDate = Convert.ToDateTime(dataResult.dtResult.Rows[i][11]);
+                    model.NextIntractionTime = TimeSpan.Parse(Convert.ToDateTime(string.Format(Convert.ToDateTime(dataResult.dtResult.Rows[i][12]).ToString(), "HH:mm")).ToString("HH:mm")); //TimeSpan.Parse(dataResult.dtResult.Rows[i][12].ToString());
+                    model.NextIntractionActivity = dataResult.dtResult.Rows[i][13].ToString();
+                    model.Comment = dataResult.dtResult.Rows[i][14].ToString();
 
-                models.Add(model);
+                    models.Add(model);
+                }
+                return models;
             }
-
-            return models;
+            catch (Exception ex)
+            {
+                return models;
+            }
         }
-
     }
 }

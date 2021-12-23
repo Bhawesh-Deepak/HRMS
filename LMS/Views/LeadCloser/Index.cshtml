@@ -1,4 +1,4 @@
-﻿@model IEnumerable< HRMS.Core.Entities.LeadManagement.CustomerDetail>
+﻿@model IEnumerable<HRMS.Core.Entities.LeadManagement.CustomerDetail>
 
 @{
     ViewData["Title"] = "Lead Closer ";
@@ -52,6 +52,7 @@
                                             <th>Description/Project</th>
                                             <th>Special Remarks</th>
                                             <th>Unique Code</th>
+                                            <th>Download</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -68,6 +69,8 @@
                                                 <td>@item.Data.Description_Project</td>
                                                 <td>@item.Data.SpecialRemarks</td>
                                                 <td>@item.Data.EmpCode</td>
+
+                                                <td><a href="~/Documents/LCF.xlsx" download="LCF" class="btn btn-primary btn-xs"><i class="fa fa-download"></i></a></td>
                                             </tr>
                                         }
                                     </tbody>
@@ -76,7 +79,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 @await Html.PartialAsync("~/Views/Shared/_CommanModalPopUpPartial.cshtml")
 
             </div>
