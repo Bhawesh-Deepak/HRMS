@@ -2,18 +2,23 @@
     ViewData["Title"] = "Leads";
 }
 
+<style>
+    .panel .panel-heading{background:#436eac !important;}
+    .vd_bg-green{background:#436eac !important; box-shadow:0 4px 0 #fff !important}
+    #btnUpdate{margin-right:-15px}
+</style>
+
 <div class="vd_content-wrapper">
     <div class="vd_container">
         <div class="vd_content clearfix">
-            <div class="vd_head-section clearfix">
+            <!--<div class="vd_head-section clearfix">
                 <div class="vd_panel-header">
                     <ul class="breadcrumb">
                         <li><a href="/">Home</a> </li>
                         <li class="active">Leas Allocation</li>
-
                     </ul>
                 </div>
-            </div>
+            </div>-->
             <div class="vd_content-section clearfix">
                 <div class="row">
                     <div class="col-md-12">
@@ -23,7 +28,7 @@
                                 <div class="vd_panel-menu">
                                     <div data-action="minimize" data-original-title="Minimize" data-toggle="tooltip" data-placement="bottom" class=" menu entypo-icon"> <i class="icon-minus3"></i> </div>
 
-                                    <div data-action="close" data-original-title="Close" data-toggle="tooltip" data-placement="bottom" class=" menu entypo-icon"> <i class="icon-cross"></i> </div>
+                                    <!--<div data-action="close" data-original-title="Close" data-toggle="tooltip" data-placement="bottom" class=" menu entypo-icon"> <i class="icon-cross"></i> </div>-->
                                 </div>
                                 <!-- vd_panel-menu -->
                             </div>
@@ -33,12 +38,12 @@
                                     <div class="col-md-6">
                                         <!-- begin panel -->
                                         <!-- end panel -->
-                                        <div class="panel panel-default" style="border-left: 3px solid #00bcd4;">
+                                        <div class="panel panel-default">
                                             <div class="panel-heading ui-sortable-handle">
                                                 <div class="panel-heading-btn">
 
                                                 </div>
-                                                <h4 class="panel-title" style="color:black"> <span class="fa fa-cloud-upload" style="color:orange;padding-right: 4px;font-size: 20px;"></span>  Calling Data Auto Upload </h4>
+                                                <h4 class="panel-title"><span class="fa fa-cloud-upload" style="padding-right: 4px;font-size: 20px;"></span>Auto Upload</h4>
                                             </div>
                                             <div class="panel-body">
                                                 <form asp-action="UploadLeadData" asp-controller="CustomerDetail" enctype="multipart/form-data">
@@ -56,7 +61,7 @@
                                                     </div>
                                                     <div class="row text-right">
                                                         <div class="col-md-12 ">
-                                                            <a href="~/Documents/Leadallocationauto.xlsx" download="" class="btn vd_btn vd_btn-bevel vd_bg-green font-semibold pull-left" style="margin-top:-5px"><i class="fa fa-file-excel-o"></i> Download Templete </a>
+                                                            <a href="~/Documents/Leadallocationauto.xlsx" download="" class="btn vd_btn vd_btn-bevel vd_bg-green font-semibold pull-left"><i class="fa fa-file-excel-o"></i> Download Templete </a>
                                                             <button type="submit" class="btn vd_btn vd_btn-bevel vd_bg-green font-semibold"> <i class="fa fa-upload"></i>  Upload </button>
                                                         </div>
                                                     </div>
@@ -67,13 +72,10 @@
                                     <div class="col-md-6 ui-sortable">
                                         <!-- begin panel -->
                                         <!-- end panel -->
-                                        <div class="panel panel-default" style="border-left: 3px solid #00bcd4;">
+                                        <div class="panel panel-default">
                                             <div class="panel-heading ui-sortable-handle">
 
-                                                <h4 class="panel-title" style="color:black">
-                                                    <span class="fa fa-cloud-upload" style="color:orange;padding-right: 4px;font-size: 20px;"></span>  Calling Data Manual Upload
-
-                                                </h4>
+                                                <h4 class="panel-title"><span class="fa fa-cloud-upload" style="padding-right: 4px;font-size: 20px;"></span>Manual Upload</h4>
 
                                             </div>
                                             <div class="panel-body">
@@ -91,8 +93,8 @@
                                                         </div>
                                                     </div>
                                                     <div class="row text-right">
-                                                        <div class="col-md-12 ">
-                                                            <a href="~/Documents/Leadallocationmanual.xlsx" download="" class="btn vd_btn vd_btn-bevel vd_bg-green font-semibold pull-left" style="margin-top:-5px"><i class="fa fa-file-excel-o"></i> Download Templete </a>
+                                                        <div class="col-md-12">
+                                                            <a href="~/Documents/Leadallocationmanual.xlsx" download="" class="btn vd_btn vd_btn-bevel vd_bg-green font-semibold pull-left"><i class="fa fa-file-excel-o"></i> Download Templete </a>
                                                             <button type="submit" class="btn vd_btn vd_btn-bevel vd_bg-green font-semibold"> <i class="fa fa-upload"></i>  Upload </button>
                                                         </div>
                                                     </div>
@@ -112,11 +114,11 @@
                     <div class="col-md-12">
                         <div class="panel vd_map-widget widget">
                             <div class="panel-heading vd_bg-black">
-                                <h3 class="panel-title"> <span class="menu-icon"> <i class="glyphicon glyphicon-user"></i> </span> <span class="menu-text">  Leads Import</span> </h3>
+                                <h3 class="panel-title"> <span class="menu-icon"> <i class="glyphicon glyphicon-user"></i> </span> <span class="menu-text">Calling Leads Import</span> </h3>
                                 <div class="vd_panel-menu">
                                     <div data-action="minimize" data-original-title="Minimize" data-toggle="tooltip" data-placement="bottom" class=" menu entypo-icon"> <i class="icon-minus3"></i> </div>
 
-                                    <div data-action="close" data-original-title="Close" data-toggle="tooltip" data-placement="bottom" class=" menu entypo-icon"> <i class="icon-cross"></i> </div>
+                                    <!--<div data-action="close" data-original-title="Close" data-toggle="tooltip" data-placement="bottom" class=" menu entypo-icon"> <i class="icon-cross"></i> </div>-->
                                 </div>
                                 <!-- vd_panel-menu -->
                             </div>
@@ -126,12 +128,12 @@
                                     <div class="col-md-6">
                                         <!-- begin panel -->
                                         <!-- end panel -->
-                                        <div class="panel panel-default" style="border-left: 3px solid #00bcd4;">
+                                        <div class="panel panel-default">
                                             <div class="panel-heading ui-sortable-handle">
                                                 <div class="panel-heading-btn">
 
                                                 </div>
-                                                <h4 class="panel-title" style="color:black"> <span class="fa fa-cloud-upload" style="color:orange;padding-right: 4px;font-size: 20px;"></span>Call  Lead Upload Auto </h4>
+                                                <h4 class="panel-title"> <span class="fa fa-cloud-upload" style="padding-right: 4px;font-size: 20px;"></span>Auto Upload</h4>
                                             </div>
                                             <div class="panel-body">
                                                 <form asp-action="UploadLeadData" asp-controller="CustomerDetail" enctype="multipart/form-data">
@@ -149,7 +151,7 @@
                                                     </div>
                                                     <div class="row text-right">
                                                         <div class="col-md-12 ">
-                                                            <a href="~/Documents/Leadallocationauto.xlsx" download="" class="btn vd_btn vd_btn-bevel vd_bg-green font-semibold pull-left" style="margin-top:-5px"><i class="fa fa-file-excel-o"></i> Download Templete </a>
+                                                            <a href="~/Documents/Leadallocationauto.xlsx" download="" class="btn vd_btn vd_btn-bevel vd_bg-green font-semibold pull-left"><i class="fa fa-file-excel-o"></i> Download Templete </a>
                                                             <button type="submit" class="btn vd_btn vd_btn-bevel vd_bg-green font-semibold"> <i class="fa fa-upload"></i>  Upload </button>
                                                         </div>
                                                     </div>
@@ -160,13 +162,11 @@
                                     <div class="col-md-6 ui-sortable">
                                         <!-- begin panel -->
                                         <!-- end panel -->
-                                        <div class="panel panel-default" style="border-left: 3px solid #00bcd4;">
+                                        <div class="panel panel-default">
                                             <div class="panel-heading ui-sortable-handle">
 
-                                                <h4 class="panel-title" style="color:black">
-                                                    <span class="fa fa-cloud-upload" style="color:orange;padding-right: 4px;font-size: 20px;"></span> Call Lead Upload Manual
-
-                                                </h4>
+                                                <h4 class="panel-title">
+                                                    <span class="fa fa-cloud-upload" style="padding-right: 4px;font-size: 20px;"></span>Manual Upload</h4>
 
                                             </div>
                                             <div class="panel-body">
@@ -185,7 +185,7 @@
                                                     </div>
                                                     <div class="row text-right">
                                                         <div class="col-md-12 ">
-                                                            <a href="~/Documents/Leadallocationmanual.xlsx" download="" class="btn vd_btn vd_btn-bevel vd_bg-green font-semibold pull-left" style="margin-top:-5px"><i class="fa fa-file-excel-o"></i> Download Templete </a>
+                                                            <a href="~/Documents/Leadallocationmanual.xlsx" download="" class="btn vd_btn vd_btn-bevel vd_bg-green font-semibold pull-left"><i class="fa fa-file-excel-o"></i> Download Templete </a>
                                                             <button type="submit" class="btn vd_btn vd_btn-bevel vd_bg-green font-semibold"> <i class="fa fa-upload"></i>  Upload </button>
                                                         </div>
                                                     </div>
@@ -209,7 +209,7 @@
                                 <div class="vd_panel-menu">
                                     <div data-action="minimize" data-original-title="Minimize" data-toggle="tooltip" data-placement="bottom" class=" menu entypo-icon"> <i class="icon-minus3"></i> </div>
 
-                                    <div data-action="close" data-original-title="Close" data-toggle="tooltip" data-placement="bottom" class=" menu entypo-icon"> <i class="icon-cross"></i> </div>
+                                   <!-- <div data-action="close" data-original-title="Close" data-toggle="tooltip" data-placement="bottom" class=" menu entypo-icon"> <i class="icon-cross"></i> </div>-->
                                 </div>
                                 <!-- vd_panel-menu -->
                             </div>

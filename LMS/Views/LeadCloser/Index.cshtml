@@ -3,10 +3,18 @@
 @{
     ViewData["Title"] = "Lead Closer ";
 }
+<style>
+    .dataTables_filter .form-control{margin-left:5px}
+    .panel-heading{background:#436eac !important}
+    .table tbody tr td a{color:#436eac !important}
+    .table tbody tr td a .fa{color:#fff !important}
+    .pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover, .pagination>.active>span:hover, .pagination>.active>a:focus, .pagination>.active>span:focus{background-color:#436eac; border-color:#436eac;}
+    .pagination>li>a, .pagination>li>span{color:#436eac;}
+</style>
 <div class="vd_content-wrapper">
     <div class="vd_container">
         <div class="vd_content clearfix">
-            <div class="vd_head-section clearfix">
+            <!--<div class="vd_head-section clearfix">
                 <div class="vd_panel-header">
                     <ul class="breadcrumb">
                         <li><a href="/">Sales</a> </li>
@@ -15,7 +23,7 @@
 
 
                 </div>
-            </div>
+            </div>-->
             <!-- vd_head-section -->
 
             <div class="vd_title-section clearfix">
@@ -33,12 +41,12 @@
                     <div class="col-md-12">
                         <!-- begin panel -->
                         <!-- end panel -->
-                        <div class="panel panel-default" style="border-left: 3px solid #00bcd4;">
+                        <div class="panel panel-default">
                             <div class="panel-heading ui-sortable-handle">
                                 <div class="panel-heading-btn">
 
                                 </div>
-                                <h4 class="panel-title" style="color:black"> <span class="fa fa-cloud-upload" style="color:orange;padding-right: 4px;font-size: 20px;"></span>  Lead Details </h4>
+                                <h4 class="panel-title"> <span class="fa fa-cloud-upload" style="padding-right: 4px;font-size: 20px;"></span>  Lead Details </h4>
                             </div>
                             <div class="panel-body table-responsive">
                                 <table class="table table-striped" id="data-tables">

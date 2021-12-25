@@ -1,9 +1,9 @@
 ﻿@model HRMS.Core.ReqRespVm.Response.Leads.CountDashboardLeadsVM
 
-<div class="col-md-5">
+<div class="col-md-12">
     <div class="row">
-        <div class="col-md-12">
-            <div class="vd_status-widget vd_bg-green widget">
+        <div class="col-md-2">
+            <div class="vd_status-widget vd_bg-green widget" style="background:#787878 !important">
                 <div class="vd_panel-menu">
                     <div data-action="refresh" data-original-title="Refresh" data-rel="tooltip" class=" menu entypo-icon smaller-font"> <i class="icon-cycle"></i> </div>
                 </div>
@@ -12,24 +12,21 @@
                 <a class="panel-body"  asp-action="ExportCustomerLead" asp-controller="Home" asp-route-LeadTypeId="null">
                     <div class="clearfix">
                         <span class="menu-icon">
-                            <i class="icon-suitcase"></i>
+                            <i class="fa fa-users"></i>
                         </span>
                         <span class="menu-value">
                             @Model.TotalLeads
                         </span>
                     </div>
                     <div class="menu-text clearfix">
-                        Total No of Leads
+                        Total Leads
                     </div>
                 </a>
             </div>
         </div>
-        <!--col-md-12 -->
-    </div>
-    <!-- .row -->
-    <div class="row">
-        <div class="col-xs-6">
-            <div class="vd_status-widget vd_bg-grey  widget">
+   
+        <div class="col-md-2">
+            <div class="vd_status-widget vd_bg-grey  widget" style="background:#66758a !important">
                 <div class="vd_panel-menu">
                     <div data-action="refresh" data-original-title="Refresh" data-rel="tooltip" class=" menu entypo-icon smaller-font"> <i class="icon-cycle"></i> </div>
                 </div>
@@ -38,7 +35,7 @@
                 <a class="panel-body" asp-action="ExportCustomerLead" asp-controller="Home" asp-route-LeadTypeId="1">
                     <div class="clearfix">
                         <span class="menu-icon">
-                            <i class="icon-bars"></i>
+                            <i class="fa fa-sun-o"></i>
                         </span>
                         <span class="menu-value">
                             @Model.HotLeads
@@ -50,9 +47,9 @@
                 </a>
             </div>
         </div>
-        <!--col-xs-6 -->
-        <div class="col-xs-6">
-            <div class="vd_status-widget vd_bg-blue widget">
+
+        <div class="col-md-2">
+            <div class="vd_status-widget vd_bg-blue widget" style="background:#54729c !important">
                 <div class="vd_panel-menu">
                     <div data-action="refresh" data-original-title="Refresh" data-rel="tooltip" class=" menu entypo-icon smaller-font"> <i class="icon-cycle"></i> </div>
                 </div>
@@ -61,7 +58,7 @@
                 <a class="panel-body" asp-action="ExportCustomerLead" asp-controller="Home" asp-route-LeadTypeId="2">
                     <div class="clearfix">
                         <span class="menu-icon">
-                            <i class="icon-thermometer"></i>
+                            <i class="fa fa-star-half-o"></i>
                         </span>
                         <span class="menu-value">
                             @Model.WarmLeads
@@ -73,12 +70,9 @@
                 </a>
             </div>
         </div>
-        <!--col-xs-6 -->
-    </div>
-    <!-- .row -->
-    <div class="row">
-        <div class="col-xs-6">
-            <div class="vd_status-widget vd_bg-yellow widget">
+   
+        <div class="col-md-2">
+            <div class="vd_status-widget vd_bg-yellow widget" style="background:#436eac !important">
                 <div class="vd_panel-menu">
                     <div data-action="refresh" data-original-title="Refresh" data-rel="tooltip" class=" menu entypo-icon smaller-font"> <i class="icon-cycle"></i> </div>
                 </div>
@@ -87,7 +81,7 @@
                 <a class="panel-body" asp-action="ExportCustomerLead" asp-controller="Home" asp-route-LeadTypeId="3">
                     <div class="clearfix">
                         <span class="menu-icon">
-                            <i class="icon-users"></i>
+                            <i class="fa fa-moon-o"></i>
                         </span>
                         <span class="menu-value">
                             @Model.ColdLeads
@@ -99,16 +93,16 @@
                 </a>
             </div>
         </div>
-        <!--col-xs-6 -->
-        <div class="col-xs-6">
-            <div class="vd_status-widget vd_bg-dark-red widget">
+
+        <div class="col-md-2">
+            <div class="vd_status-widget vd_bg-dark-red widget" style="background:#366dba !important">
                 <div class="vd_panel-menu">
                     <div data-action="refresh" data-original-title="Refresh" data-rel="tooltip" class=" menu entypo-icon smaller-font"> <i class="icon-cycle"></i> </div>
                 </div>
                 <a class="panel-body"  asp-action="ExportCustomerLead" asp-controller="Home" asp-route-LeadTypeId="0">
                     <div class="clearfix">
                         <span class="menu-icon">
-                            <i class="fa fa-tasks"></i>
+                           <i class="fa fa-question"></i>
                         </span>
                         <span class="menu-value">
                             @Model.IncompleteLeads
@@ -120,11 +114,9 @@
                 </a>
             </div>
         </div>
-        <!--col-md-xs-6 -->
-    </div>
-    <div class="row">
-        <div class="col-xs-6">
-            <div class="vd_status-widget vd_bg-red widget">
+
+        <div class="col-md-2">
+            <div class="vd_status-widget vd_bg-red widget" style="background:#246acc !important">
                 <div class="vd_panel-menu">
                     <div data-action="refresh" data-original-title="Refresh" data-rel="tooltip" class=" menu entypo-icon smaller-font"> <i class="icon-cycle"></i> </div>
                 </div>
@@ -133,20 +125,21 @@
                 <a class="panel-body" asp-action="ExportCustomerLead" asp-controller="Home" asp-route-LeadTypeId="4">
                     <div class="clearfix">
                         <span class="menu-icon">
-                            <i class="icon-users"></i>
+                            <i class="fa fa-times"></i>
                         </span>
                         <span class="menu-value">
                             @Model.NotInterested
                         </span>
                     </div>
                     <div class="menu-text clearfix">
-                        Not-Interested Leads
+                        Not-Interested
                     </div>
                 </a>
             </div>
         </div>
-        <div class="col-xs-6">
-            <div class="vd_status-widget vd_bg-black  widget">
+
+        <div class="col-md-2" style="margin-top:20px">
+            <div class="vd_status-widget vd_bg-black  widget" style="background:#1267de !important">
                 <div class="vd_panel-menu">
                     <div data-action="refresh" data-original-title="Refresh" data-rel="tooltip" class=" menu entypo-icon smaller-font"> <i class="icon-cycle"></i> </div>
                 </div>
@@ -162,7 +155,7 @@
                         </span>
                     </div>
                     <div class="menu-text clearfix">
-                        Self Generated Leads
+                        Self Generated
                     </div>
                 </a>
             </div>

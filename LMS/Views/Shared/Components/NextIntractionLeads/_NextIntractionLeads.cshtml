@@ -8,22 +8,16 @@
                 <th>Next Activity Date</th>
                 <th>Next Activity</th>
                 <th>Time</th>
-
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>
-                        <a href="#" onclick="GetLeadType(@item.Id)">@item.LeadName</a>
-                    </td>
+                    <td><a href="#" onclick="GetLeadType(@item.Id)">@item.LeadName</a></td>
                     <td>@string.Format("{0:dd/MM/yyyy}", item.NextIntractionDate)</td>
                     <td>@item.NextIntractionActivity</td>
-                    <td>
-
-                        @item.NextIntractionTime
-                    </td>
+                    <td>@item.NextIntractionTime</td>
 
                 </tr>
             }

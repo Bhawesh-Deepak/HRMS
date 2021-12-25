@@ -24,6 +24,9 @@
     <link id="color" rel="stylesheet" href="~/wp-contents/login//assets/css/color-1.css" media="screen">
     <!-- Responsive css-->
     <link rel="stylesheet" type="text/css" href="~/wp-contents/login//assets/css/responsive.css">
+    <style>
+        .was-validated .form-control:invalid, .form-control.is-invalid {border-color: #dc3545 !important;}
+    </style>
 </head>
 <body>
     <!-- Loader starts-->
@@ -42,17 +45,17 @@
                     <div class="login-card">
 
                         <form class="theme-form login-form needs-validation" novalidate="" method="post" asp-controller="Authenticate" asp-action="Login">
-                            <img src="~/images/mainkudo.png" width="45%"/>
+                            <div class="text-center"><img src="~/images/mainkudo.png" width="45%"/></div>
                             <hr />
-                            <h4>Login</h4>
+                            <div class="text-center"><h4>Login</h4></div>
                             <hr />
-                            <h6>Welcome back! Log in to your account.</h6>
+                            <!--<h6>Welcome back! Log in to your account.</h6>-->
                             <div class="form-group">
                                 <label>User Name</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fa fa-user"></i></span>
                                     <input class="form-control" type="text" required="" name="UserName" placeholder="User Name">
-                                    <div class="invalid-tooltip">Please enter proper UserName.</div>
+                                    <!--<div class="invalid-tooltip">Please enter proper UserName.</div>-->
                                 </div>
                             </div>
                             <div class="form-group">
@@ -60,8 +63,8 @@
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fa fa-lock"></i></span>
                                     <input class="form-control" type="password" name="password" required="" placeholder="*********">
-                                    <div class="invalid-tooltip">Please enter proper Password.</div>
-                                    <div class="show-hide"><span class="show">                         </span></div>
+                                    <!--<div class="invalid-tooltip">Please enter proper Password.</div>
+                                    <div class="show-hide"><span class="show"></span></div>-->
                                 </div>
                             </div>
                             <div class="form-group">
