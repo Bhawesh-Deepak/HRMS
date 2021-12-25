@@ -7,12 +7,11 @@
 
 <div class="modal-body">
     <div class="panel-body table-responsive">
-        <table class="table table-condensed table-striped" id="data-tables1">
+        <table class="table table-condensed table-striped" id="data-tables-1">
             <thead>
                 <tr>
-                    <th>Employee Name</th>
+                    <th style="width:100px">Employee Name</th>
                     <th>AsignDate</th>
-
                     <th>Lead</th>
                     <th>Calling</th>
                     <th>Pending</th>
@@ -20,7 +19,7 @@
                     <th>Warm</th>
                     <th>Cold</th>
                     <th>Not Interested</th>
-                    <th>Lead Convert To Client</th>
+                    <th style="width:100px">Lead Convert To Client</th>
                 </tr>
             </thead>
             <tbody>
@@ -48,4 +47,8 @@
     <a asp-action="ExportTeamLaedByEmployee" asp-controller="Home" asp-route-employeeId="@Model.FirstOrDefault().employeeId"  class="btn vd_btn vd_btn-bevel vd_bg-green font-semibold" title="Export to Excel" ><i class="fa fa-download"></i> Download</a>
 </div>
 
-
+<script>
+		$(document).ready(function(){
+			$('#data-tables-1').DataTable()
+		});
+	</script>

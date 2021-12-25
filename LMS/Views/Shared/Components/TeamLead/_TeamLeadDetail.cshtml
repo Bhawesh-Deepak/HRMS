@@ -18,6 +18,10 @@
             body.loading .overlay {
                 display: block;
             }
+
+          .modal-lg{width:1200px !important;}
+          .modal-footer .vd_bg-red, .modal-footer .vd_bg-green{background:#436eac !important; box-shadow:none}
+          .modal-footer .vd_bg-red:hover, .modal-footer .vd_bg-green:hover{background:#1b9859 !important}
     </style>
 
     <div class="panel-body table-responsive">
@@ -41,7 +45,7 @@
                 {
                     <tr>
                         <td>
-                            <a href="#" onclick="GetEmployeeLeads(@item.employeeId)">@item.employeeName</a>
+                            <a href="javascript:void(0)" onclick="GetEmployeeLeads(@item.employeeId)">@item.employeeName</a>
                         </td>
                         <td>@item.Level</td>
                         <td><a>@item.Leads</a></td>
