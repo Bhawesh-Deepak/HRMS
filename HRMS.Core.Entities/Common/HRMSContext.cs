@@ -55,6 +55,7 @@ namespace HRMS.Core.Entities.Common
         public virtual DbSet<LeadType> LeadTypes { get; set; }
         public virtual DbSet<CustomerSecondryDetail> CustomerSecondryDetails { get; set; }
         public virtual DbSet<CustomerLead> CustomerLeads { get; set; }
+        public virtual DbSet<CustomerLeadCloserForm> CustomerLeadCloserForms { get; set; }
 
         #endregion
     }
