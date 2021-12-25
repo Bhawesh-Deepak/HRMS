@@ -93,7 +93,7 @@
 
 <script>
     function GetCustomerLCF(id) {
-        $.get("/LeadCloser/GetCustomerLCF", { id: id }, function (data) {
+        $.get("/LeadCloser/GetCustomerLCF", { custid: id }, function (data) {
             $("#divLeadCreate").html(data);
             $("#myLeadModal").modal('show');
             $("#modalTitle").text("Customer LCF Details ")
