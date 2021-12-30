@@ -23,9 +23,10 @@
     <link rel="stylesheet" type="text/css" href="~/wp-contents/login//assets/css/style.css">
     <link id="color" rel="stylesheet" href="~/wp-contents/login//assets/css/color-1.css" media="screen">
     <!-- Responsive css-->
-    <link rel="stylesheet" type="text/css" href="~/wp-contents/login//assets/css/responsive.css">
+    <link rel="stylesheet" type="text/css" href="~/wp-contents/login/assets/css/responsive.css">
     <style>
         .was-validated .form-control:invalid, .form-control.is-invalid {border-color: #dc3545 !important;}
+        body{background-color: rgba(36, 105, 92, 0.1);}
     </style>
 </head>
 <body>
@@ -40,9 +41,9 @@
     <section>
         <div class="container-fluid">
             <div class="row">
-                <div class="col-xl-7"><img class="bg-img-cover bg-center" src="~/wp-contents/login//assets/images/login/2.jpg" alt="looginpage"></div>
-                <div class="col-xl-5 p-0">
-                    <div class="login-card">
+                <div class="col-lg-7"><img class="bg-img-cover bg-center" src="~/wp-contents/login//assets/images/login/2.jpg" alt="looginpage"></div>
+                <div class="col-lg-5 p-0">
+                    <div class="login-card" id="loginpage">
 
                         <form class="theme-form login-form needs-validation" novalidate="" method="post" asp-controller="Authenticate" asp-action="Login">
                             <div class="text-center"><img src="~/images/mainkudo.png" width="45%"/></div>
@@ -75,6 +76,34 @@
                             
                         </form>
                     </div>
+
+                    <div class="login-card" id="forgetpss" style="display:none">
+
+                        <form class="theme-form login-form needs-validation" novalidate="" method="post" asp-controller="Authenticate" asp-action="Login">
+                            <div class="text-center"><img src="~/images/mainkudo.png" width="45%" /></div>
+                            <hr />
+                             <div class="text-center"><h4>Forgot Password</h4></div>
+                            <hr />
+                            <!--<h6>Welcome back! Log in to your account.</h6>-->
+                            <div class="form-group">
+                                <label>Email Id</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fa fa-user"></i></span>
+                                    <input class="form-control" type="text" required="" asp-for="EmailId"  placeholder="Email Id"><br/>
+                                    
+                                    <span asp-validation-for="EmailId" class="text-danger"></span>
+
+                                    <!--<div class="invalid-tooltip">Please enter proper UserName.</div>-->
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="checkbox">
+                                    <a class="link" href="javascript:void(0)" onclick="BTL()">Forgot password?</a>
+                                </div> <button class="btn btn-primary btn-block"  type="submit">Login</button>
+                            </div>
+
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -97,7 +126,18 @@
     <script src="~/wp-contents/login//assets/js/script.js"></script>
     <!-- login js-->
     <!-- Plugin used-->
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
     <script>
+        function ChangeDiv() {
+            $("#loginpage").css('display', 'none');
+            $("#forgetpss").css('display', 'block');
+        }
+        function BTL() {
+            $("#forgetpss").css('display', 'none');
+            $("#loginpage").css('display', 'block');
+        }
+
         (function () {
             'use strict';
             window.addEventListener('load', function () {

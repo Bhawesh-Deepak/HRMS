@@ -25,8 +25,8 @@
                         <div class="panel vd_map-widget widget">
                             <div class="panel-heading vd_bg-green">
                                 <h3 class="panel-title"> <span class="menu-icon"> <i class="glyphicon glyphicon-user"></i> </span> <span class="menu-text">Calling Data Import</span> </h3>
-                                <div class="vd_panel-menu">
-                                    <div data-action="minimize" data-original-title="Minimize" data-toggle="tooltip" data-placement="bottom" class=" menu entypo-icon"> <i class="icon-minus3"></i> </div>
+                                <div class="vd_panel-menu" id="change-3">
+                                    <div data-action="minimize" data-original-title="Minimize" data-toggle="tooltip" data-placement="bottom" class=" menu entypo-icon"> <i class="fa fa-minus"></i> </div>
 
                                     <!--<div data-action="close" data-original-title="Close" data-toggle="tooltip" data-placement="bottom" class=" menu entypo-icon"> <i class="icon-cross"></i> </div>-->
                                 </div>
@@ -115,8 +115,8 @@
                         <div class="panel vd_map-widget widget">
                             <div class="panel-heading vd_bg-black">
                                 <h3 class="panel-title"> <span class="menu-icon"> <i class="glyphicon glyphicon-user"></i> </span> <span class="menu-text">Calling Leads Import</span> </h3>
-                                <div class="vd_panel-menu">
-                                    <div data-action="minimize" data-original-title="Minimize" data-toggle="tooltip" data-placement="bottom" class=" menu entypo-icon"> <i class="icon-minus3"></i> </div>
+                                <div class="vd_panel-menu" id="change-4">
+                                    <div data-action="minimize" data-original-title="Minimize" data-toggle="tooltip" data-placement="bottom" class=" menu entypo-icon"> <i class="fa fa-minus"></i> </div>
 
                                     <!--<div data-action="close" data-original-title="Close" data-toggle="tooltip" data-placement="bottom" class=" menu entypo-icon"> <i class="icon-cross"></i> </div>-->
                                 </div>
@@ -206,8 +206,8 @@
                         <div class="panel vd_map-widget widget">
                             <div class="panel-heading vd_bg-yellow">
                                 <h3 class="panel-title"> <span class="menu-icon"> <i class="glyphicon glyphicon-user"></i> </span> <span class="menu-text">Create Self Leads</span> </h3>
-                                <div class="vd_panel-menu">
-                                    <div data-action="minimize" data-original-title="Minimize" data-toggle="tooltip" data-placement="bottom" class=" menu entypo-icon"> <i class="icon-minus3"></i> </div>
+                                <div class="vd_panel-menu" id="change-5">
+                                    <div data-action="minimize" data-original-title="Minimize" data-toggle="tooltip" data-placement="bottom" class=" menu entypo-icon"> <i class="fa fa-minus"></i> </div>
 
                                    <!-- <div data-action="close" data-original-title="Close" data-toggle="tooltip" data-placement="bottom" class=" menu entypo-icon"> <i class="icon-cross"></i> </div>-->
                                 </div>
@@ -239,5 +239,14 @@
             $("#divLeads").html(response);
 
         });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+      $('#change-3, #change-4, #change-5').on('click', function() {
+        $(this).find('.fa').toggleClass('fa fa-minus fa fa-plus');
+        return false;
+      });
     });
 </script>

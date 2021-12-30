@@ -5,10 +5,21 @@
     var assignDate = Model?.First()?.AssignDate;
 }
 
+<style>
+    .vd_bg-green, .vd_bg-yellow, .btn.vd_bg-red, .panel-heading{background:#436eac !important}
+    .table tbody tr td a{color:#436eac !important}
+    .pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover, .pagination>.active>span:hover, .pagination>.active>a:focus, .pagination>.active>span:focus{background-color:#436eac; border-color:#436eac;}
+    .pagination>li>a, .pagination>li>span{color:#436eac;}
+    .panel .panel-title, .panel .panel-title .fa-download, .panel-title .fa-cloud-upload{color:#fff !important}
+    .widget .vd_panel-menu>.menu:hover, .widget .vd_panel-menu>.menu.active{background-color:#fff;}
+    .btn{box-shadow:none !important}
+    .btn.vd_bg-red:hover{background:#1b9859 !important}
+</style>
+
 <div class="vd_content-wrapper">
     <div class="vd_container">
         <div class="vd_content clearfix">
-            <div class="vd_head-section clearfix">
+            <!--<div class="vd_head-section clearfix">
                 <div class="vd_panel-header">
                     <ul class="breadcrumb">
                         <li><a href="/">Home</a> </li>
@@ -16,7 +27,7 @@
                         <li class="active">Lead List</li>
                     </ul>
                 </div>
-            </div>
+            </div>-->
             <div class="vd_title-section clearfix">
                 <div class="vd_panel-header">
                     <h1>Lead List</h1>
@@ -31,7 +42,7 @@
                                 <form asp-action="ExportCustomerDetail" asp-controller="CustomerDetail" method="get">
                                     <div class="vd_panel-menu">
                                         <input type="date" name="AssignDate" id="AssignDate" class="menu entypo-icon smaller-font" style="width:75%;margin-right:10px;color:black" value="@Model.First().AssignDate.ToString("yyyy-MM-dd")" />
-                                        <button type="submit" class="menu entypo-icon smaller-font vd_bg-yellow" title="Export Excel"><i class="fa fa-download"></i></button>
+                                        <button type="submit" class="menu entypo-icon smaller-font vd_bg-white" title="Export Excel" style="width:24px"><i class="fa fa-download" style="color:#000;"></i></button>
                                     </div>
                                 </form>
                             </div>
@@ -81,8 +92,8 @@
                         <div class="panel widget">
                             <div class="panel-heading vd_bg-yellow">
                                 <h3 class="panel-title"> <span class="menu-icon"> <i class="fa fa-file-excel-o"></i> </span> Activity Import</h3>
-                                <div class="vd_panel-menu">
-                                    <div data-action="minimize" data-original-title="Minimize" data-toggle="tooltip" data-placement="bottom" class=" menu entypo-icon"> <i class="icon-minus3"></i> </div>
+                                <div class="vd_panel-menu" id="change-6">
+                                    <div data-action="minimize" data-original-title="Minimize" data-toggle="tooltip" data-placement="bottom" class=" menu entypo-icon"> <i class="fa fa-minus"></i> </div>
                                 </div>
                             </div>
                             <div class="panel-body">
@@ -151,4 +162,13 @@
             $('#myLeadModal').modal({ backdrop: 'static' });
         });
     }
+</script>
+
+<script>
+    $(document).ready(function() {
+      $('#change-6').on('click', function() {
+        $(this).find('.fa').toggleClass('fa fa-minus fa fa-plus');
+        return false;
+      });
+    });
 </script>

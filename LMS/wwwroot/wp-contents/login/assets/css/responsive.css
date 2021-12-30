@@ -3432,3 +3432,9 @@
      62. Responsive CSS Ends
 ==========================**/
 /*# sourceMappingURL=responsive.css.map */
+
+@media screen and (min-width:320px) and (max-width:767px){
+    .login-form {
+        background: #000 !important;
+    }
+}
